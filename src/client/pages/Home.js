@@ -16,7 +16,7 @@ import DailyRecoveredChart from '../components/Charts/DailyRecovered'
 import DailyDeathsChart from '../components/Charts/DailyDeaths'
 import HospitalizedChart from '../components/Charts/Hospitalized'
 import { allTimePositive, activePositive } from '../utils/regions'
-import { Container, Title } from '../styles/components'
+import { Container, Title, Text } from '../styles/components'
 import { formatNumber } from '../utils/numbers'
 
 export default withRouter(({ history }) => {
@@ -50,6 +50,7 @@ export default withRouter(({ history }) => {
         <StyledTitle>
           COVID-19: <span>{formatNumber(positiveInCountry)}</span> casi {positiveFilter.label} in italia
         </StyledTitle>
+        <Subtitle><strong>Suggerimento:</strong> puoi cliccare su una regione per vederne i dettagli.</Subtitle>
       </Container>
 
       <Container>
@@ -89,10 +90,21 @@ const Map = styled.div`
 `
 
 const StyledTitle = styled(Title)`
-  margin: 32px 0px;
+  margin-top: 32px;
   text-align: center;
 
   span {
     color: ${props => props.theme.fonts.text.color};
+  }
+`
+
+const Subtitle = styled(Text)`
+  margin-bottom: 32px;
+  font-size: 16px;
+  text-align: center;
+
+  strong {
+    font-family: ${props => props.theme.fonts.title.family};
+    font-weight: ${props => props.theme.fonts.title.weight.bold};
   }
 `

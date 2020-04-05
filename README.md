@@ -17,3 +17,10 @@ Avvio con docker-compose
 ```shell
 $ docker-compose up
 ```
+
+<br />
+
+
+## Segnalazioni issues
+
+Visitare il [repository dedicato alle issues](https://github.com/carmelocatalfamo/statscovid19-issues)

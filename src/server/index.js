@@ -41,6 +41,7 @@ if (process.env.NODE_ENV !== 'production') {
 // Serve static files
 app.use('/public', express.static(path.resolve(__dirname, './public')))
 app.use('/robots.txt', express.static(path.resolve(__dirname, './public/files/robots.txt')))
+app.use('/sitemap.xml', express.static(path.resolve(__dirname, './public/files/sitemap.xml')))
 
 // Let's encrypt verirication
 const certsPath = path.resolve(path.resolve(__dirname, './public/certs/.well-known/acme-challenge'))

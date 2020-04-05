@@ -42,6 +42,10 @@ if (process.env.NODE_ENV !== 'production') {
 app.use('/public', express.static(path.resolve(__dirname, './public')))
 app.use('/robots.txt', express.static(path.resolve(__dirname, './public/files/robots.txt')))
 
+// Let's encrypt verirication
+const certsPath = path.resolve(path.resolve(__dirname, './public/certs/.well-known/acme-challenge'))
+app.use('/.well-known/acme-challenge', express.static(certsPath, { dotfiles: 'allow' }))
+
 // Serve always index.hbs
 app.get('*', (req, res) => {
   const baseUrl = '//' + req.get('host')

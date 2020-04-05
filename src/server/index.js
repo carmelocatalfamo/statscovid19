@@ -48,7 +48,7 @@ app.use('/.well-known/acme-challenge', express.static(certsPath, { dotfiles: 'al
 
 // Serve always index.hbs
 app.get('*', (req, res) => {
-  const baseUrl = '//' + req.get('host')
+  const baseUrl = `${req.protocol}://${req.get('host')}`
 
   res.render('index', {
     layout: false,

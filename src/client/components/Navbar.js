@@ -9,14 +9,14 @@ import { Title, Container } from '../styles/components'
 
 export default withRouter(({ match }) => {
   const text = match.path === '/' && match.isExact
-    ? 'Statistiche COVID-19 Italia'
+    ? <><Logo width={30} height={30} />Statistiche COVID-19 Italia</>
     : <><MdKeyboardBackspace /> indietro</>
 
   return (
     <Navbar>
       <Content>
         <StyledTitle>
-          <Link to='/'><Logo width={30} height={30} />{text}</Link>
+          <Link to='/'>{text}</Link>
         </StyledTitle>
         <ThemeSwitch />
       </Content>
@@ -44,6 +44,7 @@ const StyledTitle = styled(Title)`
     text-decoration: none;
     display: flex;
     align-items: center;
+    height: 34px;
 
     svg {
       margin-bottom: 4px;

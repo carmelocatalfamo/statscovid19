@@ -54,6 +54,7 @@ app.get('*', (req, res) => {
     layout: false,
     NODE_ENV: process.env.NODE_ENV,
     BASE_URL: baseUrl,
+    URL: baseUrl + req.originalUrl,
     ENV: {
       NODE_ENV: process.env.NODE_ENV
     }

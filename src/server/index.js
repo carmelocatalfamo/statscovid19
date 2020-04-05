@@ -44,8 +44,12 @@ app.use('/robots.txt', express.static(path.resolve(__dirname, './public/files/ro
 
 // Serve always index.hbs
 app.get('*', (req, res) => {
+  const baseUrl = '//' + req.get('host')
+
   res.render('index', {
     layout: false,
+    NODE_ENV: process.env.NODE_ENV,
+    BASE_URL: baseUrl,
     ENV: {
       NODE_ENV: process.env.NODE_ENV
     }

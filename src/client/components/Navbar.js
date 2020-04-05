@@ -4,6 +4,7 @@ import { Link, withRouter } from 'react-router-dom'
 import { MdKeyboardBackspace } from 'react-icons/md'
 
 import ThemeSwitch from './ThemeSwitch'
+import Logo from './Logo'
 import { Title, Container } from '../styles/components'
 
 export default withRouter(({ match }) => {
@@ -15,7 +16,7 @@ export default withRouter(({ match }) => {
     <Navbar>
       <Content>
         <StyledTitle>
-          <Link to='/'>{text}</Link>
+          <Link to='/'><Logo width={30} height={30} />{text}</Link>
         </StyledTitle>
         <ThemeSwitch />
       </Content>

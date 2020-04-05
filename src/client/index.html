@@ -1,16 +1,30 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="it">
   <head>
+    {{#if (isEquals NODE_ENV "production")}}
+      <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-162784788-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'UA-162784788-1');
+    </script>
+    {{/if}}
     <meta charset="utf-8" />
-    <link rel="icon" href="/public/img/favicon/favicon.ico" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#000000" />
-    <meta name="description" content="{{cookiecutter.project_slug}}" />
-    <link rel="apple-touch-icon" href="/public/img/logo192.png" />
+    <title>Statistiche COVID-19 Italia</title>
+    <meta name="description" content="Rappresentazione grafica dei dati ufficiali forniti dalla Protezione Civile sul COVID-19 in Italia.">
+    <meta property="og:title" content="Statistiche COVID-19 Italia">
+    <meta property="og:description" content="Rappresentazione grafica dei dati ufficiali forniti dalla Protezione Civile sul COVID-19 in Italia.">
+    <meta property="og:image" content="{{BASE_URL}}/public/img/share.png">
+    <meta property="og:url" content="{{URL}}">
+    <meta property="og:site_name" content="Statistiche COVID-19 Italia">
+    <meta name="twitter:card" content="statscovid19_share_image">
+    <meta name="twitter:image:alt" content="statscovid19">
+    <link rel="icon" href="{{BASE_URL}}/public/img/favicon/favicon.ico" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css" />
     <link href="https://fonts.googleapis.com/css2?family=Baloo+Da+2:wght@400;600&family=Zilla+Slab:ital,wght@0,400;1,300&display=swap" rel="stylesheet">
-    <link rel="manifest" href="/public/files/manifest.json" />
-    <title>Statistiche COVID-19 Italia</title>
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>

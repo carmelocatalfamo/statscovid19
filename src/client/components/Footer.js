@@ -2,6 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
 
+import Logo from './Logo'
 import { Container, Title } from '../styles/components'
 
 export default () => {
@@ -10,7 +11,7 @@ export default () => {
       <StyledContainer>
         <div>
           <StyledTitle>
-            <Link to='/'>Statistiche COVID-19 Italia</Link>
+            <Link to='/'><Logo width={35} height={35} />Statistiche COVID-19 Italia</Link>
           </StyledTitle>
         </div>
 

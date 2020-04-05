@@ -9,7 +9,7 @@ export default () => {
       <Container>
         <StyledTitle>Attenzione:</StyledTitle>
         <StyledText>I dati presenti su questo sito sono in continuo aggiornamento e vengono presi direttamente dalle <a href='https://github.com/pcm-dpc/COVID-19' target='_blank' rel='noopener noreferrer'>fonti ufficiali</a> della <a href='http://www.protezionecivile.gov.it/' target='_blank' rel='noopener noreferrer'>Protezione Civile</a>.</StyledText>
-        <StyledText>Per segnalare problemi o malfunzionamenti visitare la sezione <a href='https://github.com/carmelocatalfamo/statscovid19-issues' target='_blank' rel='noopener noreferrer'>"Segnalazione problemi"</a></StyledText>
+        <StyledText>Per segnalare problemi o malfunzionamenti visitare la sezione <a href='https://github.com/carmelocatalfamo/statscovid19-issues' target='_blank' rel='noopener noreferrer'>"Segnalazione problemi"</a>.</StyledText>
       </Container>
     </Alert>
   )

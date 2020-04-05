@@ -1,10 +1,15 @@
 import React from 'react'
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
+import Helmet from 'react-helmet'
 
 export default () => {
   return (
     <Container>
+      <Helmet>
+        <title>404 Pagina non trovata | Statistiche COVID-19 Italia</title>
+      </Helmet>
+
       <Title>404 ~ page not found!</Title>
       <StyledLink to='/'>Torna alla Home</StyledLink>
     </Container>

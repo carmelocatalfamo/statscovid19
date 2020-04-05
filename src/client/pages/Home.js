@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import styled from 'styled-components'
 import { useSelector } from 'react-redux'
 import { withRouter } from 'react-router-dom'
+import Helmet from 'react-helmet'
 
 import WithNavbar from '../components/WithNavbar'
 import RegionsMap from '../components/RegionsMap'
@@ -39,10 +40,12 @@ export default withRouter(({ history }) => {
     {}
   )
 
-  // TODO: grafico trapia intensiva
-
   return (
     <WithNavbar>
+      <Helmet>
+        <title>Statistiche COVID-19 Italia</title>
+      </Helmet>
+
       <Container>
         <StyledTitle>
           COVID-19: <span>{formatNumber(positiveInCountry)}</span> casi {positiveFilter.label} in italia

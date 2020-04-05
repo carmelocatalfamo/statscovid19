@@ -38,9 +38,11 @@ const Footer = styled.div`
 const StyledContainer = styled(Container)`
   display: flex;
   justify-content: space-between;
+  align-items: center;
 
   @media (max-width: 768px) {
     flex-direction: column;
+    align-items: flex-start;
   }
 `
 

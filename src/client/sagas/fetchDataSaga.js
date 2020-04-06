@@ -7,7 +7,8 @@ export function * fetchData () {
     dailyCountry: 'https://raw.githubusercontent.com/pcm-dpc/COVID-19/master/dati-json/dpc-covid19-ita-andamento-nazionale-latest.json',
     regions: 'https://raw.githubusercontent.com/pcm-dpc/COVID-19/master/dati-json/dpc-covid19-ita-regioni.json',
     dailyRegions: 'https://raw.githubusercontent.com/pcm-dpc/COVID-19/master/dati-json/dpc-covid19-ita-regioni-latest.json',
-    provinces: 'https://raw.githubusercontent.com/pcm-dpc/COVID-19/master/dati-json/dpc-covid19-ita-province.json'
+    provinces: 'https://raw.githubusercontent.com/pcm-dpc/COVID-19/master/dati-json/dpc-covid19-ita-province.json',
+    dailyProvinces: 'https://raw.githubusercontent.com/pcm-dpc/COVID-19/master/dati-json/dpc-covid19-ita-province-latest.json'
   }
 
   try {
@@ -16,13 +17,15 @@ export function * fetchData () {
       dailyCountryResponse,
       regionsResponse,
       dailyRegionsResponse,
-      provincesResponse
+      provincesResponse,
+      dailyProvincesResponse
     ] = yield all([
       call(axios.get, url.country),
       call(axios.get, url.dailyCountry),
       call(axios.get, url.regions),
       call(axios.get, url.dailyRegions),
-      call(axios.get, url.provinces)
+      call(axios.get, url.provinces),
+      call(axios.get, url.dailyProvinces)
     ])
 
     return {
@@ -30,7 +33,8 @@ export function * fetchData () {
       dailyCountry: dailyCountryResponse.data,
       regions: regionsResponse.data,
       dailyRegions: dailyRegionsResponse.data,
-      provinces: provincesResponse.data
+      provinces: provincesResponse.data,
+      dailyProvinces: dailyProvincesResponse.data
     }
   } catch (error) {
     return {

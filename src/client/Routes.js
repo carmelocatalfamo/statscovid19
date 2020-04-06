@@ -6,11 +6,12 @@ import Home from './pages/Home'
 import Region from './pages/Region'
 import Privacy from './pages/Privacy'
 import NotFound from './pages/NotFound'
+import FullpageLoading from './components/FullpageLoading'
 
 export default () => {
   const appIsReady = useSelector(state => state.utils.appIsReady)
 
-  if (!appIsReady) return null
+  if (!appIsReady) return <FullpageLoading />
 
   return (
     <Switch>

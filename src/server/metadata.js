@@ -102,7 +102,7 @@ module.exports = (pathFromRequest) => {
   const metadata = find(metadataList, m => m.path === path)
 
   return {
-    title: metadata && metadata.title ? metadata.title : metadata[0].title,
-    description: metadata && metadata.description ? metadata.description : metadata[0].description
+    title: metadata && metadata.title ? metadata.title : metadataList[0].title,
+    description: metadata && metadata.description ? metadata.description : metadataList[0].description
   }
 }

@@ -3,6 +3,8 @@ const exphbs = require('express-handlebars')
 const compression = require('compression')
 const path = require('path')
 
+const composeMetadata = require('./metadata')
+
 const app = express()
 
 // Use compression if env is production
@@ -50,15 +52,16 @@ app.use('/.well-known/acme-challenge', express.static(certsPath, { dotfiles: 'al
 // Serve always index.hbs
 app.get('*', (req, res) => {
   const baseUrl = `${req.protocol}://${req.get('host')}`
+  const metadata = composeMetadata(req.path)
 
   res.render('index', {
     layout: false,
     NODE_ENV: process.env.NODE_ENV,
     BASE_URL: baseUrl,
     URL: baseUrl + req.originalUrl,
-    ENV: {
-      NODE_ENV: process.env.NODE_ENV
-    }
+    META_TITLE: metadata.title,
+    META_DESCRIPTION: metadata.description,
+    ENV: { NODE_ENV: process.env.NODE_ENV }
   })
 })
 

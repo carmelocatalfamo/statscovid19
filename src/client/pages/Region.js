@@ -57,7 +57,7 @@ export default ({ match }) => {
   return (
     <WithNavbar>
       <Helmet>
-        <title>{region.name} | Statistiche COVID-19 Italia</title>
+        <title>Statistiche COVID-19 {region.name}</title>
       </Helmet>
 
       <Container>

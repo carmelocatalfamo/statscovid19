@@ -10,7 +10,7 @@ export default class Privacy extends Component {
     return (
       <WithNavbar>
         <Helmet>
-          <title>Privacy Policy | Statistiche COVID-19 Italia</title>
+          <title>Privacy Policy - Statistiche COVID-19 Italia</title>
         </Helmet>
 
         <StyledContainer>

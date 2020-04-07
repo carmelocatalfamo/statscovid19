@@ -13,7 +13,6 @@ export default {
       color: '#D8325B',
       family: "'Baloo Da 2', cursive",
       weight: {
-        regular: 400,
         bold: 600
       }
     },
@@ -21,7 +20,6 @@ export default {
       color: '#17171d',
       family: "'Zilla Slab', serif",
       weight: {
-        italic: 300,
         regular: 400
       }
     }

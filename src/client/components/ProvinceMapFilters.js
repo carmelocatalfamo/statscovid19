@@ -25,16 +25,12 @@ export default ({ value, setFilter }) => {
       </PositiveCasesFilter>
 
       <Symbols>
-        <SymbolsGroup>
-          <Color color='#FFBCD8'>{'< 500'}</Color>
-          <Color color='#FF7CB8'>500/1k</Color>
-          <Color color='#FA5C98'>1.5/2.5k</Color>
-        </SymbolsGroup>
-        <SymbolsGroup>
-          <Color color='#DA3C78'>2.5/10k</Color>
-          <Color color='#BA1C58'>10/25k</Color>
-          <Color color='#9A0038'>> 25k</Color>
-        </SymbolsGroup>
+        <Color color='#FFBCD8'>{'< 500'}</Color>
+        <Color color='#FF7CB8'>500/1k</Color>
+        <Color color='#FA5C98'>1.5/2.5k</Color>
+        <Color color='#DA3C78'>2.5/10k</Color>
+        <Color color='#BA1C58'>10/25k</Color>
+        <Color color='#9A0038'>> 25k</Color>
       </Symbols>
     </Filters>
   )
@@ -46,6 +42,7 @@ const Filters = styled.div`
   align-items: center;
   flex-wrap: wrap;
   margin-top: 32px;
+  margin-bottom: 32px;
 
   @media (max-width: 768px) {
     flex-direction: column;
@@ -54,12 +51,8 @@ const Filters = styled.div`
 `
 
 const SelectContainer = styled.div`
-  width: 175px;
+  width: 150px;
   margin-left: 8px;
-
-  & div[class*='singleValue'] {
-    font-size: 20px;
-  }
 `
 
 const PositiveCasesFilter = styled.div`
@@ -73,16 +66,12 @@ const PositiveCasesFilter = styled.div`
 `
 
 const Symbols = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+
   @media (max-width: 768px) {
     margin-top: 32px;
   }
-`
-
-const SymbolsGroup = styled.div`
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  margin: 10px 0px;
 `
 
 const Color = styled.div`

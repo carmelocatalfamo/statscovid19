@@ -41,7 +41,7 @@ export default withTheme(({ theme, regionCode }) => {
 
   return (
     <Container>
-      <StyledTitle>Deceduti (ogni giorno)</StyledTitle>
+      <StyledTitle>Deceduti giornalieri</StyledTitle>
       <ResponsiveContainer width='100%' height={500}>
         <LineChart data={data}>
           <CartesianGrid strokeDasharray='3 3' />

@@ -3,29 +3,58 @@ import styled from 'styled-components'
 import { Link } from 'react-router-dom'
 
 import Logo from './Logo'
-import { Container, Title } from '../styles/components'
+import { regions } from '../utils/regions'
+import { Container, Title, Text } from '../styles/components'
 
 export default () => {
   return (
     <Footer>
-      <StyledContainer>
-        <div>
-          <StyledTitle>
-            <Link to='/'><Logo width={35} height={35} />Statistiche COVID-19 Italia</Link>
-          </StyledTitle>
-        </div>
+      <TitleContainer>
+        <StyledTitle>
+          <Link to='/'><Logo width={35} height={35} />Statistiche COVID-19 Italia</Link>
+        </StyledTitle>
+      </TitleContainer>
+
+      <MenuContainer>
+        <Menu>
+          <MenuTitle>Regioni</MenuTitle>
+          <MenuContent>
+            {regions.filter((region, index) => index < 10).map(region => (
+              <MenuItem key={region.code}>
+                <Link to={`/${region.slug}`}>{region.name}</Link>
+              </MenuItem>
+            ))}
+          </MenuContent>
+        </Menu>
 
         <Menu>
-          <a
-            target='_blank'
-            rel='noopener noreferrer'
-            href='https://github.com/carmelocatalfamo/statscovid19-issues'
-          >
-            Segnalazione problemi
-          </a>
-          <Link to='/privacy'>Privacy Policy</Link>
+          <MenuContent style={{ marginTop: '27px' }}>
+            {regions.filter((region, index) => index >= 10).map(region => (
+              <MenuItem key={region.code}>
+                <Link to={`/${region.slug}`}>{region.name}</Link>
+              </MenuItem>
+            ))}
+          </MenuContent>
         </Menu>
-      </StyledContainer>
+
+        <Menu>
+          <MenuTitle>Altre sezioni</MenuTitle>
+          <MenuContent>
+            <MenuItem>
+              <a
+                target='_blank'
+                rel='noopener noreferrer'
+                href='https://github.com/carmelocatalfamo/statscovid19-issues'
+              >
+                Segnalazione problemi
+              </a>
+            </MenuItem>
+            <MenuItem>
+              <Link to='/privacy'>Privacy Policy</Link>
+            </MenuItem>
+          </MenuContent>
+        </Menu>
+      </MenuContainer>
     </Footer>
   )
 }
@@ -36,14 +65,17 @@ const Footer = styled.div`
   padding: 32px 0px;
 `
 
-const StyledContainer = styled(Container)`
+const TitleContainer = styled(Container)`
+  margin-bottom: 32px;
+`
+
+const MenuContainer = styled(Container)`
   display: flex;
   justify-content: space-between;
-  align-items: center;
 
   @media (max-width: 768px) {
     flex-direction: column;
-    align-items: flex-start;
+    justify-content: flex-start;
   }
 `
 
@@ -62,23 +94,42 @@ const StyledTitle = styled(Title)`
     }
   }
 `
+
 const Menu = styled.div`
   @media (max-width: 768px) {
-    margin-top: 16px;
+    p {
+      margin-top: 16px;
+    }
+
+    &:first-child {
+      p {
+        margin-top: 0px;
+      }
+    }
+  }
+`
+
+const MenuContent = styled.ul`
+  @media (max-width: 768px) {
+    margin-top: 0px !important;
   }
 
   a {
     color: ${props => props.theme.fonts.text.color};
     text-decoration: none;
-    margin-left: 16px;
-
-    @media (max-width: 768px) {
-      margin-left: 0px;
-      margin-right: 16px;
-    }
 
     &:hover {
       text-decoration: underline;
     }
   }
+`
+
+const MenuItem = styled.li`
+  margin: 5px 0px;
+`
+
+const MenuTitle = styled(Text)`
+  font-family: ${props => props.theme.fonts.title.family};
+  font-weight: ${props => props.theme.fonts.title.weight.bold};
+  font-size: 18px;
 `

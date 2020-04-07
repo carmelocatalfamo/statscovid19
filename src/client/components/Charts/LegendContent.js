@@ -15,7 +15,7 @@ export default ({ getDescriptionByKey, ...props }) => {
         return (
           <LegendLabel key={legend.dataKey}>
             <MdLinearScale color={legend.color} style={iconStyle} />
-            {legend.value}{description}
+            <strong>{legend.value}</strong>{description}
           </LegendLabel>
         )
       })}
@@ -32,6 +32,11 @@ const LegendContaner = styled.div`
 `
 
 const LegendLabel = styled(Text)`
-  font-size: 18px;
+  font-size: 16px;
   margin: 2px 16px;
+
+  strong {
+    font-family: ${props => props.theme.fonts.title.family};
+    font-weight: ${props => props.theme.fonts.title.weight.bold};
+  }
 `

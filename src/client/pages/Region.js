@@ -62,7 +62,7 @@ export default ({ match }) => {
 
       <Container>
         <StyledTitle>
-          {region.name}: <span>{formatNumber(dailyRegion.totale_casi)}</span>
+          {region.name}: <span>{formatNumber(dailyRegion.totale_casi)} casi totali</span>
         </StyledTitle>
         {unassignedData[0].totale_casi > 0 && (
           <StyledText>

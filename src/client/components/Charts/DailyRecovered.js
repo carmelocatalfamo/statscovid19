@@ -39,7 +39,7 @@ export default withTheme(({ theme, regionCode }) => {
 
   return (
     <Container>
-      <StyledTitle>Dimessi (ogni giorno)</StyledTitle>
+      <StyledTitle>Dimessi giornalieri</StyledTitle>
       <ResponsiveContainer width='100%' height={500}>
         <LineChart data={data}>
           <CartesianGrid strokeDasharray='3 3' />

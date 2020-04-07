@@ -40,7 +40,7 @@ export default withTheme(({ theme, regionCode }) => {
 
   return (
     <Container>
-      <StyledTitle>Nuovi positivi (totali/attuali) giornalieri</StyledTitle>
+      <StyledTitle>Nuovi positivi giornalieri</StyledTitle>
       <ResponsiveContainer width='100%' height={500}>
         <LineChart data={data}>
           <CartesianGrid strokeDasharray='3 3' />
@@ -68,7 +68,7 @@ export default withTheme(({ theme, regionCode }) => {
           <Line
             type='monotone'
             dataKey='newDailyActualPositive'
-            name='Nuovi positivi attuali'
+            name='Variazione positivi attuali'
             stroke={theme.colors.blue}
             activeDot={{ r: 8 }}
           />

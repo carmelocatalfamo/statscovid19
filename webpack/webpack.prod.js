@@ -1,5 +1,6 @@
 const merge = require('webpack-merge')
 const ExtractCssChunks = require('extract-css-chunks-webpack-plugin')
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 
 const common = require('./webpack.common.js')
 
@@ -11,6 +12,7 @@ module.exports = merge.strategy({ entry: 'prepend' })(common, {
   },
   optimization: {
     minimize: true,
+    minimizer: [new UglifyJsPlugin()],
     mergeDuplicateChunks: true,
     splitChunks: {
       chunks: 'all',

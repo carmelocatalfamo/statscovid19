@@ -15,7 +15,7 @@ import {
 import dayjs from '../../utils/dayjs'
 import LegendContent from './LegendContent'
 import { Title } from '../../styles/components'
-import { formatNumber } from '../../utils/numbers'
+import { formatNumber, nFormatter } from '../../utils/numbers'
 
 export default withTheme(({ theme, regionCode }) => {
   const dataPerDay = useSelector(state => {
@@ -47,7 +47,7 @@ export default withTheme(({ theme, regionCode }) => {
           />
           <YAxis
             stroke={theme.fonts.text.color}
-            tickFormatter={formatNumber}
+            tickFormatter={num => nFormatter(num, 1)}
           />
           <Tooltip
             labelFormatter={date => dayjs(date).format('DD MMMM YYYY')}

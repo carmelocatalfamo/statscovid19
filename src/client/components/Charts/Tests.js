@@ -17,7 +17,7 @@ import {
 import dayjs from '../../utils/dayjs'
 import LegendContent from './LegendContent'
 import { Title } from '../../styles/components'
-import { formatNumber } from '../../utils/numbers'
+import { formatNumber, nFormatter } from '../../utils/numbers'
 
 export default withTheme(({ theme, regionCode }) => {
   const dataPerDay = useSelector(state => {
@@ -44,7 +44,7 @@ export default withTheme(({ theme, regionCode }) => {
   return (
     <Container>
       <StyledTitle>Rapporto tamponi/positivi</StyledTitle>
-      <ResponsiveContainer width='100%' height={500}>
+      <ResponsiveContainer width='100%' height={500} margin={{ left: 20, bottom: 0 }}>
         <ComposedChart data={data}>
           <CartesianGrid strokeDasharray='3 3' />
           <XAxis
@@ -54,7 +54,7 @@ export default withTheme(({ theme, regionCode }) => {
           />
           <YAxis
             stroke={theme.fonts.text.color}
-            tickFormatter={formatNumber}
+            tickFormatter={num => nFormatter(num, 1)}
           />
           <Tooltip
             labelFormatter={date => dayjs(date).format('DD MMMM YYYY')}

@@ -11,6 +11,7 @@ import {
   CartesianGrid,
   Tooltip,
   Legend,
+  ReferenceLine,
   ResponsiveContainer
 } from 'recharts'
 
@@ -82,6 +83,7 @@ export default withTheme(({ theme, regionCode }) => {
             barSize={20}
             fill={theme.colors.violet}
           />
+          <ReferenceLine x='2020-05-04T17:00:00' stroke='#FF9800' label='fase 2' />
         </ComposedChart>
       </ResponsiveContainer>
     </Container>

@@ -11,7 +11,7 @@ export const Container = styled.div`
   }
 `
 
-export const Title = styled.h1`
+export const Title = styled.h2`
   color: ${props => props.theme.fonts.title.color};
   font-family: ${props => props.theme.fonts.title.family};
   font-weight: ${props => props.theme.fonts.title.weight.bold};

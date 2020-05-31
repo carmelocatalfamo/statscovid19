@@ -28,9 +28,14 @@ export default ({ match }) => {
 
   const [filter, setFilter] = useState(options[0])
   const allProvinces = useSelector(state => state.dataset.dailyProvinces)
-  const dailyRegion = useSelector(state => state.dataset.dailyRegions.find(r => {
-    return String(r.codice_regione) === String(region.code)
-  }))
+  const totalCases = useSelector(state => state.dataset.dailyRegions
+    .filter(r => String(r.codice_regione) === String(region.code))
+    .reduce((totalCases, r) => {
+      totalCases += r.totale_casi
+      return totalCases
+    }, 0)
+  )
+
   const provinces = allProvinces.filter(province => {
     return province.codice_regione === region.code && province.lat
   })
@@ -62,7 +67,7 @@ export default ({ match }) => {
 
       <Container>
         <StyledTitle>
-          {region.name}: <span>{formatNumber(dailyRegion.totale_casi)} casi totali</span>
+          {region.name}: <span>{formatNumber(totalCases)} casi totali</span>
         </StyledTitle>
         {unassignedData[0].totale_casi > 0 && (
           <StyledText>

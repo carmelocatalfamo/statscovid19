@@ -17,9 +17,10 @@ import dayjs from '../../utils/dayjs'
 import LegendContent from './LegendContent'
 import { Title } from '../../styles/components'
 import { formatNumber, nFormatter } from '../../utils/numbers'
+import fixTrentinoCode from './fixTrentinoCode'
 
 export default withTheme(({ theme, regionCode }) => {
-  const dataPerDay = useSelector(state => {
+  let dataPerDay = useSelector(state => {
     if (regionCode) {
       return state.dataset.regions.filter(region => {
         return String(region.codice_regione) === String(regionCode)
@@ -28,6 +29,11 @@ export default withTheme(({ theme, regionCode }) => {
 
     return state.dataset.country
   })
+
+  // NOTE: fix per il trentino alto adige
+  if (regionCode === 4) {
+    dataPerDay = fixTrentinoCode(dataPerDay)
+  }
 
   const data = dataPerDay.map(day => ({ date: day.data, recovered: day.dimessi_guariti }))
 

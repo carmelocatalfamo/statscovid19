@@ -2,7 +2,6 @@ import React, { useState } from 'react'
 import styled from 'styled-components'
 import { useSelector } from 'react-redux'
 import { Redirect } from 'react-router-dom'
-import Helmet from 'react-helmet'
 
 import WithNavbar from '../components/WithNavbar'
 import { Container, Title, Text } from '../styles/components'
@@ -61,10 +60,6 @@ export default ({ match }) => {
 
   return (
     <WithNavbar>
-      <Helmet>
-        <title>Statistiche COVID-19 {region.name}</title>
-      </Helmet>
-
       <Container>
         <StyledTitle>
           {region.name}: <span>{formatNumber(totalCases)} casi totali</span>

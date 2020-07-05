@@ -7,7 +7,7 @@ export default () => {
   return (
     <Container>
       <Helmet>
-        <title>404 Pagina non trovata | Statistiche COVID-19 Italia</title>
+        <title>404 Pagina non trovata</title>
       </Helmet>
 
       <Title>404 ~ page not found!</Title>

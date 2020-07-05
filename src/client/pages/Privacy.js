@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
-import { Helmet } from 'react-helmet'
 
 import WithNavbar from '../components/WithNavbar'
 import { Container } from '../styles/components'
@@ -9,10 +8,6 @@ export default class Privacy extends Component {
   render () {
     return (
       <WithNavbar>
-        <Helmet>
-          <title>Privacy Policy - Statistiche COVID-19 Italia</title>
-        </Helmet>
-
         <StyledContainer>
           <Header>Privacy Policy di www.statscovid19.it</Header>
           <Text>Questa Applicazione raccoglie alcuni Dati Personali dei propri Utenti.</Text>

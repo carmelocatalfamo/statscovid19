@@ -1,6 +1,7 @@
 export default {
   colors: {
     primary: '#ec7a97',
+    primaryLight: '#FFBCD8',
     header: '#252429',
     background: '#17171d',
     green: '#1BBC9B',

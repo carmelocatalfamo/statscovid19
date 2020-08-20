@@ -20,8 +20,12 @@ import LegendContent from './LegendContent'
 import { Title } from '../../styles/components'
 import { formatNumber, nFormatter } from '../../utils/numbers'
 import fixTrentinoCode from './fixTrentinoCode'
+import moment from '../../utils/moment'
+import DatePicker from '../DatePicker'
 
 export default withTheme(({ theme, regionCode }) => {
+  const startDate = useSelector(state => state.datePicker.startDate)
+  const endDate = useSelector(state => state.datePicker.endDate)
   let dataPerDay = useSelector(state => {
     if (regionCode) {
       return state.dataset.regions.filter(region => {
@@ -37,12 +41,16 @@ export default withTheme(({ theme, regionCode }) => {
     dataPerDay = fixTrentinoCode(dataPerDay)
   }
 
-  const data = dataPerDay.map(day => ({
-    date: day.data,
-    totalPositive: day.totale_casi,
-    tests: day.tamponi,
-    percentage: ((day.totale_casi * 100) / day.tamponi).toFixed(2)
-  }))
+  const data = dataPerDay
+    .map(day => ({
+      date: day.data,
+      totalPositive: day.totale_casi,
+      tests: day.tamponi,
+      percentage: ((day.totale_casi * 100) / day.tamponi).toFixed(2)
+    }))
+    .filter(({ date }) => (
+      moment(date).isSameOrAfter(startDate) && moment(date).isSameOrBefore(endDate)
+    ))
 
   const CustomLegendComponent = props => {
     return <LegendContent {...props} getDescriptionByKey={getDescriptionByKey} />
@@ -51,6 +59,7 @@ export default withTheme(({ theme, regionCode }) => {
   return (
     <Container>
       <StyledTitle>Rapporto tamponi/positivi</StyledTitle>
+      <DatePicker name='tests' />
       <ResponsiveContainer width='100%' height={500} margin={{ left: 20, bottom: 0 }}>
         <ComposedChart data={data}>
           <CartesianGrid strokeDasharray='3 3' />

@@ -18,8 +18,12 @@ import LegendContent from './LegendContent'
 import { Title } from '../../styles/components'
 import { formatNumber, nFormatter } from '../../utils/numbers'
 import fixTrentinoCode from './fixTrentinoCode'
+import moment from '../../utils/moment'
+import DatePicker from '../DatePicker'
 
 export default withTheme(({ theme, regionCode }) => {
+  const startDate = useSelector(state => state.datePicker.startDate)
+  const endDate = useSelector(state => state.datePicker.endDate)
   let dataPerDay = useSelector(state => {
     if (regionCode) {
       return state.dataset.regions.filter(region => {
@@ -35,7 +39,11 @@ export default withTheme(({ theme, regionCode }) => {
     dataPerDay = fixTrentinoCode(dataPerDay)
   }
 
-  const data = dataPerDay.map(day => ({ date: day.data, deaths: day.deceduti }))
+  const data = dataPerDay
+    .map(day => ({ date: day.data, deaths: day.deceduti }))
+    .filter(({ date }) => (
+      moment(date).isSameOrAfter(startDate) && moment(date).isSameOrBefore(endDate)
+    ))
 
   const CustomLegendComponent = props => {
     return <LegendContent {...props} getDescriptionByKey={getDescriptionByKey} />
@@ -44,6 +52,7 @@ export default withTheme(({ theme, regionCode }) => {
   return (
     <Container>
       <StyledTitle>Deceduti</StyledTitle>
+      <DatePicker name='deaths' />
       <ResponsiveContainer width='100%' height={500}>
         <LineChart data={data}>
           <CartesianGrid strokeDasharray='3 3' />

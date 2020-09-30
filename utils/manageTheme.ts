@@ -10,11 +10,9 @@ export const getInitialTheme = async (req?: IncomingMessage, res?: ServerRespons
   if (isServer) {
     const Cookies = (await import('cookies')).default
 
-    const cookie = req.headers.cookie
-      .split(';')
-      .find((c) => c.trim().startsWith('theme='))
-
+    const cookie = req.headers.cookie?.split(';').find((c) => c.trim().startsWith('theme='))
     const value = cookie ? cookie.split('=')[1] : undefined
+
     if (cookie && value in Themes) return Themes[value]
 
     const cookies = new Cookies(req, res)

@@ -8,7 +8,6 @@ export type ThemeState = Themes
 export const reducer = (state: ThemeState = Themes.light, action: ActionTypes): ThemeState => {
   switch (action.type) {
     case HYDRATE:
-      console.log(action)
       return action.payload.theme
 
     case CHANGE_THEME:

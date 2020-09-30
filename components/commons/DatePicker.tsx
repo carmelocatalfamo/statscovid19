@@ -20,7 +20,6 @@ const DatePicker: FC<Props> = ({ name }) => {
   const [focusedInput, setFocusedInput] = useState(null)
 
   const onDatesChange = ({ startDate, endDate }) => {
-    console.log(startDate, endDate)
     dispatch(changeStartDate(startDate))
     dispatch(changeEndDate(endDate || null))
   }

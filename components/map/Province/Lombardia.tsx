@@ -26,7 +26,7 @@ const Lombardia: FC<Props> = ({ texts, colors }) => {
   }
 
   const textOptions = {
-    color: theme.fonts.text.color,
+    color: theme.map.text.color,
     fontSize: 200
   }
 

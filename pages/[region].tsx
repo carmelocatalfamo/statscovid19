@@ -145,8 +145,6 @@ export const getServerSideProps = wrapper.getServerSideProps(
     const dailyProvinces = await fetchDailyProvinces()
     const regions = await fetchRegions()
 
-    console.log('REGIONI', regions)
-
     const slug = isArray(query.region) ? query.region[0] : query.region
     const region = findBySlug(slug)
     const totalPositives = dailyRegions

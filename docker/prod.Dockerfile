@@ -1,35 +1,21 @@
-# Build image
-FROM node:12 as builder
+FROM node:12-slim
 
 WORKDIR /
 
-COPY package.json .
+COPY ./package.json .
 
-COPY yarn.lock .
+COPY ./yarn.lock .
 
 RUN yarn install
 
-WORKDIR /app
+ENV PATH /node_modules/.bin:$PATH
 
-COPY src ./src
-
-COPY webpack ./webpack
-
-COPY .babelrc .
-
-RUN /node_modules/.bin/webpack --config webpack/webpack.prod.js
-
-# Production image
-FROM node:12
+RUN next telemetry disable
 
 WORKDIR /app
 
-COPY --from=builder /app/src/server /app
+COPY . .
 
-COPY --from=builder /package.json /app/package.json
+RUN yarn build
 
-COPY --from=builder /yarn.lock /app/yarn.lock
-
-RUN yarn install --production
-
-CMD [ "node", "/app/index.js"]
+CMD ["yarn", "start"]

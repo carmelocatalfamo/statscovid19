@@ -18,15 +18,15 @@ Avvio con docker-compose
 $ docker-compose up
 ```
 
-<br />
+Avvio senza docker
+```shell
+$ yarn install && yarn dev
+```
 
+<br />
 
 ## Segnalazioni issues
 
-Visitare il [repository dedicato alle issues](https://github.com/carmelocatalfamo/statscovid19-issues)
+Visitare la [sezione dedicato alle issues](https://github.com/carmelocatalfamo/statscovid19/issues)
 
 <br />
-
-## Deploy in produzione
-
-Entrare via ssh sul droplet di digitalocean e lanciare lo script `./updateWebsite.sh`. Questo entra nella cartella in cui si trova il repository di produzione, esegue un pull e fa la build della nuova immagine.

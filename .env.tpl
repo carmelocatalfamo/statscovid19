@@ -1,1 +1,2 @@
 NODE_ENV=development
+NEXT_PUBLIC_GOOGLE_ANALYTICS_ID=google_analytics_id

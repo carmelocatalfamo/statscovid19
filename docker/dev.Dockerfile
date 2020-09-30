@@ -1,4 +1,4 @@
-FROM node:12
+FROM node:12-slim
 
 WORKDIR /
 
@@ -8,6 +8,10 @@ COPY ./yarn.lock .
 
 RUN yarn install
 
+ENV PATH /node_modules/.bin:$PATH
+
+RUN next telemetry disable
+
 WORKDIR /app
 
-CMD ["yarn", "run", "dev"]
+CMD ["yarn", "dev"]

@@ -43,7 +43,8 @@ const DailyGenericData: FC<Props> = ({ data }) => {
       home: day.isolamento_domiciliare
     }))
     .filter(({ date }) => (
-      moment(date).isSameOrAfter(startDate) && moment(date).isSameOrBefore(endDate)
+      moment(date).isSameOrAfter(startDate, 'days') &&
+      moment(date).isSameOrBefore(endDate, 'days')
     ))
 
   const renderTooltip = (props: TooltipProps) => {

@@ -48,7 +48,8 @@ const TestPercentage: FC<Props> = ({ data }) => {
       }
     })
     .filter(({ date }) => (
-      moment(date).isSameOrAfter(startDate) && moment(date).isSameOrBefore(endDate)
+      moment(date).isSameOrAfter(startDate, 'days') &&
+      moment(date).isSameOrBefore(endDate, 'days')
     ))
 
   const renderTooltip = (props: TooltipProps) => {

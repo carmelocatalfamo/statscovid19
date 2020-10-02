@@ -39,7 +39,8 @@ const NewPositives: FC<Props> = ({ data }) => {
       newPositives: day.nuovi_positivi
     }))
     .filter(({ date }) => (
-      moment(date).isSameOrAfter(startDate) && moment(date).isSameOrBefore(endDate)
+      moment(date).isSameOrAfter(startDate, 'days') &&
+      moment(date).isSameOrBefore(endDate, 'days')
     ))
 
   const renderTooltip = (props: TooltipProps) => {

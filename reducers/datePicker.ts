@@ -9,20 +9,23 @@ export type DatePickerState = {
 }
 
 const initialState = {
-  startDate: moment().date(24).month(1).year(2020).toISOString(),
-  endDate: moment().toISOString()
+  startDate: moment().date(24).month(1).year(2020).toString(),
+  endDate: moment().toString()
 }
 
 export const reducer = (state = initialState, action: ActionTypes): DatePickerState => {
   switch (action.type) {
     case HYDRATE:
+      console.log(action.payload.datePicker)
       return action.payload.datePicker
 
     case CHANGE_START_DATE:
-      return { ...state, startDate: action.payload ? action.payload.toISOString() : null }
+      console.log('CHANGE_START_DATE', action.payload)
+      return { ...state, startDate: action.payload ? action.payload.toString() : null }
 
     case CHANGE_END_DATE:
-      return { ...state, endDate: action.payload ? action.payload.toISOString() : null }
+      console.log('CHANGE_END_DATE', action.payload)
+      return { ...state, endDate: action.payload ? action.payload.toString() : null }
 
     default:
       return state

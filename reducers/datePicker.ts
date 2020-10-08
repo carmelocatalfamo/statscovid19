@@ -1,5 +1,3 @@
-import { HYDRATE } from 'next-redux-wrapper'
-
 import { ActionTypes, CHANGE_START_DATE, CHANGE_END_DATE } from '../actions/types'
 import { moment } from '../utils/moment'
 
@@ -15,9 +13,9 @@ const initialState = {
 
 export const reducer = (state = initialState, action: ActionTypes): DatePickerState => {
   switch (action.type) {
-    case HYDRATE:
-      console.log(action.payload.datePicker)
-      return action.payload.datePicker
+    // case HYDRATE:
+    //   console.log(action.payload.datePicker)
+    //   return action.payload.datePicker
 
     case CHANGE_START_DATE:
       console.log('CHANGE_START_DATE', action.payload)

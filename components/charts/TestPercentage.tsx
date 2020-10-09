@@ -37,7 +37,8 @@ const TestPercentage: FC<Props> = ({ data }) => {
     .map((day, index, list) => {
       const test = day.tamponi - (list[index - 1]?.tamponi || 0)
       const positives = day.nuovi_positivi > 0 ? day.nuovi_positivi : 0
-      const percentage = test ? ((positives * 100) / test).toFixed(2) : 0
+      let percentage = test ? ((positives * 100) / test).toFixed(2) : 0
+      if (Number(percentage) > 100) percentage = 100
 
       return {
         date: day.data,

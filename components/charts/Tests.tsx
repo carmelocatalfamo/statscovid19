@@ -28,7 +28,7 @@ type Props = {
   data: any[]
 }
 
-const TestPercentage: FC<Props> = ({ data }) => {
+const Tests: FC<Props> = ({ data }) => {
   const theme = useTheme()
   const startDate = useSelector<State, moment.Moment>(state => moment(state.datePicker.startDate))
   const endDate = useSelector<State, moment.Moment>(state => moment(state.datePicker.endDate))
@@ -59,25 +59,25 @@ const TestPercentage: FC<Props> = ({ data }) => {
     return (
       <TooltipContainer>
         <TooltipDate>{moment(props.label).format('DD MMMM YYYY')}</TooltipDate>
-        <TooltipItem>
-          <span>Tamponi effettuati:</span> {formatNumber(Number(props.payload[0].payload.testToday))}
-        </TooltipItem>
+        {props.payload?.map((item) => (
+          <TooltipItem key={item.dataKey.toString()}>
+            <span>{item.name}:</span> {formatNumber(Number(item.value))}
+          </TooltipItem>
+        ))}
         <TooltipItem>
           <span>Nuovi positivi:</span> {formatNumber(Number(props.payload[0].payload.newPositives))}
         </TooltipItem>
-        {props.payload?.map((item) => (
-          <TooltipItem key={item.dataKey.toString()}>
-            <span>{item.name}:</span> {formatNumber(Number(item.value))}%
-          </TooltipItem>
-        ))}
+        <TooltipItem>
+          <span>Percentuale tamponi positivi:</span> {formatNumber(Number(props.payload[0].payload.percentage))}%
+        </TooltipItem>
       </TooltipContainer>
     )
   }
 
   const renderLegend = (props: LegendProps) => {
     const text = {
-      percentageNumber: {
-        label: 'Percentuale tamponi positivi',
+      testToday: {
+        label: 'Tamponi effettuati',
         description: ''
       }
     }
@@ -101,7 +101,7 @@ const TestPercentage: FC<Props> = ({ data }) => {
 
   return (
     <Container>
-      <StyledTitle>Tamponi positivi</StyledTitle>
+      <StyledTitle>Tamponi effettuati</StyledTitle>
       <DatePicker name='test_percentage' />
       <StyledResponsiveContainer width='100%' height={500}>
         <LineChart data={dataPerDay}>
@@ -119,8 +119,8 @@ const TestPercentage: FC<Props> = ({ data }) => {
           <Legend content={renderLegend} />
           <Line
             type='monotone'
-            dataKey='percentageNumber'
-            name='Percentuale tamponi positivi'
+            dataKey='testToday'
+            name='Tamponi effettuati'
             stroke={theme.charts.lines[2]}
             dot={{ fill: theme.charts.lines[2] }}
             activeDot={{ r: 8 }}
@@ -191,4 +191,4 @@ const LegendIcon = styled(MdBrightness1)`
   margin-bottom: 3px;
 `
 
-export { TestPercentage }
+export { Tests }

@@ -16,7 +16,7 @@ import { Positives as PositiveChart } from '../components/charts/Positives'
 import { Province as ProvinceMap } from '../components/map/Province'
 import { ProvinceApiResponse, RegionApiResponse } from '../types/api'
 import { RegionMapFilters, RegionOptionValues, regionOptionValues } from '../components/RegionMapFilters'
-import { TestPercentage } from '../components/charts/TestPercentage'
+import { Tests } from '../components/charts/Tests'
 import { Text } from '../components/commons/Text'
 import { Title } from '../components/commons/Title'
 import { WithNavbar } from '../components/templates/WithNavbar'
@@ -106,7 +106,7 @@ const Region: FC<Props> = ({ totalPositives, dailyProvinces, regionPerDay }) => 
       <Container>
         <PositiveChart data={regionPerDay} />
         <NewPositives data={regionPerDay} />
-        <TestPercentage data={regionPerDay} />
+        <Tests data={regionPerDay} />
         <DailyGenericData data={regionPerDay} />
       </Container>
     </WithNavbar>

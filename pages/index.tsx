@@ -12,7 +12,7 @@ import { fetchDailyCountry, fetchDailyRegions, fetchCountry } from '../utils/api
 import { formatNumber } from '../utils/numbers'
 import { NewPositives } from '../components/charts/NewPositives'
 import { Positives as PositiveChart } from '../components/charts/Positives'
-import { TestPercentage } from '../components/charts/TestPercentage'
+import { Tests } from '../components/charts/Tests'
 import { Title } from '../components/commons/Title'
 import { WithNavbar } from '../components/templates/WithNavbar'
 import { wrapper } from '../utils/store'
@@ -73,7 +73,7 @@ const Home: FC<Props> = ({ countryPerDays, dailyCountry, dailyRegions }) => {
       <Container>
         <PositiveChart data={countryPerDays} />
         <NewPositives data={countryPerDays} />
-        <TestPercentage data={countryPerDays} />
+        <Tests data={countryPerDays} />
         <DailyGenericData data={countryPerDays} />
       </Container>
     </WithNavbar>

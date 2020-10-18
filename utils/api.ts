@@ -1,7 +1,7 @@
 import mergeWith from 'lodash/mergeWith'
 import isNumber from 'lodash/isNumber'
 
-import { CountryApiResponse, ProvinceApiResponse, RegionApiResponse } from '../types/api'
+import { CountryApiResponse, ProvinceApiResponse, RegionApiResponse } from '../models/Api'
 
 export const fetchDailyRegions = async (): Promise<RegionApiResponse[]> => {
   /**

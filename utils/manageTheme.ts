@@ -1,10 +1,10 @@
 import { IncomingMessage, ServerResponse } from 'http'
 
-import { Themes } from '../styles/themes/types'
+import { Theme } from '../models/Theme'
 
-export const getInitialTheme = async (req?: IncomingMessage, res?: ServerResponse): Promise<Themes> => {
+export const getInitialTheme = async (req?: IncomingMessage, res?: ServerResponse): Promise<Theme> => {
   const isServer = !!req
-  let defaultTheme = Themes.light
+  const defaultTheme = Theme.light
 
   // If server side
   if (isServer) {
@@ -13,7 +13,7 @@ export const getInitialTheme = async (req?: IncomingMessage, res?: ServerRespons
     const cookie = req.headers.cookie?.split(';').find((c) => c.trim().startsWith('theme='))
     const value = cookie ? cookie.split('=')[1] : undefined
 
-    if (cookie && value in Themes) return Themes[value]
+    if (cookie && value in Theme) return Theme[value]
 
     const cookies = new Cookies(req, res)
 
@@ -28,8 +28,8 @@ export const getInitialTheme = async (req?: IncomingMessage, res?: ServerRespons
     const Cookies = (await import('js-cookie')).default
     const value = Cookies.get('theme')
 
-    if (value && value in Themes) {
-      return Themes[value]
+    if (value && value in Theme) {
+      return Theme[value]
     }
 
     Cookies.set('theme', defaultTheme)
@@ -37,7 +37,7 @@ export const getInitialTheme = async (req?: IncomingMessage, res?: ServerRespons
   }
 }
 
-export const setTheme = async (theme: 'light' | 'dark') => {
+export const setTheme = async (theme: Theme): Promise<void> => {
   const Cookies = (await import('js-cookie')).default
   Cookies.set('theme', theme)
 }

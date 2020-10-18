@@ -22,7 +22,7 @@ import { Title } from '../commons/Title'
 import { compressNumber, formatNumber } from '../../utils/numbers'
 import { moment } from '../../utils/moment'
 import { DatePicker } from '../commons/DatePicker'
-import { State } from '../../reducers'
+import { State } from '../../models/State'
 
 type Props = {
   data: any[]
@@ -30,8 +30,8 @@ type Props = {
 
 const Positives: FC<Props> = ({ data }) => {
   const theme = useTheme()
-  const startDate = useSelector<State, moment.Moment>(state => moment(state.datePicker.startDate))
-  const endDate = useSelector<State, moment.Moment>(state => moment(state.datePicker.endDate))
+  const startDate = useSelector<State, moment.Moment>(state => moment(state.datepicker.startDate))
+  const endDate = useSelector<State, moment.Moment>(state => moment(state.datepicker.endDate))
 
   const dataPerDay = data
     .map((day, index, list) => ({

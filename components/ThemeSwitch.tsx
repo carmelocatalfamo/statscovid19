@@ -4,18 +4,18 @@ import { useSelector, useDispatch } from 'react-redux'
 import { FaMoon, FaSun } from 'react-icons/fa'
 import styled from 'styled-components'
 
-import { changeTheme } from '../actions'
+import { changeTheme } from '../store/actions/theme'
 import { setTheme } from '../utils/manageTheme'
-import { State } from '../reducers'
-import { Themes } from '../styles/themes/types'
+import { State } from '../models/State'
+import { Theme } from '../models/Theme'
 
 const ThemeSwitch: FC = () => {
   const dispatch = useDispatch()
   const theme = useSelector<State, string>(state => state.theme)
-  const isChecked = theme === Themes.light
+  const isChecked = theme === Theme.light
 
   const handleChange = async () => {
-    const newTheme = isChecked ? Themes.dark : Themes.light
+    const newTheme = isChecked ? Theme.dark : Theme.light
     await setTheme(newTheme)
     dispatch(changeTheme(newTheme))
   }

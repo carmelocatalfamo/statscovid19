@@ -4,9 +4,9 @@ import { useSelector, useDispatch } from 'react-redux'
 import styled from 'styled-components'
 import { DateRangePicker } from 'react-dates'
 
-import { changeStartDate, changeEndDate } from '../../actions'
+import { changeStartDate, changeEndDate } from '../../store/actions/datepicker'
 import { moment } from '../../utils/moment'
-import { State } from '../../reducers'
+import { State } from '../../models/State'
 import { Title } from './Title'
 
 type Props = {
@@ -15,23 +15,26 @@ type Props = {
 
 const DatePicker: FC<Props> = ({ name }) => {
   const dispatch = useDispatch()
-  const startDate = useSelector<State, moment.Moment | null>(state => moment(state.datePicker.startDate))
-  const endDate = useSelector<State, moment.Moment | null>(state => moment(state.datePicker.endDate))
+  const startDate = useSelector<State, moment.Moment | null>(state => moment(state.datepicker.startDate))
+  const endDate = useSelector<State, moment.Moment | null>(state => moment(state.datepicker.endDate))
   const [focusedInput, setFocusedInput] = useState(null)
 
   const onDatesChange = ({ startDate, endDate }) => {
-    dispatch(changeStartDate(startDate))
-    dispatch(changeEndDate(endDate || null))
+    const start = startDate ? startDate.toString() : null
+    const end = endDate ? endDate.toString() : null
+
+    dispatch(changeStartDate(start))
+    dispatch(changeEndDate(end))
   }
 
   const onFullPeriodClick = () => {
-    dispatch(changeStartDate(moment().date(24).month(1).year(2020)))
-    dispatch(changeEndDate(moment()))
+    dispatch(changeStartDate(moment().date(24).month(1).year(2020).toString()))
+    dispatch(changeEndDate(moment().toString()))
   }
 
   const onLastTwoWeeksClick = () => {
-    dispatch(changeStartDate(moment().subtract(1, 'month')))
-    dispatch(changeEndDate(moment()))
+    dispatch(changeStartDate(moment().subtract(1, 'month').toString()))
+    dispatch(changeEndDate(moment().toString()))
   }
 
   return (

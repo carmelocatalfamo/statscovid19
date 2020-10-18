@@ -8,6 +8,7 @@
     "start": "next start"
   },
   "dependencies": {
+    "@reduxjs/toolkit": "^1.4.0",
     "axios": "^0.20.0",
     "cookies": "^0.8.0",
     "format-number": "^3.0.0",

@@ -14,13 +14,13 @@ import { formatNumber } from '../utils/numbers'
 import { NewPositives } from '../components/charts/NewPositives'
 import { Positives as PositiveChart } from '../components/charts/Positives'
 import { Province as ProvinceMap } from '../components/map/Province'
-import { ProvinceApiResponse, RegionApiResponse } from '../types/api'
+import { ProvinceApiResponse, RegionApiResponse } from '../models/Api'
 import { RegionMapFilters, RegionOptionValues, regionOptionValues } from '../components/RegionMapFilters'
 import { Tests } from '../components/charts/Tests'
 import { Text } from '../components/commons/Text'
 import { Title } from '../components/commons/Title'
 import { WithNavbar } from '../components/templates/WithNavbar'
-import { wrapper } from '../utils/store'
+import { wrapper } from '../store/store'
 
 type Props = {
   totalPositives: number

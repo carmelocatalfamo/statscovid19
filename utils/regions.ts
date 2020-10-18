@@ -1,4 +1,4 @@
-import { RegionApiResponse } from '../types/api'
+import { RegionApiResponse } from '../models/Api'
 import { useTheme } from 'styled-components'
 
 export type Region = {

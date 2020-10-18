@@ -4,7 +4,7 @@ import { useRouter } from 'next/router'
 
 import { allTimePositive, activePositive } from '../utils/regions'
 import { Container } from '../components/commons/Container'
-import { CountryApiResponse, RegionApiResponse } from '../types/api'
+import { CountryApiResponse, RegionApiResponse } from '../models/Api'
 import { CountryMap } from '../components/map/Country'
 import { CountryMapFilters, PositiveCases, positiveCasesOptions } from '../components/CountryMapFilters'
 import { DailyGenericData } from '../components/charts/DailyGenericData'
@@ -15,7 +15,7 @@ import { Positives as PositiveChart } from '../components/charts/Positives'
 import { Tests } from '../components/charts/Tests'
 import { Title } from '../components/commons/Title'
 import { WithNavbar } from '../components/templates/WithNavbar'
-import { wrapper } from '../utils/store'
+import { wrapper } from '../store/store'
 
 type Props = {
   countryPerDays: CountryApiResponse[]

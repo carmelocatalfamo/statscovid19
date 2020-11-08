@@ -1,2 +1,3 @@
-# https://www.robotstxt.org/robotstxt.html
+Sitemap: https://www.statscovid19.it/sitemap.xml
 User-agent: *
+Disallow:

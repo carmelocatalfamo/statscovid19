@@ -39,7 +39,7 @@ const Content = styled(Container)`
   align-items: center;
 `
 
-const StyledTitle = styled(Title).attrs({ as: 'h1' })`
+const StyledTitle = styled(Title).attrs({ as: 'h2' })`
   font-size: 22px;
 
   a {

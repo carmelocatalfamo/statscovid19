@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 
-const Title = styled.h1`
+const Title = styled.h3`
   color: ${props => props.theme.colors.title};
   font-family: ${props => props.theme.fonts.title.family};
   font-weight: ${props => props.theme.fonts.title.weight.bold};

@@ -62,7 +62,7 @@ const Region: FC<Props> = ({ totalPositives, dailyProvinces, regionPerDay }) => 
     return Object.assign({ ...texts, [slug]: positiveNumbersToColors(province.totale_casi) })
   }, {})
 
-  const title = `Coronavirus: numeri e grafici sul COVID-19 in ${region.name}`
+  const title = `Statistiche COVID-19 ${region.name}`
   const description = `${region.name}: numeri, grafici e statistiche dei dati ufficiali forniti dalla Protezione Civile sul COVID-19 prima e dopo la fase 2.`
 
   return (

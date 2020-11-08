@@ -17,7 +17,7 @@ import { State } from '../models/State'
 
 function MyApp ({ Component, pageProps }) {
   const theme = useSelector<State, Theme>(state => state.theme)
-  const title = 'Coronavirus: numeri e grafici sul COVID-19 in Italia'
+  const title = 'Statistiche COVID-19 Italia'
   const description = 'Numeri, grafici e statistiche dei dati ufficiali forniti dalla Protezione Civile sul COVID-19 in Italia prima e dopo la fase 2.'
 
   return (

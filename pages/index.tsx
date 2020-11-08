@@ -48,7 +48,7 @@ const Home: FC<Props> = ({ countryPerDays, dailyCountry, dailyRegions }) => {
   return (
     <WithNavbar>
       <Container>
-        <StyledTitle>
+        <StyledTitle as='h1'>
           COVID-19: <span>{formatNumber(positivesInCountry)}</span> casi {positiveFilter.label} in italia
         </StyledTitle>
       </Container>

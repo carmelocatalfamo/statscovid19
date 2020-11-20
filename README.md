@@ -1,7 +1,7 @@
 # www.statscovid19.it
 Statistiche a livello nazionale e regionale sul COVID-19
 
-## Getting started
+## Primo avvio
 
 Clona il repository
 ```shell

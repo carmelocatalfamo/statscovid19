@@ -38,12 +38,12 @@ const CountryMapFilters: FC<Props> = ({ value, setPositiveFilter }) => {
       </PositiveCasesFilter>
 
       <Symbols>
-        <Color color={theme.map.shades[0]}>{'< 1k'}</Color>
-        <Color color={theme.map.shades[3]}>10/25k</Color>
-        <Color color={theme.map.shades[1]}>1/5k</Color>
-        <Color color={theme.map.shades[4]}>25/50k</Color>
-        <Color color={theme.map.shades[2]}>5/10k</Color>
-        <Color color={theme.map.shades[5]}>{'> 50k'}</Color>
+        <Color color={theme.map.shades[0]}>{'< 10k'}</Color>
+        <Color color={theme.map.shades[3]}>50/100k</Color>
+        <Color color={theme.map.shades[1]}>10/25k</Color>
+        <Color color={theme.map.shades[4]}>100/250k</Color>
+        <Color color={theme.map.shades[2]}>25/50k</Color>
+        <Color color={theme.map.shades[5]}>{'> 250k'}</Color>
       </Symbols>
     </Filters>
   )
@@ -84,7 +84,7 @@ const PositiveCasesFilter = styled.div`
 const Symbols = styled.div`
   display: flex;
   flex-wrap: wrap;
-  max-width: 110px;
+  max-width: 130px;
 
   @media (max-width: 768px) {
     margin-top: 32px;
@@ -93,7 +93,7 @@ const Symbols = styled.div`
 
 const Color = styled.div`
   height: 22px;
-  width: 50px;
+  width: 60px;
   line-height: 25px;
   user-select: none;
   border-radius: 30px;

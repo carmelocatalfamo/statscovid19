@@ -23,6 +23,7 @@ import { compressNumber, formatNumber } from '../../utils/numbers'
 import { moment } from '../../utils/moment'
 import { DatePicker } from '../commons/DatePicker'
 import { State } from '../../models/State'
+import { referenceLines } from './referenceLines'
 
 type Props = {
   data: any[]
@@ -113,7 +114,9 @@ const Positives: FC<Props> = ({ data }) => {
             dot={{ fill: theme.charts.lines[0] }}
             activeDot={{ r: 8 }}
           />
-          <ReferenceLine x='2020-05-04T17:00:00' stroke={theme.colors.highlight} label='FASE 2' />
+          {referenceLines.map(({ date, label }) => (
+            <ReferenceLine key={date} x={date} stroke={theme.colors.highlight} label={label} />
+          ))}
         </LineChart>
       </StyledResponsiveContainer>
     </Container>

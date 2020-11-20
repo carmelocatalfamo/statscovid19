@@ -38,12 +38,12 @@ const RegionMapFilters: FC<Props> = ({ value, setFilter }) => {
       </PositiveCasesFilter>
 
       <Symbols>
-        <Color color={theme.map.shades[0]}>{'< 500'}</Color>
-        <Color color={theme.map.shades[3]}>500/1k</Color>
-        <Color color={theme.map.shades[1]}>1.5/2.5k</Color>
-        <Color color={theme.map.shades[4]}>2.5/10k</Color>
-        <Color color={theme.map.shades[2]}>10/25k</Color>
-        <Color color={theme.map.shades[5]}>{'> 25k'}</Color>
+        <Color color={theme.map.shades[0]}>{'< 1000'}</Color>
+        <Color color={theme.map.shades[3]}>10/25k</Color>
+        <Color color={theme.map.shades[1]}>1/5k</Color>
+        <Color color={theme.map.shades[4]}>25/50k</Color>
+        <Color color={theme.map.shades[2]}>5/10k</Color>
+        <Color color={theme.map.shades[5]}>{'> 50k'}</Color>
       </Symbols>
     </Filters>
   )

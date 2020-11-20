@@ -126,15 +126,15 @@ export const findByCode = (code: number): Province | undefined => {
 export const positiveNumbersToColors = (num: number): string => {
   const theme = useTheme()
 
-  if (num < 500) {
+  if (num < 1000) {
     return theme.map.shades[0]
-  } else if (num >= 500 && num < 1500) {
+  } else if (num >= 1000 && num < 5000) {
     return theme.map.shades[1]
-  } else if (num >= 1500 && num < 2500) {
+  } else if (num >= 5000 && num < 10000) {
     return theme.map.shades[2]
-  } else if (num >= 2500 && num < 10000) {
+  } else if (num >= 10000 && num < 25000) {
     return theme.map.shades[3]
-  } else if (num > 10000 && num < 25000) {
+  } else if (num > 25000 && num < 50000) {
     return theme.map.shades[4]
   } else {
     return theme.map.shades[5]

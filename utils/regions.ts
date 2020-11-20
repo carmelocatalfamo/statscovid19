@@ -44,15 +44,15 @@ export const findBySlug = (slug: string): Region => (
 const positiveNumbersToColors = (counter: number) => {
   const theme = useTheme()
 
-  if (counter < 1000) {
+  if (counter < 10000) {
     return theme.map.shades[0]
-  } else if (counter >= 1000 && counter < 5000) {
-    return theme.map.shades[1]
-  } else if (counter >= 5000 && counter < 10000) {
-    return theme.map.shades[2]
   } else if (counter >= 10000 && counter < 25000) {
+    return theme.map.shades[1]
+  } else if (counter >= 25000 && counter < 50000) {
+    return theme.map.shades[2]
+  } else if (counter >= 50000 && counter < 100000) {
     return theme.map.shades[3]
-  } else if (counter > 25000 && counter < 50000) {
+  } else if (counter > 100000 && counter < 250000) {
     return theme.map.shades[4]
   } else {
     return theme.map.shades[5]

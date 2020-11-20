@@ -18,7 +18,7 @@ const Navbar: FC = () => {
   return (
     <Nav>
       <Content>
-        <StyledTitle>
+        <StyledTitle as='p'>
           <Link href='/'><a>{text}</a></Link>
         </StyledTitle>
         <ThemeSwitch />

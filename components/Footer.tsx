@@ -12,7 +12,7 @@ const Footer: FC = () => {
   return (
     <FooterContainer>
       <TitleContainer>
-        <StyledTitle>
+        <StyledTitle as='p'>
           <Link href='/'>
             <a>
               <Logo width={35} height={35} />Statistiche COVID-19 Italia

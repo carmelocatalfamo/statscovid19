@@ -144,7 +144,7 @@ const Container = styled.div`
   padding: 32px 0px;
 `
 
-const StyledTitle = styled(Title)`
+const StyledTitle = styled(Title).attrs({ as: 'p' })`
   margin-bottom: 24px;
 `
 
@@ -153,7 +153,7 @@ const TooltipContainer = styled.div`
   padding: 14px;
 `
 
-const TooltipDate = styled(Title).attrs({ as: 'h3' })`
+const TooltipDate = styled(Title).attrs({ as: 'p' })`
   color: ${props => props.theme.colors.title};
   text-transform: uppercase;
   font-size: 16px;

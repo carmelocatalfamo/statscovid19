@@ -113,7 +113,7 @@ const Region: FC<Props> = ({ totalPositives, dailyProvinces, regionPerDay }) => 
   )
 }
 
-const StyledTitle = styled(Title)`
+const StyledTitle = styled(Title).attrs({ as: 'h1' })`
   margin-top: 32px;
   margin-bottom: 32px;
   text-align: center;

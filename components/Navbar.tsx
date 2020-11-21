@@ -18,7 +18,7 @@ const Navbar: FC = () => {
   return (
     <Nav>
       <Content>
-        <StyledTitle as='p'>
+        <StyledTitle>
           <Link href='/'><a>{text}</a></Link>
         </StyledTitle>
         <ThemeSwitch />
@@ -39,7 +39,7 @@ const Content = styled(Container)`
   align-items: center;
 `
 
-const StyledTitle = styled(Title).attrs({ as: 'h2' })`
+const StyledTitle = styled(Title).attrs({ as: 'p' })`
   font-size: 22px;
 
   a {

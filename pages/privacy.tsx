@@ -1,13 +1,25 @@
 /* eslint-disable react/no-unescaped-entities */
 import React, { FC } from 'react'
 import styled from 'styled-components'
-import { Container } from '../components/commons/Container'
+import Head from 'next/head'
 
+import { Container } from '../components/commons/Container'
 import { WithNavbar } from '../components/templates/WithNavbar'
 
 const Privacy: FC = () => {
+  const title = 'Privacy Policy'
+  const description = 'Privacy policy del sito www.statscovid19.it'
+
   return (
     <WithNavbar>
+      <Head>
+        <title>{title}</title>
+        <meta name="description" content={description} />
+        <meta key='og:title' property="og:title" content={title} />
+        <meta key='og:description' property="og:description" content={description} />
+        <meta key='og:site_name' property="og:site_name" content={title} />
+      </Head>
+
       <StyledContainer>
         <Header>Privacy Policy di www.statscovid19.it</Header>
         <Text>Questa Applicazione raccoglie alcuni Dati Personali dei propri Utenti.</Text>
@@ -197,7 +209,7 @@ const Text = styled.div`
   margin-bottom: 15px;
 `
 
-const Header = styled.h2`
+const Header = styled.h1`
   font-family: ${props => props.theme.fonts.title.family};
   font-weight: ${props => props.theme.fonts.title.weight.bold};
   color: ${props => props.theme.fonts.title.color};
@@ -206,7 +218,7 @@ const Header = styled.h2`
   line-height: 52px;
 `
 
-const Title = styled.h3`
+const Title = styled.p`
   font-family: ${props => props.theme.fonts.title.family};
   font-weight: ${props => props.theme.fonts.title.weight.bold};
   color: ${props => props.theme.fonts.title.color};

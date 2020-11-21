@@ -26,10 +26,15 @@ type Props = {
 const Home: FC<Props> = ({ countryPerDays, dailyCountry, dailyRegions }) => {
   const router = useRouter()
   const [positiveFilter, setPositiveFilter] = useState(positiveCasesOptions[0])
+
   const positivesPerRegions = positiveFilter.value === PositiveCases.allTime
-    ? allTimePositive(dailyRegions) : activePositive(dailyRegions)
+    ? allTimePositive(dailyRegions)
+    : activePositive(dailyRegions)
+
   const positivesInCountry = positiveFilter.value === PositiveCases.allTime
-    ? dailyCountry.totale_casi : dailyCountry.totale_positivi
+    ? dailyCountry.totale_casi
+    : dailyCountry.totale_positivi
+
   const mapTexts = positivesPerRegions.reduce(
     (texts, { region, positive }) => Object.assign({
       ...texts,

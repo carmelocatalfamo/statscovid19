@@ -25,4 +25,4 @@ jobs:
       - name: Update website
         env:
           SSH_HOST: ${{ secrets.SSH_HOST }}
-        run: ssh root@"$SSH_HOST" ./updateWebsite.sh
+        run: ssh root@"$SSH_HOST" ./statscovid19/deploy.sh

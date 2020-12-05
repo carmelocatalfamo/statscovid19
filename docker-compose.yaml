@@ -1,11 +1,11 @@
 version: "3.4"
 
 services:
-  website:
+  statscovid19:
     build:
       context: .
       dockerfile: docker/dev.Dockerfile
-    container_name: website
+    container_name: statscovid19
     env_file: .env
     ports:
       - 3000:3000

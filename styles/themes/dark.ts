@@ -29,7 +29,7 @@ const theme: DefaultTheme = {
     }
   },
   charts: {
-    lines: ['#CE4257', '#4F000B', '#FF7F51'],
+    lines: ['#CE4257', '#4F000B', '#FF7F51', '#3f51b5', '#009688'],
     stroke: '#E2DBC0',
     axis: '#EDF5E1'
   },

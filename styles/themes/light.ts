@@ -5,7 +5,7 @@ const theme: DefaultTheme = {
   map: {
     text: {
       size: 30,
-      color: '#EDF5E1'
+      color: '#17171d'
     },
     shades: ['#FFC398', '#FF9B54', '#FF7F51', '#CE4257', '#720026', '#4F000B']
   },

@@ -25,7 +25,7 @@ type Props = {
 
 const Home: FC<Props> = ({ countryPerDays, dailyCountry, dailyRegions }) => {
   const router = useRouter()
-  const [positiveFilter, setPositiveFilter] = useState(positiveCasesOptions[0])
+  const [positiveFilter, setPositiveFilter] = useState(positiveCasesOptions[1])
 
   const positivesPerRegions = positiveFilter.value === PositiveCases.allTime
     ? allTimePositive(dailyRegions)

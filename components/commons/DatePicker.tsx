@@ -37,6 +37,11 @@ const DatePicker: FC<Props> = ({ name }) => {
     dispatch(changeEndDate(moment().toString()))
   }
 
+  const onLastThreeMonthsClick = () => {
+    dispatch(changeStartDate(moment().subtract(3, 'month').toString()))
+    dispatch(changeEndDate(moment().toString()))
+  }
+
   return (
     <Container>
       <DatePickerContainer>
@@ -57,6 +62,7 @@ const DatePicker: FC<Props> = ({ name }) => {
         <FiltersText>Filtri rapidi</FiltersText>
         <Buttons>
           <Button onClick={onFullPeriodClick}>Periodo completo</Button>
+          <Button onClick={onLastThreeMonthsClick}>Ultimi 3 mesi</Button>
           <Button onClick={onLastTwoWeeksClick}>Ultimo mese</Button>
         </Buttons>
       </Shortcuts>

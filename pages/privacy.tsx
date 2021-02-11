@@ -3,15 +3,14 @@ import React, { FC } from 'react'
 import styled from 'styled-components'
 import Head from 'next/head'
 
-import { Container } from '../components/commons/Container'
-import { WithNavbar } from '../components/templates/WithNavbar'
+import { WithTemplate } from '../components/WithTemplate'
 
 const Privacy: FC = () => {
   const title = 'Privacy Policy'
   const description = 'Privacy policy del sito www.statscovid19.it'
 
   return (
-    <WithNavbar>
+    <WithTemplate>
       <Head>
         <title>{title}</title>
         <meta name="description" content={description} />
@@ -20,7 +19,7 @@ const Privacy: FC = () => {
         <meta key='og:site_name' property="og:site_name" content={title} />
       </Head>
 
-      <StyledContainer>
+      <Container>
         <Header>Privacy Policy di www.statscovid19.it</Header>
         <Text>Questa Applicazione raccoglie alcuni Dati Personali dei propri Utenti.</Text>
         <Divider />
@@ -196,38 +195,39 @@ const Privacy: FC = () => {
         </Text>
         <br />
         <br />
-      </StyledContainer>
-    </WithNavbar>
+      </Container>
+    </WithTemplate>
   )
 }
 
 const Text = styled.div`
   font-family: ${props => props.theme.fonts.text.family};
-  color: ${props => props.theme.fonts.text.color};
-  font-size: 19px;
-  line-height: 29px;
+  color: ${props => props.theme.colors.title};
+  line-height: 1.6;
+  font-size: 14px;
   margin-bottom: 15px;
 `
 
 const Header = styled.h1`
-  font-family: ${props => props.theme.fonts.title.family};
-  font-weight: ${props => props.theme.fonts.title.weight.bold};
-  color: ${props => props.theme.fonts.title.color};
-  font-size: 42px;
-  margin-top: 70px;
+  font-family: ${props => props.theme.fonts.text.family};
+  color: ${props => props.theme.colors.title};
+  font-weight: bold;
+  font-size: 26px;
   line-height: 52px;
 `
 
 const Title = styled.p`
-  font-family: ${props => props.theme.fonts.title.family};
-  font-weight: ${props => props.theme.fonts.title.weight.bold};
-  color: ${props => props.theme.fonts.title.color};
+  font-family: ${props => props.theme.fonts.text.family};
+  color: ${props => props.theme.colors.title};
+  font-weight: bold;
   text-transform: uppercase;
-  font-size: 22px;
+  font-size: 18px;
   line-height: 32px;
 `
 
-const StyledContainer = styled(Container)`
+const Container = styled.div`
+  grid-column: 1 / 5;
+
   ul {
     list-style: disc;
     padding-left: 25px;
@@ -235,7 +235,7 @@ const StyledContainer = styled(Container)`
 `
 
 const Divider = styled.div`
-  border-bottom: 1px dotted ${props => props.theme.fonts.text.color};
+  border-bottom: 1px dotted ${props => props.theme.colors.text};
   margin: 50px 0px;
 `
 

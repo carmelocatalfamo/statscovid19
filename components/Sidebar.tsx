@@ -9,6 +9,7 @@ import { IoIosBug } from 'react-icons/io'
 import { SidebarLink } from './SidebarLink'
 import { SidebarRegionsMenu } from './SidebarRegionsMenu'
 import { regions } from '../utils/regions'
+import Link from 'next/link'
 
 export const Sidebar = () => {
   const theme = useTheme()
@@ -37,6 +38,11 @@ export const Sidebar = () => {
       </ul>
 
       <div>
+        <Link href='/privacy' passHref>
+          <ExternalLink>
+            Privacy Policy
+          </ExternalLink>
+        </Link>
         <ExternalLink
           href='https://github.com/carmelocatalfamo/statscovid19/issues'
           target='_blank'
@@ -72,6 +78,7 @@ const ExternalLink = styled.a`
   display: flex;
   align-items: center;
   justify-content: center;
+  margin-top: 10px;
 
   svg {
     transition: 0.2s ease-in-out fill;

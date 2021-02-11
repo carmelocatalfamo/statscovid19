@@ -39,9 +39,10 @@ export default class MyDocument extends Document {
     return (
       <Html lang='it'>
         <Head>
-          <link rel="icon" href="/favicon.ico" />
-          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css" />
-          <link href="https://fonts.googleapis.com/css2?family=Baloo+Da+2:wght@600&family=Zilla+Slab&display=swap" rel="stylesheet" />
+          <link rel='icon' href='/favicon.ico' />
+          <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css' />
+          <link rel='preconnect' href='https://fonts.gstatic.com' />
+          <link rel='stylesheet' href='https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap' />
         </Head>
         <body>
           <Main />

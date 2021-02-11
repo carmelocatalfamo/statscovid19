@@ -23,6 +23,7 @@
     "default-param-last": "off",
     "no-use-before-define": "off",
     "@typescript-eslint/explicit-module-boundary-types": "off",
-    "react/prop-types": 0
+    "react/prop-types": 0,
+    "camelcase": "off"
   }
 }

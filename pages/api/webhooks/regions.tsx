@@ -1,3 +1,4 @@
+import { NextApiRequest, NextApiResponse } from 'next'
 import puppeteer from 'puppeteer'
 import fs from 'fs'
 
@@ -10,8 +11,21 @@ const writeFilePromise = (filePath: string, data: string) => {
   })
 }
 
-const handler = async (req, res) => {
-  const browser = await puppeteer.launch()
+const handler = async (req: NextApiRequest, res: NextApiResponse) => {
+  if (
+    !req.query.token ||
+    !process.env.WEBHOOKS_TOKEN ||
+    (req.query.token && req.query.token !== process.env.WEBHOOKS_TOKEN)
+  ) {
+    return res.status(200).json({ success: false })
+  }
+
+  const browser = await puppeteer.launch({
+    headless: true,
+    executablePath: '/usr/bin/chromium-browser',
+    args: ['--no-sandbox', '--disable-gpu']
+  })
+
   const page = await browser.newPage()
   await page.goto('http://www.governo.it/it/articolo/domande-frequenti-sulle-misure-adottate-dal-governo/15638')
 

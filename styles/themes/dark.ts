@@ -16,6 +16,7 @@ const theme: DefaultTheme = {
     gradient2: '#FF8B58',
     gradient3: danger,
     success: secondary,
+    warning: '#F5D76E',
     danger,
     title: '#F5F6FA',
     text: '#A1A5B9',

@@ -1,4 +1,8 @@
-import { CountryApiResponse, RegionApiResponse } from '../models/Api'
+import {
+  CountryApiResponse,
+  RegionApiResponse,
+  ZoneApiResponse
+} from '../models/Api'
 
 export const fetchCountryLatest = async (): Promise<CountryApiResponse> => {
   try {
@@ -33,6 +37,21 @@ export const fetchCountry = async (): Promise<CountryApiResponse[]> => {
 export const fetchRegions = async (): Promise<RegionApiResponse[]> => {
   try {
     const res = await fetch('https://raw.githubusercontent.com/pcm-dpc/COVID-19/master/dati-json/dpc-covid19-ita-regioni.json')
+
+    if (!res.ok) {
+      throw new Error(res.statusText)
+    }
+
+    const json = await res.json()
+    return json
+  } catch (error) {
+    return []
+  }
+}
+
+export const fetchZones = async (): Promise<ZoneApiResponse[]> => {
+  try {
+    const res = await fetch('/api/zones')
 
     if (!res.ok) {
       throw new Error(res.statusText)

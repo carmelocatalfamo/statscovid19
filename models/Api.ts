@@ -1,3 +1,5 @@
+import { regions } from '../utils/regions'
+
 export interface CountryApiResponse {
   casi_da_screening: number
   casi_da_sospetto_diagnostico: number
@@ -44,4 +46,9 @@ export interface ProvinceApiResponse {
   sigla_provincia: string
   stato: string
   totale_casi: number
+}
+
+export interface ZoneApiResponse {
+  region: typeof regions[0]
+  zone: 'yellow' | 'orange' | 'red'
 }

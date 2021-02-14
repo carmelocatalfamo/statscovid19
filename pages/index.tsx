@@ -38,8 +38,8 @@ const Home: NextPage<Props> = ({ countryDataPerDay }) => {
         intensiveCareChanges={today.terapia_intensiva - yesterday.terapia_intensiva}
         lastUpdate={today.data}
       />
-      <TotalPositives data={totalPositives} />
-      <TestPositivesRatio data={testPositivesRatio} />
+      <TotalPositives size={100} data={totalPositives} />
+      <TestPositivesRatio size={100} data={testPositivesRatio} />
     </WithTemplate>
   )
 }

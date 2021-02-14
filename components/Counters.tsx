@@ -55,7 +55,7 @@ export const Counters: FC<Props> = ({
           Icon={RiHospitalLine}
         />
       </Card>
-      <Card offset={75} size={25} highlighted>
+      <Card offset={75} size={25} highlighted={theme.colors.primary}>
         <CounterCard
           title={lastUpdateFormatted}
           titleColorInverse

@@ -2,13 +2,14 @@ import React, { FC, useEffect, useState } from 'react'
 import styled, { useTheme } from 'styled-components'
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts'
 
-import { Card } from '../commons/Card'
+import { Card, CardSize } from '../commons/Card'
 import { Text } from '../commons/Text'
 import { CustomTooltip } from './CustomTooltip'
 import { toLocaleDate, toLocaleString } from '../../utils/functions'
 import { TimeRangeSelect, timeRangeOptions } from '../TimeRangeSelect'
 
 type Props = {
+  size: CardSize
   data: {
     date: string
     positives: number
@@ -19,7 +20,7 @@ const labelMap = {
   positives: 'Positivi'
 }
 
-export const TotalPositives: FC<Props> = ({ data }) => {
+export const TotalPositives: FC<Props> = ({ data, size }) => {
   const theme = useTheme()
   const [timeRange, setTimeRange] = useState(timeRangeOptions[0])
   const axisFontSize = 12
@@ -50,11 +51,12 @@ export const TotalPositives: FC<Props> = ({ data }) => {
 
   return (
     <Card
-      size={100}
+      size={size}
       title={() => (
         <Header>
           <Title>Positivi</Title>
           <TimeRangeSelect
+            instanceId='test_positives'
             value={timeRange}
             setValue={setTimeRange}
           />

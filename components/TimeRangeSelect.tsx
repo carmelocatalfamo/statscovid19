@@ -57,23 +57,28 @@ export const timeRangeOptions = [
 export type Option = typeof timeRangeOptions[0]
 
 type Props = {
+  instanceId: string
   value: Option,
   setValue: (value: Option) => void
 }
 
-export const TimeRangeSelect: FC<Props> = ({ value, setValue, ...props }) => {
+export const TimeRangeSelect: FC<Props> = ({ instanceId, value, setValue, ...props }) => {
   const theme = useTheme()
 
   return (
     <StyledSelect
       {...props}
-      id='time_range_select'
+      instanceId={instanceId}
       options={timeRangeOptions}
       value={value}
       isClearable={false}
       isSearchable={false}
       onChange={setValue}
       styles={{
+        container: (provided) => ({
+          ...provided,
+          margin: '-10px 0px'
+        }),
         control: (provided) => ({
           ...provided,
           backgroundColor: 'transparent',

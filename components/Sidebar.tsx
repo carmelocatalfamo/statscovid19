@@ -37,7 +37,7 @@ export const Sidebar = () => {
         </li>
       </ul>
 
-      <div>
+      <Footer>
         <Link href='/privacy' passHref>
           <ExternalLink>
             Privacy Policy
@@ -53,12 +53,13 @@ export const Sidebar = () => {
           />
           Segnalazione problemi
         </ExternalLink>
-      </div>
+      </Footer>
     </Aside>
   )
 }
 
 const Aside = styled.aside`
+  overflow: overlay;
   position: fixed;
   background-color: ${props => props.theme.colors.sidebar};
   width: 255px;
@@ -92,4 +93,8 @@ const ExternalLink = styled.a`
       fill: ${props => props.theme.colors.title};
     }
   }
+`
+
+const Footer = styled.div`
+  padding-top: 30px;
 `

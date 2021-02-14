@@ -9,6 +9,7 @@ import { WithTemplate } from '../components/WithTemplate'
 import { TestPositivesRatio } from '../components/charts/TestPositivesRatio'
 import { regions } from '../utils/regions'
 import { TotalPositives } from '../components/charts/TotalPositives'
+import { Zone } from '../components/Zone'
 
 type Props = {
   regionDataPerDay: RegionApiResponse[]
@@ -51,8 +52,9 @@ const Region: NextPage<Props> = ({ regionDataPerDay, region }) => {
         intensiveCareChanges={today.terapia_intensiva - yesterday.terapia_intensiva}
         lastUpdate={today.data}
       />
-      <TotalPositives data={totalPositives} />
-      <TestPositivesRatio data={testPositivesRatio} />
+      <TotalPositives size={75} data={totalPositives} />
+      <Zone regionSlug={region.slug} />
+      <TestPositivesRatio size={100} data={testPositivesRatio} />
     </WithTemplate>
   )
 }

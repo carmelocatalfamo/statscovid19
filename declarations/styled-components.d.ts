@@ -12,6 +12,7 @@ declare module 'styled-components' {
       gradient2: string
       gradient3: string
       success: string
+      warning: string
       danger: string
       title: string
       text: string

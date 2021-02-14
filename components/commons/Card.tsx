@@ -4,11 +4,13 @@ import isFunction from 'lodash/isFunction'
 
 import { Text } from './Text'
 
+export type CardSize = 25 | 50 | 75 | 100
+
 type Props = {
   offset?: 25 | 50 | 75
-  size: 25 | 50 | 75 | 100
+  size: CardSize
   title?: string | (() => JSX.Element)
-  highlighted?: boolean
+  highlighted?: string
 }
 
 export const Card: FC<Props> = ({ title, offset, size, highlighted, children }) => {
@@ -39,11 +41,12 @@ export const Card: FC<Props> = ({ title, offset, size, highlighted, children }) 
   )
 }
 
-const Content = styled.div<{ highlighted?: boolean }>`
+const Content = styled.div<{ highlighted?: string }>`
   background-color: ${props => props.highlighted
-    ? props.theme.colors.primary
+    ? props.highlighted
     : props.theme.colors.sidebar
   };
+  transition: 0.2s ease-in-out backgroundColor;
   border-radius: 10px;
   box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.1);
 `
@@ -58,4 +61,5 @@ const Title = styled(Text)`
 
 const Body = styled.div`
   padding: 30px;
+  height: calc(100% - 70px);
 `

@@ -1,16 +1,17 @@
-import React, { FC } from 'react'
+import React, { CSSProperties, FC } from 'react'
 
 type Props = {
   fill: string
   stroke: string
+  style: CSSProperties
 }
 
 export const Marche: FC<Props> = ({ fill, stroke }) => {
   return (
     <svg
       xmlns='http://www.w3.org/2000/svg'
-      width='165.75'
-      height='161.313'
+      width='100%'
+      viewBox='0 0 165.75 161.313'
       version='1'
     >
       <path

@@ -1,17 +1,19 @@
-import React, { FC } from 'react'
+import React, { FC, CSSProperties } from 'react'
 
 type Props = {
   fill: string
   stroke: string
+  style: CSSProperties
 }
 
-export const Calabria: FC<Props> = ({ fill, stroke }) => {
+export const Calabria: FC<Props> = ({ fill, stroke, ...props }) => {
   return (
     <svg
       xmlns='http://www.w3.org/2000/svg'
-      width='146.213'
-      height='263'
+      width='100%'
+      viewBox='0 0 146.213 263'
       version='1'
+      {...props}
     >
       <path
         fill={fill}

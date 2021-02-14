@@ -1,16 +1,17 @@
-import React, { FC } from 'react'
+import React, { CSSProperties, FC } from 'react'
 
 type Props = {
   fill: string
   stroke: string
+  style: CSSProperties
 }
 
 export const Puglia: FC<Props> = ({ fill, stroke }) => {
   return (
     <svg
       xmlns='http://www.w3.org/2000/svg'
-      width='324.585'
-      height='259.986'
+      width='100%'
+      viewBox='0 0 324.585 259.986'
       version='1'
     >
       <path

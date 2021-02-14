@@ -1,16 +1,17 @@
-import React, { FC } from 'react'
+import React, { CSSProperties, FC } from 'react'
 
 type Props = {
   fill: string
   stroke: string
+  style: CSSProperties
 }
 
 export const Liguria: FC<Props> = ({ fill, stroke }) => {
   return (
     <svg
       xmlns='http://www.w3.org/2000/svg'
-      width='233.574'
-      height='111.414'
+      width='100%'
+      viewBox='0 0 233.574 111.414'
       version='1'
     >
       <path

@@ -29,50 +29,51 @@ type Props = {
 }
 
 export const Region: FC<Props> = ({ regionSlug, ...props }) => {
-  // console.log(regionSlug)
+  const style = { maxHeight: '300px' }
+
   switch (regionSlug) {
     case 'abruzzo':
-      return <Abruzzo {...props} />
+      return <Abruzzo {...props} style={style} />
     case 'basilicata':
-      return <Basilicata {...props} />
+      return <Basilicata {...props} style={style} />
     case 'calabria':
-      return <Calabria {...props} />
+      return <Calabria {...props} style={style} />
     case 'campania':
-      return <Campania {...props} />
+      return <Campania {...props} style={style} />
     case 'emiliaromagna':
-      return <Emiliaromagna {...props} />
+      return <Emiliaromagna {...props} style={style} />
     case 'friuliveneziagiulia':
-      return <Friuliveneziagiulia {...props} />
+      return <Friuliveneziagiulia {...props} style={style} />
     case 'lazio':
-      return <Lazio {...props} />
+      return <Lazio {...props} style={style} />
     case 'liguria':
-      return <Liguria {...props} />
+      return <Liguria {...props} style={style} />
     case 'lombardia':
-      return <Lombardia {...props} />
+      return <Lombardia {...props} style={style} />
     case 'marche':
-      return <Marche {...props} />
+      return <Marche {...props} style={style} />
     case 'molise':
-      return <Molise {...props} />
+      return <Molise {...props} style={style} />
     case 'bolzano':
-      return <Bolzano {...props} />
+      return <Bolzano {...props} style={style} />
     case 'trento':
-      return <Trento {...props} />
+      return <Trento {...props} style={style} />
     case 'piemonte':
-      return <Piemonte {...props} />
+      return <Piemonte {...props} style={style} />
     case 'puglia':
-      return <Puglia {...props} />
+      return <Puglia {...props} style={style} />
     case 'sardegna':
-      return <Sardegna {...props} />
+      return <Sardegna {...props} style={style} />
     case 'sicilia':
-      return <Sicilia {...props} />
+      return <Sicilia {...props} style={style} />
     case 'toscana':
-      return <Toscana {...props} />
+      return <Toscana {...props} style={style} />
     case 'umbria':
-      return <Umbria {...props} />
+      return <Umbria {...props} style={style} />
     case 'valledaosta':
-      return <Valledaosta {...props} />
+      return <Valledaosta {...props} style={style} />
     case 'veneto':
-      return <Veneto {...props} />
+      return <Veneto {...props} style={style} />
     default:
       return null
   }

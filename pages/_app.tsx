@@ -4,6 +4,7 @@ import { AppContext } from 'next/app'
 import { ThemeProvider } from 'styled-components'
 import nookies from 'nookies'
 
+import { CookieBanner } from '../components/CookieBanner'
 import { GlobalStyle } from '../styles/GlobalStyle'
 import { useThemeReducer, ThemeDispatch } from '../hooks/useThemeReducer'
 import themes from '../styles/themes'
@@ -31,6 +32,7 @@ function MyApp ({ Component, pageProps, initialTheme }) {
       </Head>
       <GlobalStyle />
       <ThemeDispatch.Provider value={changeTheme}>
+        <CookieBanner />
         <Component {...pageProps} />
       </ThemeDispatch.Provider>
     </ThemeProvider>

@@ -1,5 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next'
 import puppeteer from 'puppeteer'
+import chrome from 'chrome-aws-lambda'
 import fs from 'fs'
 
 const writeFilePromise = (filePath: string, data: string) => {
@@ -21,9 +22,9 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   }
 
   const browser = await puppeteer.launch({
-    headless: true,
-    executablePath: '/usr/bin/chromium-browser',
-    args: ['--no-sandbox', '--disable-gpu']
+    args: chrome.args,
+    executablePath: await chrome.executablePath,
+    headless: chrome.headless
   })
 
   const page = await browser.newPage()

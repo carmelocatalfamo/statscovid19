@@ -11,6 +11,7 @@
     "audit:fix": "npm i --package-lock-only && npm audit fix && rm yarn.lock && yarn import && rm package-lock.json"
   },
   "dependencies": {
+    "chrome-aws-lambda": "^7.0.0",
     "lodash": "^4.17.20",
     "next": "10.0.5",
     "nookies": "^2.5.2",

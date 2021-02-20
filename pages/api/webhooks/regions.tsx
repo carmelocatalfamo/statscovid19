@@ -1,6 +1,7 @@
 import { NextApiRequest, NextApiResponse } from 'next'
 import puppeteer from 'puppeteer'
 import chrome from 'chrome-aws-lambda'
+import path from 'path'
 import fs from 'fs'
 
 const writeFilePromise = (filePath: string, data: string) => {
@@ -73,7 +74,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   await browser.close()
 
   try {
-    await writeFilePromise('public/zones.json', JSON.stringify(response))
+    await writeFilePromise(path.resolve('./public', 'zones.json'), JSON.stringify(response))
     res.status(200).json({ success: true })
   } catch (error) {
     res.status(400).json({ success: false, error: error.message })

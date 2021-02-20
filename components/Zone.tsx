@@ -1,6 +1,7 @@
 import React, { FC, useEffect, useState } from 'react'
 import styled, { useTheme } from 'styled-components'
 import { FiInfo } from 'react-icons/fi'
+import ContentLoader from 'react-content-loader'
 
 import { Card } from './commons/Card'
 import { Region } from './maps/Region'
@@ -17,8 +18,6 @@ export const Zone: FC<Props> = ({ regionSlug }) => {
   const [loading, setLoading] = useState(true)
   const [zones, setZones] = useState<ZoneApiResponse[]>([])
   const [data, setData] = useState<ZoneApiResponse | null>(null)
-
-  console.log(regionSlug)
 
   useEffect(() => {
     const fetchRegionZones = async () => {
@@ -59,8 +58,23 @@ export const Zone: FC<Props> = ({ regionSlug }) => {
   }
 
   const renderContent = () => {
-    if (loading) return <Text>Caricamento...</Text>
-    if (!loading && !data) return <Text>No data</Text>
+    if (loading) {
+      return (
+        <ContentLoader
+          speed={2}
+          width='100%'
+          height='100%'
+          backgroundColor='#f3f3f3'
+          foregroundColor='#ecebeb'
+        >
+          <circle cx='50%' cy='130' r='75' />
+        </ContentLoader>
+      )
+    }
+
+    if (!loading && !data) {
+      return <Text>Errore durante il caricamento dei dati</Text>
+    }
 
     return (
       <Container>

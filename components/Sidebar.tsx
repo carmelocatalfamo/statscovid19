@@ -4,7 +4,7 @@ import { AiFillPieChart } from 'react-icons/ai'
 import { FiMap } from 'react-icons/fi'
 import { useRouter } from 'next/router'
 import isArray from 'lodash/isArray'
-import { IoIosBug } from 'react-icons/io'
+import { IoIosBug, IoMdLock, IoMdMail } from 'react-icons/io'
 
 import { SidebarLink } from './SidebarLink'
 import { SidebarRegionsMenu } from './SidebarRegionsMenu'
@@ -40,9 +40,22 @@ export const Sidebar = () => {
       <Footer>
         <Link href='/privacy' passHref>
           <ExternalLink>
+            <IoMdLock
+              color={theme.colors.text}
+              size={16}
+            />
             Privacy Policy
           </ExternalLink>
         </Link>
+
+        <ExternalLink href='mailto:info@statscovid19.it'>
+          <IoMdMail
+            color={theme.colors.text}
+            size={16}
+          />
+          info@statscovid19.it
+        </ExternalLink>
+
         <ExternalLink
           href='https://github.com/carmelocatalfamo/statscovid19/issues'
           target='_blank'
@@ -78,8 +91,9 @@ const ExternalLink = styled.a`
   transition: 0.2s ease-in-out color;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   margin-top: 10px;
+  margin-left: 15px;
 
   svg {
     transition: 0.2s ease-in-out fill;

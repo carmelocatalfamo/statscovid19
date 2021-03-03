@@ -50,5 +50,5 @@ export interface ProvinceApiResponse {
 
 export interface ZoneApiResponse {
   region: typeof regions[0]
-  zone: 'yellow' | 'orange' | 'red'
+  zone: 'white' | 'yellow' | 'orange' | 'red'
 }

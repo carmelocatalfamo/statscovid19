@@ -15,6 +15,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
     const response = await page.$$eval('path[id]', el => {
       const zones = {
+        '#ffffff': 'white',
         '#ffd732': 'yellow',
         '#ee7f01': 'orange',
         '#e2001a': 'red'

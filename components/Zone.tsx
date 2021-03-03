@@ -44,6 +44,7 @@ export const Zone: FC<Props> = ({ regionSlug }) => {
   }, [zones, regionSlug])
 
   const zoneToColors = {
+    white: theme.colors.text,
     yellow: theme.colors.warning,
     orange: theme.colors.gradient2,
     red: theme.colors.danger,
@@ -51,6 +52,7 @@ export const Zone: FC<Props> = ({ regionSlug }) => {
   }
 
   const zoneToTitle = {
+    white: 'Zona Bianca',
     yellow: 'Zona Gialla',
     orange: 'Zona Arancione',
     red: 'Zona Rossa',

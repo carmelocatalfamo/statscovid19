@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styled, { useTheme } from 'styled-components'
 import { AiFillPieChart } from 'react-icons/ai'
 import { FiMap } from 'react-icons/fi'
@@ -15,6 +15,7 @@ export const Sidebar = () => {
   const theme = useTheme()
   const { query, pathname } = useRouter()
   const region = isArray(query.region) ? query.region[0] : query.region
+  const [regionMenuIsOpen, setRegionMenuIsOpen] = useState(!!region)
 
   return (
     <Aside>
@@ -31,9 +32,12 @@ export const Sidebar = () => {
           <SidebarLink
             label='Regioni'
             active={regions.map(({ slug }) => slug).includes(region)}
+            onClick={() => setRegionMenuIsOpen(state => !state)}
             Icon={FiMap}
           />
-          <SidebarRegionsMenu />
+          <SidebarRegionsMenu
+            isOpen={regionMenuIsOpen}
+          />
         </li>
       </ul>
 

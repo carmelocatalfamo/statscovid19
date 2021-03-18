@@ -8,18 +8,21 @@ import { Text } from './commons/Text'
 type Props = {
   label: string
   href?: string
+  onClick?: () => void
   active?: boolean
   Icon: IconType
 }
 
-export const SidebarLink: FC<Props> = ({ href, label, active, Icon }) => {
+export const SidebarLink: FC<Props> = ({ href, label, active, onClick, Icon }) => {
   const theme = useTheme()
   const iconColor = active ? theme.colors.primary : theme.colors.text
   const textColor = active ? theme.colors.title : theme.colors.text
 
-  const renderLink = () => {
+  const renderLink = (handleOnClick?: () => void) => {
     return (
-      <StyledLink>
+      <StyledLink
+        onClick={handleOnClick}
+      >
         <Icon
           size={22}
           color={iconColor}
@@ -33,7 +36,7 @@ export const SidebarLink: FC<Props> = ({ href, label, active, Icon }) => {
 
   if (!href) {
     return (
-      renderLink()
+      renderLink(onClick)
     )
   }
 
@@ -49,6 +52,7 @@ const StyledLink = styled.a`
   align-items: center;
   text-decoration: none;
   padding: 15px;
+  cursor: pointer;
 `
 
 const ItemText = styled(Text)`

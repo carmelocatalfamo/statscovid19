@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { FC } from 'react'
 import styled from 'styled-components'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
@@ -7,12 +7,18 @@ import isArray from 'lodash/isArray'
 import { Text } from './commons/Text'
 import { regions } from '../utils/regions'
 
-export const SidebarRegionsMenu = () => {
+type Props = {
+  isOpen: boolean
+}
+
+export const SidebarRegionsMenu: FC<Props> = ({ isOpen }) => {
   const { query } = useRouter()
   const region = isArray(query.region) ? query.region[0] : query.region
 
   return (
-    <List>
+    <List
+      style={{ maxHeight: isOpen ? '1000px' : '0px' }}
+    >
       {regions.map(({ code, slug, name }) => (
         <li key={code}>
           <Link
@@ -34,6 +40,8 @@ export const SidebarRegionsMenu = () => {
 const List = styled.ul`
   margin-top: -10px;
   padding-left: 58px;
+  overflow: hidden;
+  transition: 0.2s linear max-height;
 `
 
 const Anchor = styled.a`

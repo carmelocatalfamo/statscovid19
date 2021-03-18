@@ -50,7 +50,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
       return el.map(x => ({
         region: regions.find(({ slug }) => slug === x.getAttribute('id')),
-        zone: zones[x.getAttribute('fill')] || null
+        zone: zones[x.getAttribute('fill').toLowerCase()] || null
       }))
     })
 

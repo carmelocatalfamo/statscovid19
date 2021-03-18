@@ -7,6 +7,8 @@ import { fetchCountry } from '../utils/api'
 import { WithTemplate } from '../components/WithTemplate'
 import { TestPositivesRatio } from '../components/charts/TestPositivesRatio'
 import { TotalPositives } from '../components/charts/TotalPositives'
+import { NewPositives } from '../components/charts/NewPositives'
+import { IntensiveCare } from '../components/charts/IntensiveCare'
 
 type Props = {
   countryDataPerDay: CountryApiResponse[]
@@ -28,6 +30,16 @@ const Home: NextPage<Props> = ({ countryDataPerDay }) => {
     positives: totale_positivi
   }))
 
+  const newPositives = countryDataPerDay.map(({ data, nuovi_positivi }) => ({
+    date: data,
+    positives: nuovi_positivi
+  }))
+
+  const intensiveCare = countryDataPerDay.map(({ data, terapia_intensiva }) => ({
+    date: data,
+    intensiveCare: terapia_intensiva
+  }))
+
   return (
     <WithTemplate>
       <Counters
@@ -39,7 +51,9 @@ const Home: NextPage<Props> = ({ countryDataPerDay }) => {
         lastUpdate={today.data}
       />
       <TotalPositives size={100} data={totalPositives} />
+      <NewPositives size={100} data={newPositives} />
       <TestPositivesRatio size={100} data={testPositivesRatio} />
+      <IntensiveCare size={100} data={intensiveCare} />
     </WithTemplate>
   )
 }

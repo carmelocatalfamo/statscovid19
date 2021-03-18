@@ -9,6 +9,8 @@ import { WithTemplate } from '../components/WithTemplate'
 import { TestPositivesRatio } from '../components/charts/TestPositivesRatio'
 import { regions } from '../utils/regions'
 import { TotalPositives } from '../components/charts/TotalPositives'
+import { NewPositives } from '../components/charts/NewPositives'
+import { IntensiveCare } from '../components/charts/IntensiveCare'
 import { Zone } from '../components/Zone'
 
 type Props = {
@@ -17,6 +19,7 @@ type Props = {
 }
 
 const Region: NextPage<Props> = ({ regionDataPerDay, region }) => {
+  const isClientSide = typeof window !== 'undefined'
   const reversedCountryDataPerDay = [...regionDataPerDay].reverse()
   const today = reversedCountryDataPerDay[0]
   const yesterday = reversedCountryDataPerDay[1]
@@ -32,6 +35,16 @@ const Region: NextPage<Props> = ({ regionDataPerDay, region }) => {
   const totalPositives = regionDataPerDay.map(({ data, totale_positivi }) => ({
     date: data,
     positives: totale_positivi
+  }))
+
+  const newPositives = regionDataPerDay.map(({ data, nuovi_positivi }) => ({
+    date: data,
+    positives: nuovi_positivi
+  }))
+
+  const intensiveCare = regionDataPerDay.map(({ data, terapia_intensiva }) => ({
+    date: data,
+    intensiveCare: terapia_intensiva
   }))
 
   return (
@@ -54,7 +67,9 @@ const Region: NextPage<Props> = ({ regionDataPerDay, region }) => {
       />
       <TotalPositives size={75} data={totalPositives} />
       <Zone regionSlug={region.slug} />
+      <NewPositives size={100} data={newPositives} />
       <TestPositivesRatio size={100} data={testPositivesRatio} />
+      <IntensiveCare size={100} data={intensiveCare} />
     </WithTemplate>
   )
 }

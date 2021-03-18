@@ -63,6 +63,7 @@ export const Zone: FC<Props> = ({ regionSlug }) => {
     if (loading) {
       return (
         <ContentLoader
+          uniqueKey='zone_loader'
           speed={2}
           width='100%'
           height='100%'

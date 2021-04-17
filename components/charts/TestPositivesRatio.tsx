@@ -115,12 +115,25 @@ const Title = styled(Text)`
   color: ${props => props.theme.colors.title};
   font-size: 16px;
   font-weight: bold;
+  text-align: right;
+  margin-bottom: 10px;
+
+  ${props => props.theme.breakpoint.small} {
+    text-align: left;
+    margin-bottom: 0px;
+  }
 `
 
 const Header = styled.div`
+  align-items: flex-end;
+  flex-direction: column;
   display: flex;
-  align-items: center;
   justify-content: space-between;
   padding: 22px 30px;
   border-bottom: 2px solid ${props => props.theme.colors.content};
+
+  ${props => props.theme.breakpoint.small} {
+    align-items: center;
+    flex-direction: row;
+  }
 `

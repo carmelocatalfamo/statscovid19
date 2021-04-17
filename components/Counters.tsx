@@ -2,10 +2,12 @@ import React, { FC } from 'react'
 import { useTheme } from 'styled-components'
 import { RiVirusLine, RiHospitalLine, RiCalendarEventFill } from 'react-icons/ri'
 import { FaUserInjured } from 'react-icons/fa'
+import NoSSR from 'react-no-ssr'
 
-import { Card } from './commons/Card'
+import { Card, CardSize, CardOffset } from './commons/Card'
 import { CounterCard } from './CounterCard'
 import { toLocaleString } from '../utils/functions'
+import { useWindowSize } from '../hooks/useWindowSize'
 
 type Props = {
   currentPositives: number
@@ -25,11 +27,36 @@ export const Counters: FC<Props> = ({
   lastUpdate
 }) => {
   const theme = useTheme()
+  const { width } = useWindowSize()
   const lastUpdateFormatted = new Date(lastUpdate).toLocaleDateString('it-IT')
+  const isMedium = width <= 980
+  const isSmall = width <= 570
+
+  const cards = {
+    first: {
+      offset: undefined,
+      size: isSmall ? 100 : isMedium ? 50 : 25
+    },
+    second: {
+      offset: isSmall ? 0 : isMedium ? 50 : 25,
+      size: isSmall ? 100 : isMedium ? 50 : 25
+    },
+    third: {
+      offset: isSmall ? 0 : isMedium ? undefined : 50,
+      size: isSmall ? 100 : isMedium ? 50 : 25
+    },
+    fourth: {
+      offset: isSmall ? 0 : isMedium ? 50 : 75,
+      size: isSmall ? 100 : isMedium ? 50 : 25
+    }
+  }
 
   return (
-    <>
-      <Card size={25}>
+    <NoSSR>
+      <Card
+        offset={cards.first.offset as CardOffset}
+        size={cards.first.size as CardSize}
+      >
         <CounterCard
           title={toLocaleString(currentPositives)}
           change={currentPositivesChanges}
@@ -38,7 +65,10 @@ export const Counters: FC<Props> = ({
           Icon={RiVirusLine}
         />
       </Card>
-      <Card offset={25} size={25}>
+      <Card
+        offset={cards.second.offset as CardOffset}
+        size={cards.second.size as CardSize}
+      >
         <CounterCard
           title={toLocaleString(newPositives)}
           description='Nuovi positivi'
@@ -46,7 +76,10 @@ export const Counters: FC<Props> = ({
           Icon={FaUserInjured}
         />
       </Card>
-      <Card offset={50} size={25}>
+      <Card
+        offset={cards.third.offset as CardOffset}
+        size={cards.third.size as CardSize}
+      >
         <CounterCard
           title={toLocaleString(intensiveCare)}
           change={intensiveCareChanges}
@@ -55,7 +88,11 @@ export const Counters: FC<Props> = ({
           Icon={RiHospitalLine}
         />
       </Card>
-      <Card offset={75} size={25} highlighted={theme.colors.primary}>
+      <Card
+        offset={cards.fourth.offset as CardOffset}
+        size={cards.fourth.size as CardSize}
+        highlighted={theme.colors.primary}
+      >
         <CounterCard
           title={lastUpdateFormatted}
           titleColorInverse
@@ -64,6 +101,6 @@ export const Counters: FC<Props> = ({
           Icon={RiCalendarEventFill}
         />
       </Card>
-    </>
+    </NoSSR>
   )
 }

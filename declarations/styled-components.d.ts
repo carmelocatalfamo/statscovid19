@@ -4,6 +4,10 @@ import { Theme } from '../models/Theme'
 declare module 'styled-components' {
   export interface DefaultTheme {
     theme: Theme
+    breakpoint: {
+      small: string
+      large: string
+    }
     logo: string[]
     colors: {
       primary: string

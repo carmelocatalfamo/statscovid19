@@ -9,9 +9,10 @@ import { regions } from '../utils/regions'
 
 type Props = {
   isOpen: boolean
+  onRegionClick?: (regionSlug: string) => void
 }
 
-export const SidebarRegionsMenu: FC<Props> = ({ isOpen }) => {
+export const SidebarRegionsMenu: FC<Props> = ({ isOpen, onRegionClick }) => {
   const { query } = useRouter()
   const region = isArray(query.region) ? query.region[0] : query.region
 
@@ -20,7 +21,7 @@ export const SidebarRegionsMenu: FC<Props> = ({ isOpen }) => {
       style={{ maxHeight: isOpen ? '1000px' : '0px' }}
     >
       {regions.map(({ code, slug, name }) => (
-        <li key={code}>
+        <li key={code} onClick={() => onRegionClick?.(slug)}>
           <Link
             href={`/${slug}`}
             passHref

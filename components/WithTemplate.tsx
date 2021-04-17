@@ -2,12 +2,14 @@ import React, { FC } from 'react'
 import styled from 'styled-components'
 
 import { Navbar } from './Navbar'
+import { Menu } from './Menu'
 import { Sidebar } from './Sidebar'
 
 export const WithTemplate: FC = ({ children }) => {
   return (
     <>
       <Navbar />
+      <Menu />
       <Page>
         <Sidebar/>
         <Content>
@@ -30,9 +32,12 @@ const Page = styled.div`
 const Content = styled.div`
   background-color: ${props => props.theme.colors.content};
   flex: 1;
-  margin-left: 255px;
   min-height: 100%;
   overflow: overlay;
+
+  ${props => props.theme.breakpoint.large} {
+    margin-left: 255px;
+  }
 `
 
 const Grid = styled.div`

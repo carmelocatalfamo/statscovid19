@@ -5,9 +5,10 @@ import isFunction from 'lodash/isFunction'
 import { Text } from './Text'
 
 export type CardSize = 25 | 50 | 75 | 100
+export type CardOffset = 25 | 50 | 75
 
 type Props = {
-  offset?: 25 | 50 | 75
+  offset?: CardOffset
   size: CardSize
   title?: string | (() => JSX.Element)
   highlighted?: string

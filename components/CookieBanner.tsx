@@ -54,7 +54,7 @@ const Banner = styled.div`
   bottom: 30px;
   padding: 15px;
   border-radius: 10px;
-  width: 100%;
+  width: calc(100% - 60px);
   max-width: 650px;
 `
 

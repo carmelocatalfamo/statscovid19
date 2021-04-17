@@ -8,6 +8,10 @@ const danger = '#FC5080'
 
 const theme: DefaultTheme = {
   theme: Theme.dark,
+  breakpoint: {
+    small: '@media (min-width: 570px)',
+    large: '@media (min-width: 1200px)'
+  },
   logo: [primary, secondary],
   colors: {
     primary,

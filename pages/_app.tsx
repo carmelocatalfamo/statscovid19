@@ -6,16 +6,16 @@ import nookies from 'nookies'
 
 import { CookieBanner } from '../components/CookieBanner'
 import { GlobalStyle } from '../styles/GlobalStyle'
-import { useThemeReducer, ThemeDispatch } from '../hooks/useThemeReducer'
+import { useStateReducer, StateContext } from '../hooks/useState'
 import themes from '../styles/themes'
 
-function MyApp ({ Component, pageProps, initialTheme }) {
-  const { theme, changeTheme } = useThemeReducer(initialTheme)
+function MyApp ({ Component, pageProps, initialState }) {
+  const { state, dispatch } = useStateReducer(initialState)
   const title = 'Statistiche COVID-19 Italia'
   const description = 'Numeri, grafici e statistiche dei dati ufficiali forniti dalla Protezione Civile sul COVID-19 in Italia prima e dopo la fase 2.'
 
   return (
-    <ThemeProvider theme={themes[theme]}>
+    <ThemeProvider theme={themes[state.theme]}>
       <Head>
         <title>{title}</title>
         <meta name='description' content={description} />
@@ -31,10 +31,10 @@ function MyApp ({ Component, pageProps, initialTheme }) {
         <meta name='viewport' content='initial-scale=1.0, width=device-width' />
       </Head>
       <GlobalStyle />
-      <ThemeDispatch.Provider value={changeTheme}>
+      <StateContext.Provider value={{ state, dispatch }}>
         <CookieBanner />
         <Component {...pageProps} />
-      </ThemeDispatch.Provider>
+      </StateContext.Provider>
     </ThemeProvider>
   )
 }
@@ -46,7 +46,10 @@ MyApp.getInitialProps = async ({ Component, ctx }: AppContext) => {
     : {}
 
   return {
-    initialTheme: cookies.theme,
+    initialState: {
+      theme: cookies.theme,
+      menu: false
+    },
     pageProps: {
       ...pageLevelInitialProps
     }

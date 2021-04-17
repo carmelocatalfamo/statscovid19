@@ -1,27 +1,48 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import styled from 'styled-components'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
+import { FiMenu, FiX } from 'react-icons/fi'
 
 import { Logo } from './commons/Logo'
 import { Text } from './commons/Text'
+import { ButtonIcon } from './commons/ButtonIcon'
 import { ThemeSwitch } from './ThemeSwitch'
 import { regions } from '../utils/regions'
+import { SHOW_MENU, StateContext } from '../hooks/useState'
 
 export const Navbar = () => {
   const router = useRouter()
+  const { state: { menu }, dispatch } = useContext(StateContext)
   const regionSlug = router.query.region
   const region = regions.find(({ slug }) => slug === regionSlug)
+
+  const handleOnClickMenu = () => {
+    dispatch({
+      type: SHOW_MENU,
+      payload: !menu
+    })
+  }
 
   return (
     <Content>
       <Link href='/' passHref>
         <Brand>
           <Logo width={35} height={35} />
-          <Name>Statistiche Covid-19 {region ? region.name : 'Italia'}</Name>
+          <Name>
+            <span>Statistiche Covid-19 </span>
+            {region ? ` ${region.name}` : ' Italia'}
+          </Name>
         </Brand>
       </Link>
-      <ThemeSwitch />
+      <div>
+        <ThemeSwitch />
+        <ButtonIcon
+          title='Menù'
+          icon={menu ? FiX : FiMenu}
+          onClick={handleOnClickMenu}
+        />
+      </div>
     </Content>
   )
 }
@@ -51,4 +72,14 @@ const Name = styled(Text)`
   font-size: 20px;
   font-weight: bold;
   margin-left: 12px;
+
+  span {
+    display: none;
+  }
+
+  ${props => props.theme.breakpoint.small} {
+    span {
+      display: inline-block;
+    }
+  }
 `

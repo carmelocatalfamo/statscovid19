@@ -49,6 +49,7 @@ export const Navbar = () => {
 
 const Content = styled.nav`
   background-color: ${props => props.theme.colors.navbar};
+  border-bottom: 1px solid ${props => props.theme.colors.content};
   width: 100%;
   height: 70px;
   padding: 0px 30px;

@@ -47,7 +47,14 @@ const List = styled.ul`
 
 const Anchor = styled.a`
   text-decoration: none;
-  font-size: 12px;
+  font-size: 16px;
+  margin: 10px 0px;
+  display: block;
+
+  ${props => props.theme.breakpoint.large} {
+    font-size: 12px;
+    margin: 0px;
+  }
 `
 
 const RegionName = styled(Text)<{ active?: boolean }>`

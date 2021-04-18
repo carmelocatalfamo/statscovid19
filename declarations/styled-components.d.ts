@@ -6,6 +6,7 @@ declare module 'styled-components' {
     theme: Theme
     breakpoint: {
       small: string
+      medium: string
       large: string
     }
     logo: string[]

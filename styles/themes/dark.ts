@@ -10,6 +10,7 @@ const theme: DefaultTheme = {
   theme: Theme.dark,
   breakpoint: {
     small: '@media (min-width: 570px)',
+    medium: '@media (min-width: 980px)',
     large: '@media (min-width: 1200px)'
   },
   logo: [primary, secondary],

@@ -2,8 +2,9 @@ import React, { FC, useEffect, useState } from 'react'
 import styled, { useTheme } from 'styled-components'
 import { FiInfo } from 'react-icons/fi'
 import ContentLoader from 'react-content-loader'
+import isUndefined from 'lodash/isUndefined'
 
-import { Card } from './commons/Card'
+import { Card, CardOffset, CardSize } from './commons/Card'
 import { Region } from './maps/Region'
 import { Text } from './commons/Text'
 import { fetchZones } from '../utils/api'
@@ -11,13 +12,17 @@ import { ZoneApiResponse } from '../models/Api'
 
 type Props = {
   regionSlug: string
+  offset?: CardOffset,
+  size?: CardSize
 }
 
-export const Zone: FC<Props> = ({ regionSlug }) => {
+export const Zone: FC<Props> = ({ regionSlug, offset, size }) => {
   const theme = useTheme()
   const [loading, setLoading] = useState(true)
   const [zones, setZones] = useState<ZoneApiResponse[]>([])
   const [data, setData] = useState<ZoneApiResponse | null>(null)
+  const _offset = isUndefined(offset) ? 75 : offset
+  const _size = isUndefined(size) ? 25 : size
 
   useEffect(() => {
     const fetchRegionZones = async () => {
@@ -67,8 +72,8 @@ export const Zone: FC<Props> = ({ regionSlug }) => {
           speed={2}
           width='100%'
           height='100%'
-          backgroundColor='#f3f3f3'
-          foregroundColor='#ecebeb'
+          backgroundColor={theme.colors.navbar}
+          foregroundColor={theme.colors.content}
         >
           <circle cx='50%' cy='130' r='75' />
         </ContentLoader>
@@ -91,9 +96,9 @@ export const Zone: FC<Props> = ({ regionSlug }) => {
   }
 
   return (
-    <Card
-      offset={75}
-      size={25}
+    <StyledCard
+      offset={_offset}
+      size={_size}
       highlighted={zoneToColors[data?.zone]}
       title={() => (
         <CardHeader>
@@ -101,6 +106,7 @@ export const Zone: FC<Props> = ({ regionSlug }) => {
           <a
             target='_blank'
             rel='noreferrer'
+            title='Informazioni Ufficiali'
             href='https://www.governo.it/it/articolo/domande-frequenti-sulle-misure-adottate-dal-governo/15638'
           >
             <FiInfo
@@ -115,7 +121,7 @@ export const Zone: FC<Props> = ({ regionSlug }) => {
       )}
     >
       {renderContent()}
-    </Card>
+    </StyledCard>
   )
 }
 
@@ -125,6 +131,16 @@ const Container = styled.div`
   align-items: center;
   justify-content: center;
   height: 100%;
+`
+
+const StyledCard = styled(Card)`
+  & > div:last-child {
+    height: 320px;
+
+    ${props => props.theme.breakpoint.medium} {
+      height: calc(100% - 70px);
+    }
+  }
 `
 
 const CardHeader = styled.div`

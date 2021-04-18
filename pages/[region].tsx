@@ -1,6 +1,7 @@
 import React from 'react'
 import { GetServerSideProps, NextPage } from 'next'
 import Head from 'next/head'
+import NoSSR from 'react-no-ssr'
 
 import { Counters } from '../components/Counters'
 import { RegionApiResponse } from '../models/Api'
@@ -12,6 +13,7 @@ import { TotalPositives } from '../components/charts/TotalPositives'
 import { NewPositives } from '../components/charts/NewPositives'
 import { IntensiveCare } from '../components/charts/IntensiveCare'
 import { Zone } from '../components/Zone'
+import { useWindowSize } from '../hooks/useWindowSize'
 
 type Props = {
   regionDataPerDay: RegionApiResponse[]
@@ -19,7 +21,8 @@ type Props = {
 }
 
 const Region: NextPage<Props> = ({ regionDataPerDay, region }) => {
-  const isClientSide = typeof window !== 'undefined'
+  const { width } = useWindowSize()
+  const isMedium = width <= 980
   const reversedCountryDataPerDay = [...regionDataPerDay].reverse()
   const today = reversedCountryDataPerDay[0]
   const yesterday = reversedCountryDataPerDay[1]
@@ -47,6 +50,24 @@ const Region: NextPage<Props> = ({ regionDataPerDay, region }) => {
     intensiveCare: terapia_intensiva
   }))
 
+  const renderPositivesAndZone = () => {
+    if (isMedium) {
+      return (
+        <NoSSR>
+          <Zone offset={0} size={100} regionSlug={region.slug} />
+          <TotalPositives size={100} data={totalPositives} />
+        </NoSSR>
+      )
+    }
+
+    return (
+      <NoSSR>
+        <TotalPositives size={75} data={totalPositives} />
+        <Zone regionSlug={region.slug} />
+      </NoSSR>
+    )
+  }
+
   return (
     <WithTemplate>
       <Head>
@@ -65,8 +86,7 @@ const Region: NextPage<Props> = ({ regionDataPerDay, region }) => {
         intensiveCareChanges={today.terapia_intensiva - yesterday.terapia_intensiva}
         lastUpdate={today.data}
       />
-      <TotalPositives size={75} data={totalPositives} />
-      <Zone regionSlug={region.slug} />
+      {renderPositivesAndZone()}
       <NewPositives size={100} data={newPositives} />
       <TestPositivesRatio size={100} data={testPositivesRatio} />
       <IntensiveCare size={100} data={intensiveCare} />

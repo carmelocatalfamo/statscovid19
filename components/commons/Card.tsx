@@ -5,16 +5,24 @@ import isFunction from 'lodash/isFunction'
 import { Text } from './Text'
 
 export type CardSize = 25 | 50 | 75 | 100
-export type CardOffset = 25 | 50 | 75
+export type CardOffset = 0 | 25 | 50 | 75
 
 type Props = {
   offset?: CardOffset
   size: CardSize
   title?: string | (() => JSX.Element)
   highlighted?: string
+  className?: string
 }
 
-export const Card: FC<Props> = ({ title, offset, size, highlighted, children }) => {
+export const Card: FC<Props> = ({
+  title,
+  offset,
+  size,
+  highlighted,
+  children,
+  className
+}) => {
   const gridColumnMap = {
     25: 1,
     50: 2,
@@ -32,6 +40,7 @@ export const Card: FC<Props> = ({ title, offset, size, highlighted, children }) 
   return (
     <Content
       highlighted={highlighted}
+      className={className}
       style={{ gridColumn: `${gridStart} / ${gridEnd}` }}
     >
       {title && (

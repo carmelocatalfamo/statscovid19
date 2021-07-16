@@ -1,29 +1,51 @@
-import React, { FC, useEffect, useRef, useState } from 'react'
-import styled, { useTheme } from 'styled-components'
+import React, { useEffect, useRef, useState } from 'react'
 import { IconType } from 'react-icons'
 import isNumber from 'lodash/isNumber'
+import styled, { useTheme } from 'styled-components'
 
-import { Text } from '../components/commons/Text'
-import { toLocaleString } from '../utils/functions'
+import { ContentLoader } from '@/components/commons/ContentLoader'
+import { Text } from '@/components/commons/Text'
+import { toLocaleString } from '@/utils/functions'
 
 type Props = {
-  color: string
-  title: string
-  titleColorInverse?: boolean
   change?: number
+  className?: string
+  color: string
   description: string
   Icon: IconType
-  className?: string
+  isLoading?: boolean
+  title: string
+  highlighted?: boolean
 }
 
-export const CounterCard: FC<Props> = ({ color, title, titleColorInverse, description, change, Icon }) => {
+export const CounterCard = ({
+  change,
+  color,
+  description,
+  highlighted,
+  Icon,
+  isLoading,
+  title
+}: Props) => {
   const theme = useTheme()
   const cardElement = useRef<HTMLDivElement>()
   const [vertical, setVertical] = useState(false)
+  const iconColor = highlighted || !color ? '#fff' : color
   const changeSymbol = change < 0 ? '-' : '+'
-  const changeColor = change < 0
-    ? theme.colors.success
-    : change > 0 ? theme.colors.danger : theme.colors.title
+  const changeColor = change <= 0 ? theme.colors.success : theme.colors.danger
+
+  const styles: Record<string, React.CSSProperties> = {
+    container: {
+      flexDirection: vertical ? 'column' : 'row',
+      textAlign: vertical ? 'center' : 'left'
+    },
+    iconContent: {
+      marginRight: vertical ? '0px' : '22px'
+    },
+    iconBackground: {
+      backgroundColor: iconColor
+    }
+  }
 
   useEffect(() => {
     if (cardElement.current) {
@@ -39,41 +61,65 @@ export const CounterCard: FC<Props> = ({ color, title, titleColorInverse, descri
     }
   }, [cardElement.current])
 
-  return (
-    <Content
-      ref={cardElement}
-      style={{
-        flexDirection: vertical ? 'column' : 'row',
-        textAlign: vertical ? 'center' : 'left'
-      }}
-    >
-      <IconContainer style={{ marginRight: vertical ? '0px' : '22px' }}>
-        <IconBackground style={{ backgroundColor: color }} />
-        <Icon size={26} color={color} />
-      </IconContainer>
-      <div>
+  const renderCardContent = () => {
+    if (isLoading) {
+      return (
+        <ContentLoader height={55}>
+          <rect
+            x={vertical ? '25%' : '0%'}
+            y='15%'
+            rx='3'
+            ry='3'
+            width='50%'
+            height='40%'
+          />
+          <rect
+            x={vertical ? '15%' : '0%'}
+            y='65%'
+            rx='3'
+            ry='3'
+            width='70%'
+            height='30%'
+          />
+        </ContentLoader>
+      )
+    }
+
+    return (
+      <React.Fragment>
         <Header>
-          <Title inverse={titleColorInverse}>{title}</Title>
+          <Title inverse={highlighted}>{title}</Title>
           {isNumber(change) && (
             <Change style={{ color: changeColor }}>
-              {changeSymbol}{toLocaleString(Math.abs(change))}
+              {changeSymbol}
+              {toLocaleString(Math.abs(change))}
             </Change>
           )}
         </Header>
         <Description>{description}</Description>
-      </div>
-    </Content>
+      </React.Fragment>
+    )
+  }
+
+  return (
+    <Container ref={cardElement} style={styles.container}>
+      <IconContent style={styles.iconContent}>
+        <IconBackground style={styles.iconBackground} />
+        <Icon size={26} color={iconColor} />
+      </IconContent>
+      <CardContent>{renderCardContent()}</CardContent>
+    </Container>
   )
 }
 
-const Content = styled.div`
+const Container = styled.div`
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   flex-direction: row;
 `
 
-const IconContainer = styled.div`
+const IconContent = styled.div`
   width: 60px;
   height: 60px;
   position: relative;
@@ -98,10 +144,7 @@ const Header = styled.div`
 `
 
 const Title = styled(Text)<{ inverse?: boolean }>`
-  color: ${props => props.inverse
-    ? '#FFFFFF'
-    : props.theme.colors.title
-  };
+  color: ${props => (props.inverse ? '#FFFFFF' : props.theme.colors.title)};
   font-weight: bold;
   font-size: 22px;
 `
@@ -115,4 +158,8 @@ const Change = styled(Text)`
 
 const Description = styled(Text)`
   font-size: 14px;
+`
+
+const CardContent = styled.div`
+  flex: 1;
 `

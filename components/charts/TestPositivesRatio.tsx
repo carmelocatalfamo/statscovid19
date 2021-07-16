@@ -1,12 +1,20 @@
-import React, { FC, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import styled, { useTheme } from 'styled-components'
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts'
+import {
+  LineChart,
+  Line,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  ResponsiveContainer
+} from 'recharts'
 
-import { Card, CardSize } from '../commons/Card'
-import { Text } from '../commons/Text'
-import { CustomTooltip } from './CustomTooltip'
-import { toLocaleDate } from '../../utils/functions'
-import { TimeRangeSelect, timeRangeOptions } from '../TimeRangeSelect'
+import { Card, CardSize } from '@/components/commons/Card'
+import { Text } from '@/components/commons/Text'
+import { CustomTooltip } from '@/components/charts/CustomTooltip'
+import { toLocaleDate } from '@/utils/functions'
+import { TimeRangeSelect, timeRangeOptions } from '@/components/TimeRangeSelect'
 
 type Props = {
   size: CardSize
@@ -21,7 +29,7 @@ const labelMap = {
   ratio: 'Percentuale'
 }
 
-export const TestPositivesRatio: FC<Props> = ({ data, size }) => {
+export const TestPositivesRatio = ({ data, size }: Props) => {
   const theme = useTheme()
   const [timeRange, setTimeRange] = useState(timeRangeOptions[0])
   const axisFontSize = 12
@@ -31,7 +39,9 @@ export const TestPositivesRatio: FC<Props> = ({ data, size }) => {
     try {
       const timeRange = window.localStorage.getItem('timeRange')
       const savedTimeRange = JSON.parse(timeRange)
-      const newValue = timeRangeOptions.find(r => r.value === savedTimeRange?.value) || timeRangeOptions[0]
+      const newValue =
+        timeRangeOptions.find(r => r.value === savedTimeRange?.value) ||
+        timeRangeOptions[0]
       setTimeRange(newValue)
     } catch (error) {
       setTimeRange(timeRangeOptions[0])
@@ -44,7 +54,8 @@ export const TestPositivesRatio: FC<Props> = ({ data, size }) => {
 
   const _data = data
     .map(d => {
-      let percentage = d.tests > 0 ? Number(((d.positives * 100) / d.tests).toFixed(2)) : 0
+      let percentage =
+        d.tests > 0 ? Number(((d.positives * 100) / d.tests).toFixed(2)) : 0
       if (percentage > 100) percentage = 100
       if (percentage < 0) percentage = 0
 
@@ -76,10 +87,7 @@ export const TestPositivesRatio: FC<Props> = ({ data, size }) => {
     >
       <ResponsiveContainer height={300}>
         <LineChart data={_data}>
-          <CartesianGrid
-            strokeDasharray='3'
-            stroke={theme.colors.content}
-          />
+          <CartesianGrid strokeDasharray='3' stroke={theme.colors.content} />
           <XAxis
             dataKey='date'
             fontSize={axisFontSize}

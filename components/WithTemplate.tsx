@@ -1,21 +1,23 @@
-import React, { FC } from 'react'
+import React from 'react'
 import styled from 'styled-components'
 
-import { Navbar } from './Navbar'
-import { Menu } from './Menu'
-import { Sidebar } from './Sidebar'
+import { Navbar } from '@/components/Navbar'
+import { Menu } from '@/components/Menu'
+import { Sidebar } from '@/components/Sidebar'
 
-export const WithTemplate: FC = ({ children }) => {
+type Props = {
+  children?: React.ReactNode
+}
+
+export const WithTemplate = ({ children }: Props) => {
   return (
     <>
       <Navbar />
       <Menu />
       <Page>
-        <Sidebar/>
+        <Sidebar />
         <Content>
-          <Grid>
-            {children}
-          </Grid>
+          <Grid>{children}</Grid>
         </Content>
       </Page>
     </>

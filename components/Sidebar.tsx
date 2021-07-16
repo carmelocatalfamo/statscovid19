@@ -1,8 +1,8 @@
 import React from 'react'
 import styled from 'styled-components'
 
-import { SidebarMainMenu } from './SidebarMainMenu'
-import { SidebarFooter } from './SidebarFooter'
+import { SidebarMainMenu } from '@/components/SidebarMainMenu'
+import { SidebarFooter } from '@/components/SidebarFooter'
 
 export const Sidebar = () => {
   return (

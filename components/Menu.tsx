@@ -1,26 +1,26 @@
-import React, { useContext, useEffect } from 'react'
+import React, { useEffect } from 'react'
 import styled from 'styled-components'
 
-import { SHOW_MENU, StateContext } from '../hooks/useState'
-import { SidebarFooter } from './SidebarFooter'
-import { SidebarMainMenu } from './SidebarMainMenu'
+import { changeMenuIsVisible } from '@/store/slices/ui'
+import { SidebarFooter } from '@/components/SidebarFooter'
+import { SidebarMainMenu } from '@/components/SidebarMainMenu'
+import { useAppDispatch } from '@/hooks/useAppDispatch'
+import { useAppSelector } from '@/hooks/useAppSelector'
 
 const Menu = () => {
-  const { state: { menu }, dispatch } = useContext(StateContext)
-
-  const handleOnItemClick = () => {
-    dispatch({
-      type: SHOW_MENU,
-      payload: false
-    })
-  }
+  const dispatch = useAppDispatch()
+  const menuIsVisible = useAppSelector(state => state.ui.menuIsVisible)
 
   useEffect(() => {
-    document.body.style.overflow = menu ? 'hidden' : null
-  }, [menu])
+    document.body.style.overflow = menuIsVisible ? 'hidden' : null
+  }, [menuIsVisible])
+
+  const handleOnItemClick = () => {
+    dispatch(changeMenuIsVisible(false))
+  }
 
   return (
-    <Container isOpen={menu}>
+    <Container isVisible={menuIsVisible}>
       <Content>
         <SidebarMainMenu onItemClick={handleOnItemClick} />
         <SidebarFooter onItemClick={handleOnItemClick} />
@@ -29,9 +29,9 @@ const Menu = () => {
   )
 }
 
-const Container = styled.menu<{ isOpen: boolean }>`
+const Container = styled.menu<{ isVisible: boolean }>`
   background-color: ${props => props.theme.colors.sidebar};
-  top: ${props => props.isOpen ? '0vh' : '-100vh'};
+  top: ${props => (props.isVisible ? '0vh' : '-100vh')};
   transition: 0.15s ease-in-out top;
   overflow: hidden;
   position: fixed;

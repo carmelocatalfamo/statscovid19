@@ -1,4 +1,4 @@
-import React, { CSSProperties, FC } from 'react'
+import React, { CSSProperties } from 'react'
 
 type Props = {
   fill: string
@@ -6,7 +6,7 @@ type Props = {
   style: CSSProperties
 }
 
-export const Liguria: FC<Props> = ({ fill, stroke }) => {
+export const Liguria = ({ fill, stroke }: Props) => {
   return (
     <svg
       xmlns='http://www.w3.org/2000/svg'

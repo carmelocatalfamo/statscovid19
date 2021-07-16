@@ -1,106 +1,103 @@
-import React, { FC } from 'react'
-import { useTheme } from 'styled-components'
-import { RiVirusLine, RiHospitalLine, RiCalendarEventFill } from 'react-icons/ri'
+import React from 'react'
 import { FaUserInjured } from 'react-icons/fa'
+import {
+  RiCalendarEventFill,
+  RiHospitalLine,
+  RiVirusLine
+} from 'react-icons/ri'
+import { useTheme } from 'styled-components'
 import NoSSR from 'react-no-ssr'
 
-import { Card, CardSize, CardOffset } from './commons/Card'
-import { CounterCard } from './CounterCard'
-import { toLocaleString } from '../utils/functions'
-import { useWindowSize } from '../hooks/useWindowSize'
+import { Card, CardSize, CardOffset } from '@/components/commons/Card'
+import { CounterCard } from '@/components/CounterCard'
+import { toLocaleString } from '@/utils/functions'
+import { useWindowSize } from '@/hooks/useWindowSize'
 
 type Props = {
-  currentPositives: number
-  currentPositivesChanges: number
-  newPositives: number
   intensiveCare: number
   intensiveCareChanges: number
+  isLoading?: boolean
   lastUpdate: string
+  newPositives: number
+  totalPositives: number
+  totalPositivesChanges: number
 }
 
-export const Counters: FC<Props> = ({
-  currentPositives,
-  currentPositivesChanges,
-  newPositives,
+export const Counters = ({
   intensiveCare,
   intensiveCareChanges,
-  lastUpdate
-}) => {
+  isLoading,
+  lastUpdate,
+  newPositives,
+  totalPositives,
+  totalPositivesChanges
+}: Props) => {
   const theme = useTheme()
-  const { width } = useWindowSize()
-  const lastUpdateFormatted = new Date(lastUpdate).toLocaleDateString('it-IT')
-  const isMedium = width <= 980
-  const isSmall = width <= 570
+  const { isSmall, isSmaller } = useWindowSize()
 
-  const cards = {
-    first: {
+  const cards = [
+    {
+      change: totalPositivesChanges,
+      color: theme.colors.primary,
+      description: 'Positivi attuali',
+      highlighted: undefined,
+      icon: RiVirusLine,
       offset: undefined,
-      size: isSmall ? 100 : isMedium ? 50 : 25
+      size: isSmaller ? 100 : isSmall ? 50 : 25,
+      title: totalPositives && toLocaleString(totalPositives)
     },
-    second: {
-      offset: isSmall ? 0 : isMedium ? 50 : 25,
-      size: isSmall ? 100 : isMedium ? 50 : 25
+    {
+      change: undefined,
+      color: theme.colors.gradient1,
+      description: 'Nuovi positivi',
+      highlighted: undefined,
+      icon: FaUserInjured,
+      offset: isSmaller ? 0 : isSmall ? 50 : 25,
+      size: isSmaller ? 100 : isSmall ? 50 : 25,
+      title: newPositives && toLocaleString(newPositives)
     },
-    third: {
-      offset: isSmall ? 0 : isMedium ? undefined : 50,
-      size: isSmall ? 100 : isMedium ? 50 : 25
+    {
+      change: intensiveCareChanges,
+      color: theme.colors.gradient2,
+      description: 'In terapia intensiva',
+      highlighted: undefined,
+      icon: RiHospitalLine,
+      offset: isSmaller ? 0 : isSmall ? undefined : 50,
+      size: isSmaller ? 100 : isSmall ? 50 : 25,
+      title: intensiveCare && toLocaleString(intensiveCare)
     },
-    fourth: {
-      offset: isSmall ? 0 : isMedium ? 50 : 75,
-      size: isSmall ? 100 : isMedium ? 50 : 25
+    {
+      change: undefined,
+      color: '#FFFFFF',
+      description: 'Ultimo aggiornamento',
+      highlighted: theme.colors.primary,
+      icon: RiCalendarEventFill,
+      offset: isSmaller ? 0 : isSmall ? 50 : 75,
+      size: isSmaller ? 100 : isSmall ? 50 : 25,
+      title: new Date(lastUpdate).toLocaleDateString('it-IT')
     }
-  }
+  ]
 
   return (
     <NoSSR>
-      <Card
-        offset={cards.first.offset as CardOffset}
-        size={cards.first.size as CardSize}
-      >
-        <CounterCard
-          title={toLocaleString(currentPositives)}
-          change={currentPositivesChanges}
-          description='Positivi attuali'
-          color={theme.colors.primary}
-          Icon={RiVirusLine}
-        />
-      </Card>
-      <Card
-        offset={cards.second.offset as CardOffset}
-        size={cards.second.size as CardSize}
-      >
-        <CounterCard
-          title={toLocaleString(newPositives)}
-          description='Nuovi positivi'
-          color={theme.colors.gradient1}
-          Icon={FaUserInjured}
-        />
-      </Card>
-      <Card
-        offset={cards.third.offset as CardOffset}
-        size={cards.third.size as CardSize}
-      >
-        <CounterCard
-          title={toLocaleString(intensiveCare)}
-          change={intensiveCareChanges}
-          description='In terapia intensiva'
-          color={theme.colors.gradient2}
-          Icon={RiHospitalLine}
-        />
-      </Card>
-      <Card
-        offset={cards.fourth.offset as CardOffset}
-        size={cards.fourth.size as CardSize}
-        highlighted={theme.colors.primary}
-      >
-        <CounterCard
-          title={lastUpdateFormatted}
-          titleColorInverse
-          description='Ultimo aggiornamento'
-          color='#FFFFFF'
-          Icon={RiCalendarEventFill}
-        />
-      </Card>
+      {cards.map(card => (
+        <Card
+          key={card.description}
+          offset={card.offset as CardOffset}
+          size={card.size as CardSize}
+          highlighted={card.highlighted}
+        >
+          <CounterCard
+            color={card.color}
+            description={card.description}
+            change={card.change}
+            Icon={card.icon}
+            isLoading={isLoading}
+            title={card.title}
+            highlighted={card.highlighted}
+          />
+        </Card>
+      ))}
     </NoSSR>
   )
 }

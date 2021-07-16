@@ -1,29 +1,25 @@
-import React, { useContext } from 'react'
+import React from 'react'
 import { useTheme } from 'styled-components'
 import { FiSun, FiMoon } from 'react-icons/fi'
 
-import { ButtonIcon } from './commons/ButtonIcon'
-import { CHANGE_THEME, StateContext } from '../hooks/useState'
-import { Theme } from '../models/Theme'
+import { ButtonIcon } from '@/components/commons/ButtonIcon'
+import { Theme } from '@/models/Theme'
+import { useAppDispatch } from '@/hooks/useAppDispatch'
+import { changeTheme } from '@/store/slices/ui'
 
 const ThemeSwitch = () => {
   const { theme } = useTheme()
-  const { dispatch } = useContext(StateContext)
+  const dispatch = useAppDispatch()
   const isDark = theme === Theme.dark
+  const ThemeIcon = isDark ? FiSun : FiMoon
 
   const handleOnClick = () => {
-    dispatch({
-      type: CHANGE_THEME,
-      payload: isDark ? Theme.light : Theme.dark
-    })
+    const newTheme = isDark ? Theme.light : Theme.dark
+    dispatch(changeTheme(newTheme))
   }
 
   return (
-    <ButtonIcon
-      title='Cambia tema'
-      onClick={handleOnClick}
-      icon={isDark ? FiSun : FiMoon}
-    />
+    <ButtonIcon title='Cambia tema' onClick={handleOnClick} Icon={ThemeIcon} />
   )
 }
 

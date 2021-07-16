@@ -3,22 +3,27 @@ import styled, { useTheme } from 'styled-components'
 import { IconType } from 'react-icons'
 
 type Props = {
-  onClick?: () => void
-  icon: IconType
-  title?: string
-  size?: number
+  className?: string
   color?: string
+  Icon: IconType
+  onClick?: () => void
+  size?: number
+  title?: string
 }
 
-const ButtonIcon = ({ onClick, icon, title, size, color }: Props) => {
+const ButtonIcon = ({
+  className,
+  color,
+  Icon,
+  onClick,
+  size,
+  title
+}: Props) => {
   const { colors } = useTheme()
-  const Icon = icon
-  const _size = size || 22
-  const _color = color || colors.text
 
   return (
-    <Button title={title} onClick={onClick}>
-      <Icon size={_size} color={_color} />
+    <Button className={className} title={title} onClick={onClick}>
+      <Icon size={size || 22} color={color || colors.text} />
     </Button>
   )
 }

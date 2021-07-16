@@ -1,27 +1,29 @@
-import React, { useContext } from 'react'
-import styled from 'styled-components'
-import Link from 'next/link'
-import { useRouter } from 'next/router'
+import React from 'react'
 import { FiMenu, FiX } from 'react-icons/fi'
+import { useRouter } from 'next/router'
+import isArray from 'lodash/isArray'
+import Link from 'next/link'
+import styled from 'styled-components'
 
-import { Logo } from './commons/Logo'
-import { Text } from './commons/Text'
-import { ButtonIcon } from './commons/ButtonIcon'
-import { ThemeSwitch } from './ThemeSwitch'
-import { regions } from '../utils/regions'
-import { SHOW_MENU, StateContext } from '../hooks/useState'
+import { ButtonIcon } from '@/components/commons/ButtonIcon'
+import { changeMenuIsVisible } from '@/store/slices/ui'
+import { Logo } from '@/components/commons/Logo'
+import { regions } from '@/utils/regions'
+import { Text } from '@/components/commons/Text'
+import { ThemeSwitch } from '@/components/ThemeSwitch'
+import { useAppDispatch } from '@/hooks/useAppDispatch'
+import { useAppSelector } from '@/hooks/useAppSelector'
 
 export const Navbar = () => {
-  const router = useRouter()
-  const { state: { menu }, dispatch } = useContext(StateContext)
-  const regionSlug = router.query.region
+  const { query } = useRouter()
+  const dispatch = useAppDispatch()
+  const menuIsVisible = useAppSelector(state => state.ui.menuIsVisible)
+  const regionSlug = isArray(query.region) ? query.region[0] : query.region
   const region = regions.find(({ slug }) => slug === regionSlug)
+  const MenuIcon = menuIsVisible ? FiX : FiMenu
 
   const handleOnClickMenu = () => {
-    dispatch({
-      type: SHOW_MENU,
-      payload: !menu
-    })
+    dispatch(changeMenuIsVisible(!menuIsVisible))
   }
 
   return (
@@ -37,9 +39,9 @@ export const Navbar = () => {
       </Link>
       <div>
         <ThemeSwitch />
-        <ButtonIcon
+        <StyledButtonIcon
           title='Menù'
-          icon={menu ? FiX : FiMenu}
+          Icon={MenuIcon}
           onClick={handleOnClickMenu}
         />
       </div>
@@ -82,5 +84,11 @@ const Name = styled(Text)`
     span {
       display: inline-block;
     }
+  }
+`
+
+const StyledButtonIcon = styled(ButtonIcon)`
+  ${props => props.theme.breakpoint.large} {
+    display: none;
   }
 `

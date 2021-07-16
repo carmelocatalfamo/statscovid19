@@ -1,16 +1,17 @@
-import React, { useState, useEffect } from 'react'
-import styled from 'styled-components'
+import React, { useEffect, useState } from 'react'
 import { IoMdClose } from 'react-icons/io'
 import nookies from 'nookies'
+import styled from 'styled-components'
 
-import { Text } from './commons/Text'
+import { Text } from '@/components/commons/Text'
 
 export const CookieBanner = () => {
   const [visible, setVisible] = useState(false)
 
   useEffect(() => {
     const cookies = nookies.get(null)
-    const isVisible = !cookies.privacy || (cookies.privacy && cookies.privacy !== 'true')
+    const isVisible =
+      !cookies.privacy || (cookies.privacy && cookies.privacy !== 'true')
     setVisible(isVisible)
   }, [])
 
@@ -35,9 +36,12 @@ export const CookieBanner = () => {
         />
       </Header>
       <StyledText>
-        Su questo sito utilizziamo cookie tecnici necessari alla navigazione e funzionali all’erogazione del servizio.
+        Su questo sito utilizziamo cookie tecnici necessari alla navigazione e
+        funzionali all’erogazione del servizio.
         <br />
-        Utilizziamo i cookie anche per fornire un’esperienza di navigazione sempre migliore e per facilitare le interazioni con le funzionalità del sito stesso.
+        Utilizziamo i cookie anche per fornire un’esperienza di navigazione
+        sempre migliore e per facilitare le interazioni con le funzionalità del
+        sito stesso.
       </StyledText>
       <Button onClick={handleClickAccept}>
         Accetto e proseguo la navigazione
@@ -63,7 +67,7 @@ const Header = styled.div`
 `
 
 const StyledText = styled(Text)`
-  color: #FFF;
+  color: #fff;
   padding: 15px;
 `
 

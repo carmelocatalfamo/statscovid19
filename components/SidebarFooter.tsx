@@ -1,25 +1,21 @@
 import React from 'react'
-import styled, { useTheme } from 'styled-components'
 import { IoIosBug, IoMdLock, IoMdMail } from 'react-icons/io'
-
 import Link from 'next/link'
+import styled, { useTheme } from 'styled-components'
 
 type Props = {
   onItemClick?: () => void
 }
 
 export const SidebarFooter = ({ onItemClick }: Props) => {
-  const theme = useTheme()
+  const { colors } = useTheme()
 
   return (
     <Footer>
       <span onClick={onItemClick}>
         <Link href='/privacy' passHref>
           <ExternalLink>
-            <IoMdLock
-              color={theme.colors.text}
-              size={16}
-            />
+            <IoMdLock color={colors.text} size={16} />
             Privacy Policy
           </ExternalLink>
         </Link>
@@ -27,10 +23,7 @@ export const SidebarFooter = ({ onItemClick }: Props) => {
 
       <span onClick={onItemClick}>
         <ExternalLink href='mailto:info@statscovid19.it'>
-          <IoMdMail
-            color={theme.colors.text}
-            size={16}
-          />
+          <IoMdMail color={colors.text} size={16} />
           info@statscovid19.it
         </ExternalLink>
       </span>
@@ -40,10 +33,7 @@ export const SidebarFooter = ({ onItemClick }: Props) => {
           href='https://github.com/carmelocatalfamo/statscovid19/issues'
           target='_blank'
         >
-          <IoIosBug
-            color={theme.colors.text}
-            size={16}
-          />
+          <IoIosBug color={colors.text} size={16} />
           Segnalazione problemi
         </ExternalLink>
       </span>

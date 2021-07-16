@@ -1,6 +1,6 @@
-import React, { FC } from 'react'
-import styled, { useTheme } from 'styled-components'
+import React from 'react'
 import Select from 'react-select'
+import styled, { CSSObject, useTheme } from 'styled-components'
 
 export const timeRangeOptions = [
   {
@@ -58,11 +58,16 @@ export type Option = typeof timeRangeOptions[0]
 
 type Props = {
   instanceId: string
-  value: Option,
+  value: Option
   setValue: (value: Option) => void
 }
 
-export const TimeRangeSelect: FC<Props> = ({ instanceId, value, setValue, ...props }) => {
+export const TimeRangeSelect = ({
+  instanceId,
+  value,
+  setValue,
+  ...props
+}: Props) => {
   const theme = useTheme()
 
   return (
@@ -75,35 +80,37 @@ export const TimeRangeSelect: FC<Props> = ({ instanceId, value, setValue, ...pro
       isSearchable={false}
       onChange={setValue}
       styles={{
-        container: (provided) => ({
+        container: (provided: CSSObject) => ({
           ...provided,
           margin: '-10px 0px'
         }),
-        control: (provided) => ({
+        control: (provided: CSSObject) => ({
           ...provided,
           backgroundColor: 'transparent',
           borderColor: 'transparent !important',
           cursor: 'pointer',
           boxShadow: 'none'
         }),
-        valueContainer: (provided) => ({
+        valueContainer: (provided: CSSObject) => ({
           ...provided,
           justifyContent: 'flex-end'
         }),
         indicatorSeparator: () => ({
           display: 'none'
         }),
-        singleValue: (provided) => ({
+        singleValue: (provided: CSSObject) => ({
           ...provided,
           color: `${theme.colors.title} !important`,
           fontSize: 14
         }),
-        menu: (provided) => ({
+        menu: (provided: CSSObject) => ({
           ...provided,
           backgroundColor: theme.colors.content
         }),
-        option: (provided, state) => {
-          const backgroundColor = state.isSelected ? theme.colors.primary : 'transparent'
+        option: (provided: CSSObject, state) => {
+          const backgroundColor = state.isSelected
+            ? theme.colors.primary
+            : 'transparent'
           return {
             ...provided,
             color: state.isSelected ? '#FFFFFF' : theme.colors.text,

@@ -1,4 +1,4 @@
-import React, { FC } from 'react'
+import React from 'react'
 import { useTheme } from 'styled-components'
 
 type Props = {
@@ -6,7 +6,7 @@ type Props = {
   width?: number
 }
 
-export const Logo: FC<Props> = ({ height, width }) => {
+export const Logo = ({ height, width }: Props) => {
   const theme = useTheme()
 
   return (
@@ -67,39 +67,19 @@ export const Logo: FC<Props> = ({ height, width }) => {
       <use fillOpacity='0' stroke='#000' strokeOpacity='0' xlinkHref='#e' />
       <g>
         <use fill={theme.logo[0]} xlinkHref='#f' />
-        <use
-          fillOpacity='0'
-          stroke='#000'
-          strokeOpacity='0'
-          xlinkHref='#f'
-        />
+        <use fillOpacity='0' stroke='#000' strokeOpacity='0' xlinkHref='#f' />
       </g>
       <g>
         <use fill={theme.logo[0]} xlinkHref='#g' />
-        <use
-          fillOpacity='0'
-          stroke='#000'
-          strokeOpacity='0'
-          xlinkHref='#g'
-        />
+        <use fillOpacity='0' stroke='#000' strokeOpacity='0' xlinkHref='#g' />
       </g>
       <g>
         <use fill={theme.logo[0]} xlinkHref='#h' />
-        <use
-          fillOpacity='0'
-          stroke='#000'
-          strokeOpacity='0'
-          xlinkHref='#h'
-        />
+        <use fillOpacity='0' stroke='#000' strokeOpacity='0' xlinkHref='#h' />
       </g>
       <g>
         <use fill={theme.logo[0]} xlinkHref='#i' />
-        <use
-          fillOpacity='0'
-          stroke='#000'
-          strokeOpacity='0'
-          xlinkHref='#i'
-        />
+        <use fillOpacity='0' stroke='#000' strokeOpacity='0' xlinkHref='#i' />
       </g>
     </svg>
   )

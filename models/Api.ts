@@ -1,6 +1,6 @@
-import { regions } from '../utils/regions'
+import { regions } from '@/utils/regions'
 
-export interface CountryApiResponse {
+export interface CountryData {
   casi_da_screening: number
   casi_da_sospetto_diagnostico: number
   casi_testati: number
@@ -27,28 +27,14 @@ export interface CountryApiResponse {
   variazione_totale_positivi: number
 }
 
-export interface RegionApiResponse extends CountryApiResponse {
+export interface RegionData extends CountryData {
   codice_regione: number
   denominazione_regione: string
   lat: number | null
   long: number | null
 }
 
-export interface ProvinceApiResponse {
-  codice_provincia: number
-  codice_regione: number
-  data: string
-  denominazione_provincia: string
-  denominazione_regione: string
-  lat: number | null
-  long: number | null
-  note: string | null
-  sigla_provincia: string
-  stato: string
-  totale_casi: number
-}
-
-export interface ZoneApiResponse {
+export interface RegionZoneData {
   region: typeof regions[0]
   zone: 'white' | 'yellow' | 'orange' | 'red'
 }

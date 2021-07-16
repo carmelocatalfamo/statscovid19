@@ -1,5 +1,6 @@
 import 'styled-components'
-import { Theme } from '../models/Theme'
+
+import { Theme } from '@/models/Theme'
 
 declare module 'styled-components' {
   export interface DefaultTheme {
@@ -10,6 +11,10 @@ declare module 'styled-components' {
       large: string
     }
     logo: string[]
+    loader: {
+      background: string
+      foreground: string
+    }
     colors: {
       primary: string
       secondary: string

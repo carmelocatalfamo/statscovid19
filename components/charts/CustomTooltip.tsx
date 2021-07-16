@@ -1,18 +1,21 @@
 import React from 'react'
 import styled from 'styled-components'
 
-import { Text } from '../commons/Text'
+import { Text } from '@/components/commons/Text'
 
-export const CustomTooltip = ({ active, payload, label, labelFormatter, formatter }) => {
+export const CustomTooltip = ({
+  active,
+  payload,
+  label,
+  labelFormatter,
+  formatter
+}) => {
   if (active) {
     return (
       <Container>
         <Label>{labelFormatter(label)}</Label>
         {payload?.map(({ dataKey, color, value }) => (
-          <Key
-            key={dataKey}
-            style={{ color }}
-          >
+          <Key key={dataKey} style={{ color }}>
             {formatter(value, dataKey)}
           </Key>
         ))}

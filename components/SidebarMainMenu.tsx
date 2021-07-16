@@ -4,9 +4,9 @@ import { FiMap } from 'react-icons/fi'
 import { useRouter } from 'next/router'
 import isArray from 'lodash/isArray'
 
-import { SidebarLink } from './SidebarLink'
-import { SidebarRegionsMenu } from './SidebarRegionsMenu'
-import { regions } from '../utils/regions'
+import { regions } from '@/utils/regions'
+import { SidebarLink } from '@/components/SidebarLink'
+import { SidebarRegionsMenu } from '@/components/SidebarRegionsMenu'
 
 type Props = {
   className?: string

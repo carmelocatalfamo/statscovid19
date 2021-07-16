@@ -1,35 +1,28 @@
-import React, { FC } from 'react'
+import React from 'react'
 import styled from 'styled-components'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import isArray from 'lodash/isArray'
 
-import { Text } from './commons/Text'
-import { regions } from '../utils/regions'
+import { regions } from '@/utils/regions'
+import { Text } from '@/components/commons/Text'
 
 type Props = {
   isOpen: boolean
   onRegionClick?: (regionSlug: string) => void
 }
 
-export const SidebarRegionsMenu: FC<Props> = ({ isOpen, onRegionClick }) => {
+export const SidebarRegionsMenu = ({ isOpen, onRegionClick }: Props) => {
   const { query } = useRouter()
   const region = isArray(query.region) ? query.region[0] : query.region
 
   return (
-    <List
-      style={{ maxHeight: isOpen ? '1000px' : '0px' }}
-    >
+    <List style={{ maxHeight: isOpen ? '1000px' : '0px' }}>
       {regions.map(({ code, slug, name }) => (
         <li key={code} onClick={() => onRegionClick?.(slug)}>
-          <Link
-            href={`/${slug}`}
-            passHref
-          >
+          <Link href={`/${slug}`} passHref>
             <Anchor>
-              <RegionName active={region === slug}>
-                {name}
-              </RegionName>
+              <RegionName active={region === slug}>{name}</RegionName>
             </Anchor>
           </Link>
         </li>
@@ -58,8 +51,6 @@ const Anchor = styled.a`
 `
 
 const RegionName = styled(Text)<{ active?: boolean }>`
-  color: ${props => props.active
-    ? props.theme.colors.title
-    : props.theme.colors.text
-  };
+  color: ${props =>
+    props.active ? props.theme.colors.title : props.theme.colors.text};
 `

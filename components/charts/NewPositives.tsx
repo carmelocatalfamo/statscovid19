@@ -1,12 +1,20 @@
-import React, { FC, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import styled, { useTheme } from 'styled-components'
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts'
+import {
+  LineChart,
+  Line,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  ResponsiveContainer
+} from 'recharts'
 
-import { Card, CardSize } from '../commons/Card'
-import { Text } from '../commons/Text'
-import { CustomTooltip } from './CustomTooltip'
-import { toLocaleDate, toLocaleString } from '../../utils/functions'
-import { TimeRangeSelect, timeRangeOptions } from '../TimeRangeSelect'
+import { Card, CardSize } from '@/components/commons/Card'
+import { Text } from '@/components/commons/Text'
+import { CustomTooltip } from '@/components/charts/CustomTooltip'
+import { toLocaleDate, toLocaleString } from '@/utils/functions'
+import { TimeRangeSelect, timeRangeOptions } from '@/components/TimeRangeSelect'
 
 type Props = {
   size: CardSize
@@ -20,7 +28,7 @@ const labelMap = {
   positives: 'Nuovi positivi'
 }
 
-export const NewPositives: FC<Props> = ({ data, size }) => {
+export const NewPositives = ({ data, size }: Props) => {
   const theme = useTheme()
   const [timeRange, setTimeRange] = useState(timeRangeOptions[0])
   const axisFontSize = 12
@@ -30,7 +38,9 @@ export const NewPositives: FC<Props> = ({ data, size }) => {
     try {
       const timeRange = window.localStorage.getItem('timeRangeNewPositives')
       const savedTimeRange = JSON.parse(timeRange)
-      const newValue = timeRangeOptions.find(r => r.value === savedTimeRange?.value) || timeRangeOptions[0]
+      const newValue =
+        timeRangeOptions.find(r => r.value === savedTimeRange?.value) ||
+        timeRangeOptions[0]
       setTimeRange(newValue)
     } catch (error) {
       setTimeRange(timeRangeOptions[0])
@@ -38,16 +48,18 @@ export const NewPositives: FC<Props> = ({ data, size }) => {
   }, [])
 
   useEffect(() => {
-    window.localStorage.setItem('timeRangeNewPositives', JSON.stringify(timeRange))
+    window.localStorage.setItem(
+      'timeRangeNewPositives',
+      JSON.stringify(timeRange)
+    )
   }, [timeRange])
 
-  const _data = data
-    .filter(d => {
-      const dates = timeRange?.getDates()
-      if (!dates) return true
-      const date = new Date(d.date).getTime()
-      return date >= dates.from && date <= dates.to
-    })
+  const _data = data.filter(d => {
+    const dates = timeRange?.getDates()
+    if (!dates) return true
+    const date = new Date(d.date).getTime()
+    return date >= dates.from && date <= dates.to
+  })
 
   return (
     <Card
@@ -65,10 +77,7 @@ export const NewPositives: FC<Props> = ({ data, size }) => {
     >
       <ResponsiveContainer height={300}>
         <LineChart data={_data}>
-          <CartesianGrid
-            strokeDasharray='3'
-            stroke={theme.colors.content}
-          />
+          <CartesianGrid strokeDasharray='3' stroke={theme.colors.content} />
           <XAxis
             dataKey='date'
             fontSize={axisFontSize}
@@ -85,7 +94,9 @@ export const NewPositives: FC<Props> = ({ data, size }) => {
           <Tooltip
             content={CustomTooltip}
             labelFormatter={v => toLocaleDate(v)}
-            formatter={(value, label) => `${labelMap[label]}: ${toLocaleString(value)}`}
+            formatter={(value, label) =>
+              `${labelMap[label]}: ${toLocaleString(value)}`
+            }
           />
           <Line
             type='monotone'

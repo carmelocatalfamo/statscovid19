@@ -1,57 +1,43 @@
-import React from 'react'
+import React, { useMemo } from 'react'
 import { GetServerSideProps, NextPage } from 'next'
 import Head from 'next/head'
 import NoSSR from 'react-no-ssr'
 
-import { Counters } from '../components/Counters'
-import { RegionApiResponse } from '../models/Api'
-import { fetchRegions } from '../utils/api'
-import { WithTemplate } from '../components/WithTemplate'
-import { TestPositivesRatio } from '../components/charts/TestPositivesRatio'
-import { regions } from '../utils/regions'
-import { TotalPositives } from '../components/charts/TotalPositives'
-import { NewPositives } from '../components/charts/NewPositives'
-import { IntensiveCare } from '../components/charts/IntensiveCare'
-import { Zone } from '../components/Zone'
-import { useWindowSize } from '../hooks/useWindowSize'
+import { Counters } from '@/components/Counters'
+import { IntensiveCare } from '@/components/charts/IntensiveCare'
+import { NewPositives } from '@/components/charts/NewPositives'
+import { RegionData } from '@/models/Api'
+import { regions } from '@/utils/regions'
+import { TestPositivesRatio } from '@/components/charts/TestPositivesRatio'
+import { TotalPositives } from '@/components/charts/TotalPositives'
+import { useGetDailyRegionDataQuery } from '@/store/services/covid'
+import { useWindowSize } from '@/hooks/useWindowSize'
+import { WithTemplate } from '@/components/WithTemplate'
+import { Zone } from '@/components/Zone'
 
 type Props = {
-  regionDataPerDay: RegionApiResponse[]
   region: typeof regions[0]
 }
 
-const Region: NextPage<Props> = ({ regionDataPerDay, region }) => {
-  const { width } = useWindowSize()
-  const isMedium = width <= 980
-  const reversedCountryDataPerDay = [...regionDataPerDay].reverse()
-  const today = reversedCountryDataPerDay[0]
-  const yesterday = reversedCountryDataPerDay[1]
+const Region: NextPage<Props> = ({ region }) => {
+  const { isSmaller, isSmall } = useWindowSize()
+  const { ...props } = useGetDailyRegionDataQuery(region.code)
+  const { data, isFetching, isLoading } = props
+
   const title = `Statistiche COVID-19 ${region.name}`
   const description = `${region.name}: numeri, grafici e statistiche dei dati ufficiali forniti dalla Protezione Civile sul COVID-19 prima e dopo la fase 2.`
 
-  const testPositivesRatio = regionDataPerDay.map(({ data, nuovi_positivi, tamponi }, index) => ({
-    date: data,
-    positives: nuovi_positivi,
-    tests: tamponi - (regionDataPerDay[index - 1]?.tamponi || 0)
-  }))
-
-  const totalPositives = regionDataPerDay.map(({ data, totale_positivi }) => ({
-    date: data,
-    positives: totale_positivi
-  }))
-
-  const newPositives = regionDataPerDay.map(({ data, nuovi_positivi }) => ({
-    date: data,
-    positives: nuovi_positivi
-  }))
-
-  const intensiveCare = regionDataPerDay.map(({ data, terapia_intensiva }) => ({
-    date: data,
-    intensiveCare: terapia_intensiva
-  }))
+  const {
+    intensiveCare,
+    newPositives,
+    testPositivesRatio,
+    today,
+    totalPositives,
+    yesterday
+  } = useMemo(() => composeData(data), [data])
 
   const renderPositivesAndZone = () => {
-    if (isMedium) {
+    if (isSmall || isSmaller) {
       return (
         <NoSSR>
           <Zone offset={0} size={100} regionSlug={region.slug} />
@@ -72,19 +58,26 @@ const Region: NextPage<Props> = ({ regionDataPerDay, region }) => {
     <WithTemplate>
       <Head>
         <title>{title}</title>
-        <meta name="description" content={description} />
-        <meta key='og:title' property="og:title" content={title} />
-        <meta key='og:description' property="og:description" content={description} />
-        <meta key='og:site_name' property="og:site_name" content={title} />
+        <meta name='description' content={description} />
+        <meta key='og:title' property='og:title' content={title} />
+        <meta
+          key='og:description'
+          property='og:description'
+          content={description}
+        />
+        <meta key='og:site_name' property='og:site_name' content={title} />
       </Head>
 
       <Counters
-        currentPositives={today.totale_positivi}
-        currentPositivesChanges={today.variazione_totale_positivi}
-        newPositives={today.nuovi_positivi}
-        intensiveCare={today.terapia_intensiva}
-        intensiveCareChanges={today.terapia_intensiva - yesterday.terapia_intensiva}
-        lastUpdate={today.data}
+        isLoading={isLoading || isFetching}
+        totalPositives={today?.totale_positivi}
+        totalPositivesChanges={today?.variazione_totale_positivi}
+        newPositives={today?.nuovi_positivi}
+        intensiveCare={today?.terapia_intensiva}
+        intensiveCareChanges={
+          today?.terapia_intensiva - yesterday?.terapia_intensiva
+        }
+        lastUpdate={today?.data}
       />
       {renderPositivesAndZone()}
       <NewPositives size={100} data={newPositives} />
@@ -94,14 +87,48 @@ const Region: NextPage<Props> = ({ regionDataPerDay, region }) => {
   )
 }
 
+const composeData = (data: RegionData[] = []) => {
+  const [yesterday, today] = data.slice(-2)
+
+  const testPositivesRatio = data.map(
+    ({ data: date, nuovi_positivi, tamponi }, index) => ({
+      date,
+      positives: nuovi_positivi,
+      tests: tamponi - (data[index - 1]?.tamponi || 0)
+    })
+  )
+
+  const totalPositives = data.map(({ data, totale_positivi }) => ({
+    date: data,
+    positives: totale_positivi
+  }))
+
+  const newPositives = data.map(({ data, nuovi_positivi }) => ({
+    date: data,
+    positives: nuovi_positivi
+  }))
+
+  const intensiveCare = data.map(({ data, terapia_intensiva }) => ({
+    date: data,
+    intensiveCare: terapia_intensiva
+  }))
+
+  return {
+    intensiveCare,
+    newPositives,
+    testPositivesRatio,
+    today,
+    totalPositives,
+    yesterday
+  }
+}
+
 export const getServerSideProps: GetServerSideProps = async ({ query }) => {
   const region = regions.find(({ slug }) => slug === query.region)
-  const data = await fetchRegions()
 
   return {
     props: {
-      region,
-      regionDataPerDay: data.filter(({ codice_regione }) => codice_regione === region.code)
+      region
     }
   }
 }

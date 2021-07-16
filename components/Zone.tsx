@@ -1,52 +1,26 @@
-import React, { FC, useEffect, useState } from 'react'
-import styled, { useTheme } from 'styled-components'
+import React from 'react'
 import { FiInfo } from 'react-icons/fi'
 import ContentLoader from 'react-content-loader'
 import isUndefined from 'lodash/isUndefined'
+import styled, { useTheme } from 'styled-components'
 
-import { Card, CardOffset, CardSize } from './commons/Card'
-import { Region } from './maps/Region'
-import { Text } from './commons/Text'
-import { fetchZones } from '../utils/api'
-import { ZoneApiResponse } from '../models/Api'
+import { Card, CardOffset, CardSize } from '@/components/commons/Card'
+import { Region } from '@/components/maps/Region'
+import { Text } from '@/components/commons/Text'
+import { useGetRegionsZoneDataQuery } from '@/store/services/covid'
 
 type Props = {
   regionSlug: string
-  offset?: CardOffset,
+  offset?: CardOffset
   size?: CardSize
 }
 
-export const Zone: FC<Props> = ({ regionSlug, offset, size }) => {
+export const Zone = ({ regionSlug, offset, size }: Props) => {
   const theme = useTheme()
-  const [loading, setLoading] = useState(true)
-  const [zones, setZones] = useState<ZoneApiResponse[]>([])
-  const [data, setData] = useState<ZoneApiResponse | null>(null)
-  const _offset = isUndefined(offset) ? 75 : offset
-  const _size = isUndefined(size) ? 25 : size
-
-  useEffect(() => {
-    const fetchRegionZones = async () => {
-      setLoading(true)
-
-      try {
-        const zonesResponse = await fetchZones()
-        setZones(zonesResponse)
-      } catch (error) {
-        console.log('ERROR', error)
-      }
-
-      setLoading(false)
-    }
-
-    fetchRegionZones()
-  }, [])
-
-  useEffect(() => {
-    if (zones.length) {
-      const zone = zones.find(({ region: { slug } }) => slug === regionSlug)
-      setData(zone)
-    }
-  }, [zones, regionSlug])
+  const { data = [], error, isLoading } = useGetRegionsZoneDataQuery()
+  const cardOffset = isUndefined(offset) ? 75 : offset
+  const cardSize = isUndefined(size) ? 25 : size
+  const regionZone = data.find(({ region: { slug } }) => slug === regionSlug)
 
   const zoneToColors = {
     white: theme.colors.text,
@@ -65,29 +39,29 @@ export const Zone: FC<Props> = ({ regionSlug, offset, size }) => {
   }
 
   const renderContent = () => {
-    if (loading) {
+    if (isLoading) {
       return (
         <ContentLoader
           uniqueKey='zone_loader'
           speed={2}
           width='100%'
           height='100%'
-          backgroundColor={theme.colors.navbar}
-          foregroundColor={theme.colors.content}
+          backgroundColor={theme.loader.background}
+          foregroundColor={theme.loader.foreground}
         >
           <circle cx='50%' cy='130' r='75' />
         </ContentLoader>
       )
     }
 
-    if (!loading && !data) {
+    if (error) {
       return <Text>Errore durante il caricamento dei dati</Text>
     }
 
     return (
       <Container>
         <Region
-          regionSlug={data.region.slug}
+          regionSlug={regionZone.region.slug}
           fill={theme.colors.navbar}
           stroke={theme.colors.navbar}
         />
@@ -97,12 +71,12 @@ export const Zone: FC<Props> = ({ regionSlug, offset, size }) => {
 
   return (
     <StyledCard
-      offset={_offset}
-      size={_size}
-      highlighted={zoneToColors[data?.zone]}
+      offset={cardOffset}
+      size={cardSize}
+      highlighted={zoneToColors[regionZone?.zone]}
       title={() => (
         <CardHeader>
-          <Title>{zoneToTitle[data?.zone]}</Title>
+          <Title>{zoneToTitle[regionZone?.zone]}</Title>
           <a
             target='_blank'
             rel='noreferrer'

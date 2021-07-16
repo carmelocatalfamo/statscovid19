@@ -1,4 +1,4 @@
-import React, { FC, CSSProperties } from 'react'
+import React, { CSSProperties } from 'react'
 
 type Props = {
   fill: string
@@ -6,7 +6,7 @@ type Props = {
   style: CSSProperties
 }
 
-export const Calabria: FC<Props> = ({ fill, stroke, ...props }) => {
+export const Calabria = ({ fill, stroke, ...props }: Props) => {
   return (
     <svg
       xmlns='http://www.w3.org/2000/svg'

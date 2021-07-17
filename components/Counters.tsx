@@ -1,17 +1,16 @@
-import React from 'react'
+import React, { useMemo } from 'react'
 import { FaUserInjured } from 'react-icons/fa'
 import {
   RiCalendarEventFill,
   RiHospitalLine,
   RiVirusLine
 } from 'react-icons/ri'
-import { useTheme } from 'styled-components'
 import NoSSR from 'react-no-ssr'
+import styled, { useTheme } from 'styled-components'
 
-import { Card, CardSize, CardOffset } from '@/components/commons/Card'
+import { Card } from '@/components/commons/Card'
 import { CounterCard } from '@/components/CounterCard'
 import { toLocaleString } from '@/utils/functions'
-import { useWindowSize } from '@/hooks/useWindowSize'
 
 type Props = {
   intensiveCare: number
@@ -23,70 +22,62 @@ type Props = {
   totalPositivesChanges: number
 }
 
-export const Counters = ({
-  intensiveCare,
-  intensiveCareChanges,
-  isLoading,
-  lastUpdate,
-  newPositives,
-  totalPositives,
-  totalPositivesChanges
-}: Props) => {
+export const Counters = ({ isLoading, ...otherProps }: Props) => {
   const theme = useTheme()
-  const { isSmall, isSmaller } = useWindowSize()
+  const cards = useMemo(() => {
+    const {
+      intensiveCare,
+      intensiveCareChanges,
+      lastUpdate,
+      newPositives,
+      totalPositives,
+      totalPositivesChanges
+    } = otherProps
 
-  const cards = [
-    {
-      change: totalPositivesChanges,
-      color: theme.colors.primary,
-      description: 'Positivi attuali',
-      highlighted: undefined,
-      icon: RiVirusLine,
-      offset: undefined,
-      size: isSmaller ? 100 : isSmall ? 50 : 25,
-      title: totalPositives && toLocaleString(totalPositives)
-    },
-    {
-      change: undefined,
-      color: theme.colors.gradient1,
-      description: 'Nuovi positivi',
-      highlighted: undefined,
-      icon: FaUserInjured,
-      offset: isSmaller ? 0 : isSmall ? 50 : 25,
-      size: isSmaller ? 100 : isSmall ? 50 : 25,
-      title: newPositives && toLocaleString(newPositives)
-    },
-    {
-      change: intensiveCareChanges,
-      color: theme.colors.gradient2,
-      description: 'In terapia intensiva',
-      highlighted: undefined,
-      icon: RiHospitalLine,
-      offset: isSmaller ? 0 : isSmall ? undefined : 50,
-      size: isSmaller ? 100 : isSmall ? 50 : 25,
-      title: intensiveCare && toLocaleString(intensiveCare)
-    },
-    {
-      change: undefined,
-      color: '#FFFFFF',
-      description: 'Ultimo aggiornamento',
-      highlighted: theme.colors.primary,
-      icon: RiCalendarEventFill,
-      offset: isSmaller ? 0 : isSmall ? 50 : 75,
-      size: isSmaller ? 100 : isSmall ? 50 : 25,
-      title: new Date(lastUpdate).toLocaleDateString('it-IT')
-    }
-  ]
+    return [
+      {
+        CardComponent: FirstCard,
+        change: totalPositivesChanges,
+        color: theme.colors.primary,
+        description: 'Positivi attuali',
+        highlighted: undefined,
+        icon: RiVirusLine,
+        title: totalPositives && toLocaleString(totalPositives)
+      },
+      {
+        CardComponent: SecondCard,
+        change: undefined,
+        color: theme.colors.gradient1,
+        description: 'Nuovi positivi',
+        highlighted: undefined,
+        icon: FaUserInjured,
+        title: newPositives && toLocaleString(newPositives)
+      },
+      {
+        CardComponent: ThirdCard,
+        change: intensiveCareChanges,
+        color: theme.colors.gradient2,
+        description: 'In terapia intensiva',
+        highlighted: undefined,
+        icon: RiHospitalLine,
+        title: intensiveCare && toLocaleString(intensiveCare)
+      },
+      {
+        CardComponent: FourthCard,
+        change: undefined,
+        color: '#FFFFFF',
+        description: 'Ultimo aggiornamento',
+        highlighted: theme.colors.primary,
+        icon: RiCalendarEventFill,
+        title: new Date(lastUpdate).toLocaleDateString('it-IT')
+      }
+    ]
+  }, [otherProps])
 
   return (
     <NoSSR>
-      {cards.map(card => (
-        <Card
-          key={card.description}
-          offset={card.offset as CardOffset}
-          size={card.size as CardSize}
-          highlighted={card.highlighted}
-        >
+      {cards.map(({ CardComponent, ...card }) => (
+        <CardComponent key={card.description} highlighted={card.highlighted}>
           <CounterCard
             color={card.color}
             description={card.description}
@@ -96,8 +87,68 @@ export const Counters = ({
             title={card.title}
             highlighted={card.highlighted}
           />
-        </Card>
+        </CardComponent>
       ))}
     </NoSSR>
   )
 }
+
+const FirstCard = styled(Card)`
+  grid-column-start: 1;
+  grid-column-end: 5;
+
+  ${props => props.theme.breakpoint.small} {
+    grid-column-start: 1;
+    grid-column-end: 3;
+  }
+
+  ${props => props.theme.breakpoint.medium} {
+    grid-column-start: 1;
+    grid-column-end: 2;
+  }
+`
+
+const SecondCard = styled(Card)`
+  grid-column-start: 1;
+  grid-column-end: 5;
+
+  ${props => props.theme.breakpoint.small} {
+    grid-column-start: 3;
+    grid-column-end: 5;
+  }
+
+  ${props => props.theme.breakpoint.medium} {
+    grid-column-start: 2;
+    grid-column-end: 3;
+  }
+`
+
+const ThirdCard = styled(Card)`
+  grid-column-start: 1;
+  grid-column-end: 5;
+
+  ${props => props.theme.breakpoint.small} {
+    grid-column-start: 1;
+    grid-column-end: 3;
+  }
+
+  ${props => props.theme.breakpoint.medium} {
+    grid-column-start: 3;
+    grid-column-end: 4;
+  }
+`
+
+const FourthCard = styled(Card)`
+  grid-column-start: 1;
+  grid-column-end: 5;
+
+  ${props => props.theme.breakpoint.small} {
+    grid-column-start: 3;
+    grid-column-end: 5;
+  }
+
+  ${props => props.theme.breakpoint.medium} {
+    grid-column-start: 4;
+    grid-column-end: 5;
+  }
+`

@@ -31,8 +31,6 @@ export const CounterCard = ({
   const cardElement = useRef<HTMLDivElement>()
   const [vertical, setVertical] = useState(false)
   const iconColor = highlighted || !color ? '#fff' : color
-  const changeSymbol = change < 0 ? '-' : '+'
-  const changeColor = change <= 0 ? theme.colors.success : theme.colors.danger
 
   const styles: Record<string, React.CSSProperties> = {
     container: {
@@ -44,6 +42,9 @@ export const CounterCard = ({
     },
     iconBackground: {
       backgroundColor: iconColor
+    },
+    change: {
+      color: change <= 0 ? theme.colors.success : theme.colors.danger
     }
   }
 
@@ -63,8 +64,17 @@ export const CounterCard = ({
 
   const renderCardContent = () => {
     if (isLoading) {
+      const uniqueKey = highlighted ? 'highlighted_card' : 'card'
+      const backgroundColor = highlighted ? '#8E63E3' : undefined
+      const foregroundColor = highlighted ? theme.colors.primary : undefined
+
       return (
-        <ContentLoader height={55}>
+        <ContentLoader
+          backgroundColor={backgroundColor}
+          foregroundColor={foregroundColor}
+          height={55}
+          uniqueKey={uniqueKey}
+        >
           <rect
             x={vertical ? '25%' : '0%'}
             y='15%'
@@ -90,9 +100,8 @@ export const CounterCard = ({
         <Header>
           <Title inverse={highlighted}>{title}</Title>
           {isNumber(change) && (
-            <Change style={{ color: changeColor }}>
-              {changeSymbol}
-              {toLocaleString(Math.abs(change))}
+            <Change style={styles.change}>
+              {`${change < 0 ? '-' : '+'}${toLocaleString(Math.abs(change))}`}
             </Change>
           )}
         </Header>

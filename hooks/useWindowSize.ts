@@ -1,22 +1,12 @@
 import { useState, useEffect } from 'react'
 
-import { breakpoints } from '@/styles/breakpoints'
-
 export const useWindowSize = () => {
   const isClient = typeof window === 'object'
 
-  const getSize = () => {
-    const width = isClient ? window.innerWidth : undefined
-
-    return {
-      width,
-      height: isClient ? window.innerHeight : undefined,
-      isSmaller: width <= breakpoints.small,
-      isSmall: width > breakpoints.small && width <= breakpoints.medium,
-      isMedium: width > breakpoints.medium && width <= breakpoints.large,
-      isLarge: width > breakpoints.large
-    }
-  }
+  const getSize = () => ({
+    width: isClient ? window.innerWidth : undefined,
+    height: isClient ? window.innerHeight : undefined
+  })
 
   const [windowSize, setWindowSize] = useState(getSize)
 

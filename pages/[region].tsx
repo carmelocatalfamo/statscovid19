@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react'
 import { GetServerSideProps, NextPage } from 'next'
 import Head from 'next/head'
-import NoSSR from 'react-no-ssr'
+import styled from 'styled-components'
 
 import { Counters } from '@/components/Counters'
 import { IntensiveCare } from '@/components/charts/IntensiveCare'
@@ -11,7 +11,6 @@ import { regions } from '@/utils/regions'
 import { TestPositivesRatio } from '@/components/charts/TestPositivesRatio'
 import { TotalPositives } from '@/components/charts/TotalPositives'
 import { useGetDailyRegionDataQuery } from '@/store/services/covid'
-import { useWindowSize } from '@/hooks/useWindowSize'
 import { WithTemplate } from '@/components/WithTemplate'
 import { Zone } from '@/components/Zone'
 
@@ -20,39 +19,19 @@ type Props = {
 }
 
 const Region: NextPage<Props> = ({ region }) => {
-  const { isSmaller, isSmall } = useWindowSize()
-  const { ...props } = useGetDailyRegionDataQuery(region.code)
-  const { data, isFetching, isLoading } = props
-
-  const title = `Statistiche COVID-19 ${region.name}`
-  const description = `${region.name}: numeri, grafici e statistiche dei dati ufficiali forniti dalla Protezione Civile sul COVID-19 prima e dopo la fase 2.`
+  const { code, name, slug } = region
+  const { data, isFetching, isLoading } = useGetDailyRegionDataQuery(code)
+  const title = `Statistiche COVID-19 ${name}`
+  const description = `${name}: numeri, grafici e statistiche dei dati ufficiali forniti dalla Protezione Civile sul COVID-19 prima e dopo la fase 2.`
+  const isLoadingNewData = isLoading || isFetching
 
   const {
+    counters,
     intensiveCare,
     newPositives,
     testPositivesRatio,
-    today,
-    totalPositives,
-    yesterday
+    totalPositives
   } = useMemo(() => composeData(data), [data])
-
-  const renderPositivesAndZone = () => {
-    if (isSmall || isSmaller) {
-      return (
-        <NoSSR>
-          <Zone offset={0} size={100} regionSlug={region.slug} />
-          <TotalPositives size={100} data={totalPositives} />
-        </NoSSR>
-      )
-    }
-
-    return (
-      <NoSSR>
-        <TotalPositives size={75} data={totalPositives} />
-        <Zone regionSlug={region.slug} />
-      </NoSSR>
-    )
-  }
 
   return (
     <WithTemplate>
@@ -69,26 +48,41 @@ const Region: NextPage<Props> = ({ region }) => {
       </Head>
 
       <Counters
-        isLoading={isLoading || isFetching}
-        totalPositives={today?.totale_positivi}
-        totalPositivesChanges={today?.variazione_totale_positivi}
-        newPositives={today?.nuovi_positivi}
-        intensiveCare={today?.terapia_intensiva}
-        intensiveCareChanges={
-          today?.terapia_intensiva - yesterday?.terapia_intensiva
-        }
-        lastUpdate={today?.data}
+        isLoading={isLoadingNewData}
+        totalPositives={counters.totalPositives}
+        totalPositivesChanges={counters.totalPositivesChanges}
+        newPositives={counters.newPositives}
+        intensiveCare={counters.intensiveCare}
+        intensiveCareChanges={counters.intensiveCareChanges}
+        lastUpdate={counters.lastUpdate}
       />
-      {renderPositivesAndZone()}
-      <NewPositives size={100} data={newPositives} />
-      <TestPositivesRatio size={100} data={testPositivesRatio} />
-      <IntensiveCare size={100} data={intensiveCare} />
+      <StyledTotalPositives
+        data={totalPositives}
+        isLoading={isLoadingNewData}
+      />
+      <StyledZone regionSlug={slug} />
+      <StyledNewPositives data={newPositives} isLoading={isLoadingNewData} />
+      <StyledTestPositivesRatio
+        data={testPositivesRatio}
+        isLoading={isLoadingNewData}
+      />
+      <StyledIntensiveCare data={intensiveCare} isLoading={isLoadingNewData} />
     </WithTemplate>
   )
 }
 
 const composeData = (data: RegionData[] = []) => {
   const [yesterday, today] = data.slice(-2)
+
+  const counters = {
+    intensiveCare: today?.terapia_intensiva,
+    intensiveCareChanges:
+      today?.terapia_intensiva - yesterday?.terapia_intensiva,
+    lastUpdate: today?.data,
+    newPositives: today?.nuovi_positivi,
+    totalPositives: today?.totale_positivi,
+    totalPositivesChanges: today?.variazione_totale_positivi
+  }
 
   const testPositivesRatio = data.map(
     ({ data: date, nuovi_positivi, tamponi }, index) => ({
@@ -114,22 +108,56 @@ const composeData = (data: RegionData[] = []) => {
   }))
 
   return {
+    counters,
     intensiveCare,
     newPositives,
     testPositivesRatio,
-    today,
-    totalPositives,
-    yesterday
+    totalPositives
   }
 }
+
+const StyledTotalPositives = styled(TotalPositives)`
+  grid-column-start: 1;
+  grid-column-end: 5;
+
+  ${props => props.theme.breakpoint.medium} {
+    grid-column-end: 4;
+  }
+`
+
+const StyledZone = styled(Zone)`
+  grid-column-start: 1;
+  grid-column-end: 5;
+  grid-row-start: 3;
+
+  ${props => props.theme.breakpoint.medium} {
+    grid-row-start: auto;
+    grid-column-start: 4;
+    grid-column-end: 5;
+  }
+`
+
+const StyledNewPositives = styled(NewPositives)`
+  grid-column-start: 1;
+  grid-column-end: 5;
+`
+
+const StyledTestPositivesRatio = styled(TestPositivesRatio)`
+  grid-column-start: 1;
+  grid-column-end: 5;
+`
+
+const StyledIntensiveCare = styled(IntensiveCare)`
+  grid-column-start: 1;
+  grid-column-end: 5;
+`
 
 export const getServerSideProps: GetServerSideProps = async ({ query }) => {
   const region = regions.find(({ slug }) => slug === query.region)
 
   return {
-    props: {
-      region
-    }
+    props: { region },
+    notFound: !region
   }
 }
 

@@ -11,7 +11,7 @@ type Props = {
 
 export const WithTemplate = ({ children }: Props) => {
   return (
-    <>
+    <React.Fragment>
       <Navbar />
       <Menu />
       <Page>
@@ -20,7 +20,7 @@ export const WithTemplate = ({ children }: Props) => {
           <Grid>{children}</Grid>
         </Content>
       </Page>
-    </>
+    </React.Fragment>
   )
 }
 
@@ -44,7 +44,7 @@ const Content = styled.div`
 
 const Grid = styled.div`
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   grid-column-gap: 30px;
   grid-row-gap: 30px;
   padding: 30px;

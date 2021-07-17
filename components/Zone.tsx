@@ -1,25 +1,20 @@
 import React from 'react'
 import { FiInfo } from 'react-icons/fi'
 import ContentLoader from 'react-content-loader'
-import isUndefined from 'lodash/isUndefined'
 import styled, { useTheme } from 'styled-components'
 
-import { Card, CardOffset, CardSize } from '@/components/commons/Card'
+import { Card } from '@/components/commons/Card'
 import { Region } from '@/components/maps/Region'
 import { Text } from '@/components/commons/Text'
 import { useGetRegionsZoneDataQuery } from '@/store/services/covid'
 
 type Props = {
   regionSlug: string
-  offset?: CardOffset
-  size?: CardSize
 }
 
-export const Zone = ({ regionSlug, offset, size }: Props) => {
+export const Zone = ({ regionSlug, ...otherProps }: Props) => {
   const theme = useTheme()
   const { data = [], error, isLoading } = useGetRegionsZoneDataQuery()
-  const cardOffset = isUndefined(offset) ? 75 : offset
-  const cardSize = isUndefined(size) ? 25 : size
   const regionZone = data.find(({ region: { slug } }) => slug === regionSlug)
 
   const zoneToColors = {
@@ -71,8 +66,7 @@ export const Zone = ({ regionSlug, offset, size }: Props) => {
 
   return (
     <StyledCard
-      offset={cardOffset}
-      size={cardSize}
+      {...otherProps}
       highlighted={zoneToColors[regionZone?.zone]}
       title={() => (
         <CardHeader>

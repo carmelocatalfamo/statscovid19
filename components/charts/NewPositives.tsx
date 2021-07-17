@@ -10,25 +10,26 @@ import {
   ResponsiveContainer
 } from 'recharts'
 
-import { Card, CardSize } from '@/components/commons/Card'
-import { Text } from '@/components/commons/Text'
+import { Card } from '@/components/commons/Card'
 import { CustomTooltip } from '@/components/charts/CustomTooltip'
-import { toLocaleDate, toLocaleString } from '@/utils/functions'
+import { Loader } from '@/components/charts/Loader'
+import { Text } from '@/components/commons/Text'
 import { TimeRangeSelect, timeRangeOptions } from '@/components/TimeRangeSelect'
+import { toLocaleDate, toLocaleString } from '@/utils/functions'
 
 type Props = {
-  size: CardSize
   data: {
     date: string
     positives: number
   }[]
+  isLoading?: boolean
 }
 
 const labelMap = {
   positives: 'Nuovi positivi'
 }
 
-export const NewPositives = ({ data, size }: Props) => {
+export const NewPositives = ({ data, isLoading, ...otherProps }: Props) => {
   const theme = useTheme()
   const [timeRange, setTimeRange] = useState(timeRangeOptions[0])
   const axisFontSize = 12
@@ -54,7 +55,18 @@ export const NewPositives = ({ data, size }: Props) => {
     )
   }, [timeRange])
 
-  const _data = data.filter(d => {
+  const renderTitle = () => (
+    <Header>
+      <Title>Nuovi Positivi</Title>
+      <TimeRangeSelect
+        instanceId='new_positives'
+        value={timeRange}
+        setValue={setTimeRange}
+      />
+    </Header>
+  )
+
+  const filteredData = data.filter(d => {
     const dates = timeRange?.getDates()
     if (!dates) return true
     const date = new Date(d.date).getTime()
@@ -62,51 +74,41 @@ export const NewPositives = ({ data, size }: Props) => {
   })
 
   return (
-    <Card
-      size={size}
-      title={() => (
-        <Header>
-          <Title>Nuovi Positivi</Title>
-          <TimeRangeSelect
-            instanceId='new_positives'
-            value={timeRange}
-            setValue={setTimeRange}
-          />
-        </Header>
-      )}
-    >
-      <ResponsiveContainer height={300}>
-        <LineChart data={_data}>
-          <CartesianGrid strokeDasharray='3' stroke={theme.colors.content} />
-          <XAxis
-            dataKey='date'
-            fontSize={axisFontSize}
-            fontFamily={theme.fonts.text.family}
-            color={axisColor}
-            tickFormatter={v => toLocaleDate(v)}
-          />
-          <YAxis
-            fontSize={axisFontSize}
-            fontFamily={theme.fonts.text.family}
-            color={axisColor}
-            tickFormatter={v => toLocaleString(v)}
-          />
-          <Tooltip
-            content={CustomTooltip}
-            labelFormatter={v => toLocaleDate(v)}
-            formatter={(value, label) =>
-              `${labelMap[label]}: ${toLocaleString(value)}`
-            }
-          />
-          <Line
-            type='monotone'
-            dataKey='positives'
-            stroke={theme.colors.primary}
-            dot={{ r: 0, fill: theme.colors.content }}
-            activeDot={{ r: 4, fill: theme.colors.primary }}
-          />
-        </LineChart>
-      </ResponsiveContainer>
+    <Card {...otherProps} title={renderTitle}>
+      <Loader isLoading={isLoading}>
+        <ResponsiveContainer height={300}>
+          <LineChart data={filteredData}>
+            <CartesianGrid strokeDasharray='3' stroke={theme.colors.content} />
+            <XAxis
+              dataKey='date'
+              fontSize={axisFontSize}
+              fontFamily={theme.fonts.text.family}
+              color={axisColor}
+              tickFormatter={v => toLocaleDate(v)}
+            />
+            <YAxis
+              fontSize={axisFontSize}
+              fontFamily={theme.fonts.text.family}
+              color={axisColor}
+              tickFormatter={v => toLocaleString(v)}
+            />
+            <Tooltip
+              content={CustomTooltip}
+              labelFormatter={v => toLocaleDate(v)}
+              formatter={(value, label) =>
+                `${labelMap[label]}: ${toLocaleString(value)}`
+              }
+            />
+            <Line
+              type='monotone'
+              dataKey='positives'
+              stroke={theme.colors.primary}
+              dot={{ r: 0, fill: theme.colors.content }}
+              activeDot={{ r: 4, fill: theme.colors.primary }}
+            />
+          </LineChart>
+        </ResponsiveContainer>
+      </Loader>
     </Card>
   )
 }

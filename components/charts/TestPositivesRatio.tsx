@@ -10,26 +10,31 @@ import {
   ResponsiveContainer
 } from 'recharts'
 
-import { Card, CardSize } from '@/components/commons/Card'
+import { Card } from '@/components/commons/Card'
 import { Text } from '@/components/commons/Text'
 import { CustomTooltip } from '@/components/charts/CustomTooltip'
+import { Loader } from '@/components/charts/Loader'
 import { toLocaleDate } from '@/utils/functions'
 import { TimeRangeSelect, timeRangeOptions } from '@/components/TimeRangeSelect'
 
 type Props = {
-  size: CardSize
   data: {
     date: string
     positives: number
     tests: number
   }[]
+  isLoading?: boolean
 }
 
 const labelMap = {
   ratio: 'Percentuale'
 }
 
-export const TestPositivesRatio = ({ data, size }: Props) => {
+export const TestPositivesRatio = ({
+  data,
+  isLoading,
+  ...otherProps
+}: Props) => {
   const theme = useTheme()
   const [timeRange, setTimeRange] = useState(timeRangeOptions[0])
   const axisFontSize = 12
@@ -52,7 +57,18 @@ export const TestPositivesRatio = ({ data, size }: Props) => {
     window.localStorage.setItem('timeRange', JSON.stringify(timeRange))
   }, [timeRange])
 
-  const _data = data
+  const renderTitle = () => (
+    <Header>
+      <Title>Andamento rapporto Tamponi/Positivi</Title>
+      <TimeRangeSelect
+        instanceId='test_positives_ratio'
+        value={timeRange}
+        setValue={setTimeRange}
+      />
+    </Header>
+  )
+
+  const filteredData = data
     .map(d => {
       let percentage =
         d.tests > 0 ? Number(((d.positives * 100) / d.tests).toFixed(2)) : 0
@@ -72,49 +88,39 @@ export const TestPositivesRatio = ({ data, size }: Props) => {
     })
 
   return (
-    <Card
-      size={size}
-      title={() => (
-        <Header>
-          <Title>Andamento rapporto Tamponi/Positivi</Title>
-          <TimeRangeSelect
-            instanceId='test_positives_ratio'
-            value={timeRange}
-            setValue={setTimeRange}
-          />
-        </Header>
-      )}
-    >
-      <ResponsiveContainer height={300}>
-        <LineChart data={_data}>
-          <CartesianGrid strokeDasharray='3' stroke={theme.colors.content} />
-          <XAxis
-            dataKey='date'
-            fontSize={axisFontSize}
-            fontFamily={theme.fonts.text.family}
-            color={axisColor}
-            tickFormatter={v => toLocaleDate(v)}
-          />
-          <YAxis
-            fontSize={axisFontSize}
-            fontFamily={theme.fonts.text.family}
-            color={axisColor}
-            tickFormatter={v => `${v}%`}
-          />
-          <Tooltip
-            content={CustomTooltip}
-            labelFormatter={v => toLocaleDate(v)}
-            formatter={(value, label) => `${labelMap[label]}: ${value}%`}
-          />
-          <Line
-            type='monotone'
-            dataKey='ratio'
-            stroke={theme.colors.primary}
-            dot={{ r: 0, fill: theme.colors.content }}
-            activeDot={{ r: 4, fill: theme.colors.primary }}
-          />
-        </LineChart>
-      </ResponsiveContainer>
+    <Card {...otherProps} title={renderTitle}>
+      <Loader isLoading={isLoading}>
+        <ResponsiveContainer height={300}>
+          <LineChart data={filteredData}>
+            <CartesianGrid strokeDasharray='3' stroke={theme.colors.content} />
+            <XAxis
+              dataKey='date'
+              fontSize={axisFontSize}
+              fontFamily={theme.fonts.text.family}
+              color={axisColor}
+              tickFormatter={v => toLocaleDate(v)}
+            />
+            <YAxis
+              fontSize={axisFontSize}
+              fontFamily={theme.fonts.text.family}
+              color={axisColor}
+              tickFormatter={v => `${v}%`}
+            />
+            <Tooltip
+              content={CustomTooltip}
+              labelFormatter={v => toLocaleDate(v)}
+              formatter={(value, label) => `${labelMap[label]}: ${value}%`}
+            />
+            <Line
+              type='monotone'
+              dataKey='ratio'
+              stroke={theme.colors.primary}
+              dot={{ r: 0, fill: theme.colors.content }}
+              activeDot={{ r: 4, fill: theme.colors.primary }}
+            />
+          </LineChart>
+        </ResponsiveContainer>
+      </Loader>
     </Card>
   )
 }

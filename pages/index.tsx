@@ -1,5 +1,6 @@
 import React, { useMemo } from 'react'
 import { NextPage } from 'next'
+import styled from 'styled-components'
 
 import { Counters } from '@/components/Counters'
 import { IntensiveCare } from '@/components/charts/IntensiveCare'
@@ -14,37 +15,47 @@ const Home: NextPage = () => {
   const { data, isLoading } = useGetDailyCountryDataQuery()
 
   const {
+    counters,
     intensiveCare,
     newPositives,
     testPositivesRatio,
-    today,
-    totalPositives,
-    yesterday
+    totalPositives
   } = useMemo(() => composeData(data), [data])
 
   return (
     <WithTemplate>
       <Counters
         isLoading={isLoading}
-        totalPositives={today?.totale_positivi}
-        totalPositivesChanges={today?.variazione_totale_positivi}
-        newPositives={today?.nuovi_positivi}
-        intensiveCare={today?.terapia_intensiva}
-        intensiveCareChanges={
-          today?.terapia_intensiva - yesterday?.terapia_intensiva
-        }
-        lastUpdate={today?.data}
+        totalPositives={counters.totalPositives}
+        totalPositivesChanges={counters.totalPositivesChanges}
+        newPositives={counters.newPositives}
+        intensiveCare={counters.intensiveCare}
+        intensiveCareChanges={counters.intensiveCareChanges}
+        lastUpdate={counters.lastUpdate}
       />
-      <TotalPositives size={100} data={totalPositives} />
-      <NewPositives size={100} data={newPositives} />
-      <TestPositivesRatio size={100} data={testPositivesRatio} />
-      <IntensiveCare size={100} data={intensiveCare} />
+      <StyledTotalPositives data={totalPositives} isLoading={isLoading} />
+      <StyledNewPositives data={newPositives} isLoading={isLoading} />
+      <StyledTestPositivesRatio
+        data={testPositivesRatio}
+        isLoading={isLoading}
+      />
+      <StyledIntensiveCare data={intensiveCare} isLoading={isLoading} />
     </WithTemplate>
   )
 }
 
 const composeData = (data: CountryData[] = []) => {
   const [yesterday, today] = data.slice(-2)
+
+  const counters = {
+    intensiveCare: today?.terapia_intensiva,
+    intensiveCareChanges:
+      today?.terapia_intensiva - yesterday?.terapia_intensiva,
+    lastUpdate: today?.data,
+    newPositives: today?.nuovi_positivi,
+    totalPositives: today?.totale_positivi,
+    totalPositivesChanges: today?.variazione_totale_positivi
+  }
 
   const testPositivesRatio = data.map(
     ({ data: date, nuovi_positivi, tamponi }, index) => ({
@@ -70,13 +81,32 @@ const composeData = (data: CountryData[] = []) => {
   }))
 
   return {
+    counters,
     intensiveCare,
     newPositives,
     testPositivesRatio,
-    today,
-    totalPositives,
-    yesterday
+    totalPositives
   }
 }
+
+const StyledTotalPositives = styled(TotalPositives)`
+  grid-column-start: 1;
+  grid-column-end: 5;
+`
+
+const StyledNewPositives = styled(NewPositives)`
+  grid-column-start: 1;
+  grid-column-end: 5;
+`
+
+const StyledTestPositivesRatio = styled(TestPositivesRatio)`
+  grid-column-start: 1;
+  grid-column-end: 5;
+`
+
+const StyledIntensiveCare = styled(IntensiveCare)`
+  grid-column-start: 1;
+  grid-column-end: 5;
+`
 
 export default Home

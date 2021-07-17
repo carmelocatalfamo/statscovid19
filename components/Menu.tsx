@@ -31,23 +31,23 @@ const Menu = () => {
 
 const Container = styled.menu<{ isVisible: boolean }>`
   background-color: ${props => props.theme.colors.sidebar};
-  top: ${props => (props.isVisible ? '0vh' : '-100vh')};
-  transition: 0.15s ease-in-out top;
+  height: 100vh;
+  left: 0px;
   overflow: hidden;
   position: fixed;
-  z-index: 9;
-  left: 0px;
-  height: 100vh;
+  top: ${props => (props.isVisible ? '0vh' : '-100vh')};
+  transition: 0.15s ease-in-out top;
   width: 100%;
+  z-index: 9;
 `
 
 const Content = styled.div`
-  padding: 90px 20px 30px;
-  height: 100%;
-  overflow: scroll;
   display: flex;
   flex-direction: column;
+  height: 100%;
   justify-content: space-between;
+  overflow: scroll;
+  padding: 90px 20px 30px;
 `
 
 export { Menu }

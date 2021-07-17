@@ -4,7 +4,7 @@ import ContentLoader from 'react-content-loader'
 import styled, { useTheme } from 'styled-components'
 
 import { Card } from '@/components/commons/Card'
-import { Region } from '@/components/maps/Region'
+import { RegionMap } from '@/components/RegionMap'
 import { Text } from '@/components/commons/Text'
 import { useGetRegionsZoneDataQuery } from '@/store/services/covid'
 
@@ -13,16 +13,16 @@ type Props = {
 }
 
 export const Zone = ({ regionSlug, ...otherProps }: Props) => {
-  const theme = useTheme()
+  const { colors, loader } = useTheme()
   const { data = [], error, isLoading } = useGetRegionsZoneDataQuery()
   const regionZone = data.find(({ region: { slug } }) => slug === regionSlug)
 
   const zoneToColors = {
-    white: theme.colors.text,
-    yellow: theme.colors.warning,
-    orange: theme.colors.gradient2,
-    red: theme.colors.danger,
-    undefined: theme.colors.sidebar
+    white: colors.text,
+    yellow: colors.warning,
+    orange: colors.gradient2,
+    red: colors.danger,
+    undefined: colors.sidebar
   }
 
   const zoneToTitle = {
@@ -41,8 +41,8 @@ export const Zone = ({ regionSlug, ...otherProps }: Props) => {
           speed={2}
           width='100%'
           height='100%'
-          backgroundColor={theme.loader.background}
-          foregroundColor={theme.loader.foreground}
+          backgroundColor={loader.background}
+          foregroundColor={loader.foreground}
         >
           <circle cx='50%' cy='130' r='75' />
         </ContentLoader>
@@ -55,10 +55,10 @@ export const Zone = ({ regionSlug, ...otherProps }: Props) => {
 
     return (
       <Container>
-        <Region
+        <RegionMap
           regionSlug={regionZone.region.slug}
-          fill={theme.colors.navbar}
-          stroke={theme.colors.navbar}
+          fill={colors.navbar}
+          stroke={colors.navbar}
         />
       </Container>
     )
@@ -77,13 +77,7 @@ export const Zone = ({ regionSlug, ...otherProps }: Props) => {
             title='Informazioni Ufficiali'
             href='https://www.governo.it/it/articolo/domande-frequenti-sulle-misure-adottate-dal-governo/15638'
           >
-            <FiInfo
-              size={22}
-              color={theme.colors.title}
-              style={{
-                cursor: 'pointer'
-              }}
-            />
+            <Icon size={22} color={colors.title} />
           </a>
         </CardHeader>
       )}
@@ -124,4 +118,8 @@ const Title = styled(Text)`
   color: ${props => props.theme.colors.title};
   font-size: 16px;
   font-weight: bold;
+`
+
+const Icon = styled(FiInfo)`
+  cursor: pointer;
 `

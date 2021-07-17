@@ -50,23 +50,23 @@ export const Navbar = () => {
 }
 
 const Content = styled.nav`
+  align-items: center;
   background-color: ${props => props.theme.colors.navbar};
   border-bottom: 1px solid ${props => props.theme.colors.content};
-  width: 100%;
-  height: 70px;
-  padding: 0px 30px;
   display: flex;
-  align-items: center;
+  height: 70px;
   justify-content: space-between;
-  position: fixed;
-  z-index: 10;
-  top: 0px;
   left: 0px;
+  padding: 0px 30px;
+  position: fixed;
+  top: 0px;
+  width: 100%;
+  z-index: 10;
 `
 
 const Brand = styled.a`
-  display: flex;
   align-items: center;
+  display: flex;
   text-decoration: none;
 `
 

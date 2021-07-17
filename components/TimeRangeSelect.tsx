@@ -58,17 +58,17 @@ export type Option = typeof timeRangeOptions[0]
 
 type Props = {
   instanceId: string
-  value: Option
   setValue: (value: Option) => void
+  value: Option
 }
 
 export const TimeRangeSelect = ({
   instanceId,
-  value,
   setValue,
+  value,
   ...props
 }: Props) => {
-  const theme = useTheme()
+  const { colors } = useTheme()
 
   return (
     <StyledSelect
@@ -100,20 +100,18 @@ export const TimeRangeSelect = ({
         }),
         singleValue: (provided: CSSObject) => ({
           ...provided,
-          color: `${theme.colors.title} !important`,
+          color: `${colors.title} !important`,
           fontSize: 14
         }),
         menu: (provided: CSSObject) => ({
           ...provided,
-          backgroundColor: theme.colors.content
+          backgroundColor: colors.content
         }),
-        option: (provided: CSSObject, state) => {
-          const backgroundColor = state.isSelected
-            ? theme.colors.primary
-            : 'transparent'
+        option: (provided: CSSObject, { isSelected }) => {
+          const backgroundColor = isSelected ? colors.primary : 'transparent'
           return {
             ...provided,
-            color: state.isSelected ? '#FFFFFF' : theme.colors.text,
+            color: isSelected ? '#FFFFFF' : colors.text,
             backgroundColor,
             cursor: 'pointer',
             ':active': {
@@ -127,8 +125,8 @@ export const TimeRangeSelect = ({
 }
 
 const StyledSelect = styled(Select)`
-  min-width: 200px;
   font-family: ${props => props.theme.fonts.text.family};
+  min-width: 200px;
 
   [class*='-indicatorContainer'] {
     color: ${props => props.theme.colors.title} !important;

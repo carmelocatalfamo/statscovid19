@@ -32,7 +32,8 @@ const theme: DefaultTheme = {
     text: '#A1A5B9',
     sidebar: '#2A2B32',
     navbar: '#2A2B32',
-    content: '#202127'
+    content: '#202127',
+    white: '#FFF'
   },
   fonts: {
     text: {

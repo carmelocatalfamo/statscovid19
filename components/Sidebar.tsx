@@ -1,8 +1,8 @@
 import React from 'react'
 import styled from 'styled-components'
 
-import { SidebarMainMenu } from '@/components/SidebarMainMenu'
 import { SidebarFooter } from '@/components/SidebarFooter'
+import { SidebarMainMenu } from '@/components/SidebarMainMenu'
 
 export const Sidebar = () => {
   return (
@@ -16,13 +16,13 @@ export const Sidebar = () => {
 const Aside = styled.aside`
   background-color: ${props => props.theme.colors.sidebar};
   display: none;
+  flex-direction: column;
+  height: calc(100vh - 70px);
+  justify-content: space-between;
   overflow: overlay;
+  padding: 30px;
   position: fixed;
   width: 255px;
-  height: calc(100vh - 70px);
-  padding: 30px;
-  flex-direction: column;
-  justify-content: space-between;
 
   ${props => props.theme.breakpoint.large} {
     display: flex;

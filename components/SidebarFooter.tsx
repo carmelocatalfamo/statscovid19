@@ -42,20 +42,20 @@ export const SidebarFooter = ({ onItemClick }: Props) => {
 }
 
 const ExternalLink = styled.a`
-  font-family: ${props => props.theme.fonts.text.family};
+  align-items: center;
   color: ${props => props.theme.colors.text};
+  display: flex;
+  font-family: ${props => props.theme.fonts.text.family};
   font-size: 12px;
+  justify-content: flex-start;
+  margin-left: 15px;
+  margin-top: 10px;
   text-decoration: none;
   transition: 0.2s ease-in-out color;
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  margin-top: 10px;
-  margin-left: 15px;
 
   svg {
-    transition: 0.2s ease-in-out fill;
     margin-right: 6px;
+    transition: 0.2s ease-in-out fill;
   }
 
   &:hover {

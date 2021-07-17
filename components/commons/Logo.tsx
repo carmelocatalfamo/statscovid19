@@ -7,7 +7,7 @@ type Props = {
 }
 
 export const Logo = ({ height, width }: Props) => {
-  const theme = useTheme()
+  const { logo } = useTheme()
 
   return (
     <svg
@@ -55,30 +55,30 @@ export const Logo = ({ height, width }: Props) => {
           d='M372.95 301.74c-10.32 0-18.69 8.38-18.69 18.7 0 10.33 8.37 18.7 18.69 18.7 10.33 0 18.7-8.37 18.7-18.7 0-10.32-8.37-18.7-18.7-18.7z'
         />
       </defs>
-      <use fill={theme.logo[0]} xlinkHref='#a' />
+      <use fill={logo[0]} xlinkHref='#a' />
       <use fillOpacity='0' stroke='#000' strokeOpacity='0' xlinkHref='#a' />
-      <use fill={theme.logo[1]} xlinkHref='#b' />
+      <use fill={logo[1]} xlinkHref='#b' />
       <use fillOpacity='0' stroke='#000' strokeOpacity='0' xlinkHref='#b' />
       <use fill='rgba(0, 0, 0, 0.1)' xlinkHref='#c' />
       <use fillOpacity='0' stroke='#000' strokeOpacity='0' xlinkHref='#c' />
-      <use fill={theme.logo[0]} xlinkHref='#d' />
+      <use fill={logo[0]} xlinkHref='#d' />
       <use fillOpacity='0' stroke='#000' strokeOpacity='0' xlinkHref='#d' />
-      <use fill={theme.logo[0]} xlinkHref='#e' />
+      <use fill={logo[0]} xlinkHref='#e' />
       <use fillOpacity='0' stroke='#000' strokeOpacity='0' xlinkHref='#e' />
       <g>
-        <use fill={theme.logo[0]} xlinkHref='#f' />
+        <use fill={logo[0]} xlinkHref='#f' />
         <use fillOpacity='0' stroke='#000' strokeOpacity='0' xlinkHref='#f' />
       </g>
       <g>
-        <use fill={theme.logo[0]} xlinkHref='#g' />
+        <use fill={logo[0]} xlinkHref='#g' />
         <use fillOpacity='0' stroke='#000' strokeOpacity='0' xlinkHref='#g' />
       </g>
       <g>
-        <use fill={theme.logo[0]} xlinkHref='#h' />
+        <use fill={logo[0]} xlinkHref='#h' />
         <use fillOpacity='0' stroke='#000' strokeOpacity='0' xlinkHref='#h' />
       </g>
       <g>
-        <use fill={theme.logo[0]} xlinkHref='#i' />
+        <use fill={logo[0]} xlinkHref='#i' />
         <use fillOpacity='0' stroke='#000' strokeOpacity='0' xlinkHref='#i' />
       </g>
     </svg>

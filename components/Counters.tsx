@@ -23,7 +23,7 @@ type Props = {
 }
 
 export const Counters = ({ isLoading, ...otherProps }: Props) => {
-  const theme = useTheme()
+  const { colors } = useTheme()
   const cards = useMemo(() => {
     const {
       intensiveCare,
@@ -38,7 +38,7 @@ export const Counters = ({ isLoading, ...otherProps }: Props) => {
       {
         CardComponent: FirstCard,
         change: totalPositivesChanges,
-        color: theme.colors.primary,
+        color: colors.primary,
         description: 'Positivi attuali',
         highlighted: undefined,
         icon: RiVirusLine,
@@ -47,7 +47,7 @@ export const Counters = ({ isLoading, ...otherProps }: Props) => {
       {
         CardComponent: SecondCard,
         change: undefined,
-        color: theme.colors.gradient1,
+        color: colors.gradient1,
         description: 'Nuovi positivi',
         highlighted: undefined,
         icon: FaUserInjured,
@@ -56,7 +56,7 @@ export const Counters = ({ isLoading, ...otherProps }: Props) => {
       {
         CardComponent: ThirdCard,
         change: intensiveCareChanges,
-        color: theme.colors.gradient2,
+        color: colors.gradient2,
         description: 'In terapia intensiva',
         highlighted: undefined,
         icon: RiHospitalLine,
@@ -65,9 +65,9 @@ export const Counters = ({ isLoading, ...otherProps }: Props) => {
       {
         CardComponent: FourthCard,
         change: undefined,
-        color: '#FFFFFF',
+        color: colors.white,
         description: 'Ultimo aggiornamento',
-        highlighted: theme.colors.primary,
+        highlighted: colors.primary,
         icon: RiCalendarEventFill,
         title: new Date(lastUpdate).toLocaleDateString('it-IT')
       }

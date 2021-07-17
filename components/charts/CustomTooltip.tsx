@@ -5,31 +5,29 @@ import { Text } from '@/components/commons/Text'
 
 export const CustomTooltip = ({
   active,
-  payload,
+  formatter,
   label,
   labelFormatter,
-  formatter
+  payload
 }) => {
-  if (active) {
-    return (
-      <Container>
-        <Label>{labelFormatter(label)}</Label>
-        {payload?.map(({ dataKey, color, value }) => (
-          <Key key={dataKey} style={{ color }}>
-            {formatter(value, dataKey)}
-          </Key>
-        ))}
-      </Container>
-    )
-  }
+  if (!active) return null
 
-  return null
+  return (
+    <Container>
+      <Label>{labelFormatter(label)}</Label>
+      {payload?.map(({ dataKey, color, value }) => (
+        <Key key={dataKey} style={{ color }}>
+          {formatter(value, dataKey)}
+        </Key>
+      ))}
+    </Container>
+  )
 }
 
 const Container = styled.div`
   background-color: ${props => props.theme.colors.content};
-  padding: 12px 16px;
   border-radius: 10px;
+  padding: 12px 16px;
 `
 
 const Label = styled(Text)`

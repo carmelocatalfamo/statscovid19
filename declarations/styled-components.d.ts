@@ -4,36 +4,37 @@ import { Theme } from '@/models/Theme'
 
 declare module 'styled-components' {
   export interface DefaultTheme {
-    theme: Theme
     breakpoint: {
-      small: string
-      medium: string
       large: string
-    }
-    logo: string[]
-    loader: {
-      background: string
-      foreground: string
+      medium: string
+      small: string
     }
     colors: {
-      primary: string
-      secondary: string
+      content: string
+      danger: string
       gradient1: string
       gradient2: string
       gradient3: string
-      success: string
-      warning: string
-      danger: string
-      title: string
-      text: string
-      sidebar: string
       navbar: string
-      content: string
+      primary: string
+      secondary: string
+      sidebar: string
+      success: string
+      text: string
+      title: string
+      warning: string
+      white: string
     }
     fonts: {
       text: {
         family: string
       }
     }
+    loader: {
+      background: string
+      foreground: string
+    }
+    logo: string[]
+    theme: Theme
   }
 }

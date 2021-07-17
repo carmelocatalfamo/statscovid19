@@ -33,16 +33,16 @@ export const SidebarRegionsMenu = ({ isOpen, onRegionClick }: Props) => {
 
 const List = styled.ul`
   margin-top: -10px;
-  padding-left: 58px;
   overflow: hidden;
+  padding-left: 58px;
   transition: 0.2s linear max-height;
 `
 
 const Anchor = styled.a`
-  text-decoration: none;
+  display: block;
   font-size: 16px;
   margin: 10px 0px;
-  display: block;
+  text-decoration: none;
 
   ${props => props.theme.breakpoint.large} {
     font-size: 12px;

@@ -29,13 +29,13 @@ const ButtonIcon = ({
 }
 
 const Button = styled.button`
-  height: 44px;
-  width: 44px;
-  padding: 0px;
-  cursor: pointer;
   background: transparent;
   border: none;
+  cursor: pointer;
+  height: 44px;
   outline: none;
+  padding: 0px;
+  width: 44px;
 `
 
 export { ButtonIcon }

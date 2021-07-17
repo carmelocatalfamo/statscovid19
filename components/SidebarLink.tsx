@@ -1,22 +1,22 @@
 import React from 'react'
-import styled, { useTheme } from 'styled-components'
 import { IconType } from 'react-icons'
 import Link from 'next/link'
+import styled, { useTheme } from 'styled-components'
 
 import { Text } from '@/components/commons/Text'
 
 type Props = {
-  label: string
-  href?: string
-  onClick?: () => void
   active?: boolean
+  href?: string
   Icon: IconType
+  label: string
+  onClick?: () => void
 }
 
-export const SidebarLink = ({ href, label, active, onClick, Icon }: Props) => {
-  const theme = useTheme()
-  const iconColor = active ? theme.colors.primary : theme.colors.text
-  const textColor = active ? theme.colors.title : theme.colors.text
+export const SidebarLink = ({ active, href, Icon, label, onClick }: Props) => {
+  const { colors } = useTheme()
+  const iconColor = active ? colors.primary : colors.text
+  const textColor = active ? colors.title : colors.text
 
   const renderLink = (handleOnClick?: () => void) => {
     return (
@@ -39,11 +39,11 @@ export const SidebarLink = ({ href, label, active, onClick, Icon }: Props) => {
 }
 
 const StyledLink = styled.a`
-  display: flex;
   align-items: center;
-  text-decoration: none;
-  padding: 15px;
   cursor: pointer;
+  display: flex;
+  padding: 15px;
+  text-decoration: none;
 `
 
 const ItemText = styled(Text)`

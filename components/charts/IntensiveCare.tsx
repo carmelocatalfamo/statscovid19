@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import styled, { useTheme } from 'styled-components'
 import {
-  LineChart,
-  Line,
-  XAxis,
-  YAxis,
   CartesianGrid,
+  Line,
+  LineChart,
+  ResponsiveContainer,
   Tooltip,
-  ResponsiveContainer
+  XAxis,
+  YAxis
 } from 'recharts'
 
 import { Card } from '@/components/commons/Card'
@@ -30,10 +30,10 @@ const labelMap = {
 }
 
 export const IntensiveCare = ({ data, isLoading, ...otherProps }: Props) => {
-  const theme = useTheme()
+  const { colors, fonts } = useTheme()
   const [timeRange, setTimeRange] = useState(timeRangeOptions[0])
   const axisFontSize = 12
-  const axisColor = theme.colors.text
+  const axisColor = colors.text
 
   useEffect(() => {
     try {
@@ -78,17 +78,17 @@ export const IntensiveCare = ({ data, isLoading, ...otherProps }: Props) => {
       <Loader isLoading={isLoading}>
         <ResponsiveContainer height={300}>
           <LineChart data={filteredData}>
-            <CartesianGrid strokeDasharray='3' stroke={theme.colors.content} />
+            <CartesianGrid strokeDasharray='3' stroke={colors.content} />
             <XAxis
               dataKey='date'
               fontSize={axisFontSize}
-              fontFamily={theme.fonts.text.family}
+              fontFamily={fonts.text.family}
               color={axisColor}
               tickFormatter={v => toLocaleDate(v)}
             />
             <YAxis
               fontSize={axisFontSize}
-              fontFamily={theme.fonts.text.family}
+              fontFamily={fonts.text.family}
               color={axisColor}
               tickFormatter={v => toLocaleString(v)}
             />
@@ -102,9 +102,9 @@ export const IntensiveCare = ({ data, isLoading, ...otherProps }: Props) => {
             <Line
               type='monotone'
               dataKey='intensiveCare'
-              stroke={theme.colors.primary}
-              dot={{ r: 0, fill: theme.colors.content }}
-              activeDot={{ r: 4, fill: theme.colors.primary }}
+              stroke={colors.primary}
+              dot={{ r: 0, fill: colors.content }}
+              activeDot={{ r: 4, fill: colors.primary }}
             />
           </LineChart>
         </ResponsiveContainer>
@@ -117,22 +117,22 @@ const Title = styled(Text)`
   color: ${props => props.theme.colors.title};
   font-size: 16px;
   font-weight: bold;
-  text-align: right;
   margin-bottom: 10px;
+  text-align: right;
 
   ${props => props.theme.breakpoint.small} {
-    text-align: left;
     margin-bottom: 0px;
+    text-align: left;
   }
 `
 
 const Header = styled.div`
   align-items: flex-end;
-  flex-direction: column;
+  border-bottom: 2px solid ${props => props.theme.colors.content};
   display: flex;
+  flex-direction: column;
   justify-content: space-between;
   padding: 22px 30px;
-  border-bottom: 2px solid ${props => props.theme.colors.content};
 
   ${props => props.theme.breakpoint.small} {
     align-items: center;

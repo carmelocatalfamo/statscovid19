@@ -1,26 +1,26 @@
 import React from 'react'
 
-import { Abruzzo } from '@/components/maps/Region/Abruzzo'
-import { Basilicata } from '@/components/maps/Region/Basilicata'
-import { Bolzano } from '@/components/maps/Region/Bolzano'
-import { Calabria } from '@/components/maps/Region/Calabria'
-import { Campania } from '@/components/maps/Region/Campania'
-import { Emiliaromagna } from '@/components/maps/Region/Emiliaromagna'
-import { Friuliveneziagiulia } from '@/components/maps/Region/Friuliveneziagiulia'
-import { Lazio } from '@/components/maps/Region/Lazio'
-import { Liguria } from '@/components/maps/Region/Liguria'
-import { Lombardia } from '@/components/maps/Region/Lombardia'
-import { Marche } from '@/components/maps/Region/Marche'
-import { Molise } from '@/components/maps/Region/Molise'
-import { Piemonte } from '@/components/maps/Region/Piemonte'
-import { Puglia } from '@/components/maps/Region/Puglia'
-import { Sardegna } from '@/components/maps/Region/Sardegna'
-import { Sicilia } from '@/components/maps/Region/Sicilia'
-import { Toscana } from '@/components/maps/Region/Toscana'
-import { Trento } from '@/components/maps/Region/Trento'
-import { Umbria } from '@/components/maps/Region/Umbria'
-import { Valledaosta } from '@/components/maps/Region/Valledaosta'
-import { Veneto } from '@/components/maps/Region/Veneto'
+import { Abruzzo } from '@/components/RegionMap/svg/Abruzzo'
+import { Basilicata } from '@/components/RegionMap/svg/Basilicata'
+import { Bolzano } from '@/components/RegionMap/svg/Bolzano'
+import { Calabria } from '@/components/RegionMap/svg/Calabria'
+import { Campania } from '@/components/RegionMap/svg/Campania'
+import { Emiliaromagna } from '@/components/RegionMap/svg/Emiliaromagna'
+import { Friuliveneziagiulia } from '@/components/RegionMap/svg/Friuliveneziagiulia'
+import { Lazio } from '@/components/RegionMap/svg/Lazio'
+import { Liguria } from '@/components/RegionMap/svg/Liguria'
+import { Lombardia } from '@/components/RegionMap/svg/Lombardia'
+import { Marche } from '@/components/RegionMap/svg/Marche'
+import { Molise } from '@/components/RegionMap/svg/Molise'
+import { Piemonte } from '@/components/RegionMap/svg/Piemonte'
+import { Puglia } from '@/components/RegionMap/svg/Puglia'
+import { Sardegna } from '@/components/RegionMap/svg/Sardegna'
+import { Sicilia } from '@/components/RegionMap/svg/Sicilia'
+import { Toscana } from '@/components/RegionMap/svg/Toscana'
+import { Trento } from '@/components/RegionMap/svg/Trento'
+import { Umbria } from '@/components/RegionMap/svg/Umbria'
+import { Valledaosta } from '@/components/RegionMap/svg/Valledaosta'
+import { Veneto } from '@/components/RegionMap/svg/Veneto'
 
 type Props = {
   regionSlug: string
@@ -28,7 +28,7 @@ type Props = {
   stroke: string
 }
 
-export const Region = ({ regionSlug, ...props }: Props) => {
+const RegionMap = ({ regionSlug, ...props }: Props) => {
   const style = { maxHeight: '300px' }
 
   switch (regionSlug) {
@@ -78,3 +78,5 @@ export const Region = ({ regionSlug, ...props }: Props) => {
       return null
   }
 }
+
+export { RegionMap }

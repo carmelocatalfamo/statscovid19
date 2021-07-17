@@ -12,10 +12,10 @@ type Props = {
   className?: string
   color: string
   description: string
+  highlighted?: boolean
   Icon: IconType
   isLoading?: boolean
   title: string
-  highlighted?: boolean
 }
 
 export const CounterCard = ({
@@ -27,33 +27,17 @@ export const CounterCard = ({
   isLoading,
   title
 }: Props) => {
-  const theme = useTheme()
+  const { colors } = useTheme()
   const cardElement = useRef<HTMLDivElement>()
   const [vertical, setVertical] = useState(false)
   const iconColor = highlighted || !color ? '#fff' : color
-
-  const styles: Record<string, React.CSSProperties> = {
-    container: {
-      flexDirection: vertical ? 'column' : 'row',
-      textAlign: vertical ? 'center' : 'left'
-    },
-    iconContent: {
-      marginRight: vertical ? '0px' : '22px'
-    },
-    iconBackground: {
-      backgroundColor: iconColor
-    },
-    change: {
-      color: change <= 0 ? theme.colors.success : theme.colors.danger
-    }
-  }
+  const changeTextColor = change <= 0 ? colors.success : colors.danger
 
   useEffect(() => {
     if (cardElement.current) {
-      const el = cardElement.current
       const resizeListener = () => {
-        const elWidth = el.clientWidth
-        setVertical(!!(elWidth < 230))
+        const { clientWidth } = cardElement.current
+        setVertical(clientWidth < 230)
       }
 
       resizeListener()
@@ -66,7 +50,7 @@ export const CounterCard = ({
     if (isLoading) {
       const uniqueKey = highlighted ? 'highlighted_card' : 'card'
       const backgroundColor = highlighted ? '#8E63E3' : undefined
-      const foregroundColor = highlighted ? theme.colors.primary : undefined
+      const foregroundColor = highlighted ? colors.primary : undefined
 
       return (
         <ContentLoader
@@ -76,44 +60,44 @@ export const CounterCard = ({
           uniqueKey={uniqueKey}
         >
           <rect
-            x={vertical ? '25%' : '0%'}
-            y='15%'
+            height='40%'
             rx='3'
             ry='3'
             width='50%'
-            height='40%'
+            x={vertical ? '25%' : '0%'}
+            y='15%'
           />
           <rect
-            x={vertical ? '15%' : '0%'}
-            y='65%'
+            height='30%'
             rx='3'
             ry='3'
             width='70%'
-            height='30%'
+            x={vertical ? '15%' : '0%'}
+            y='65%'
           />
         </ContentLoader>
       )
     }
 
     return (
-      <React.Fragment>
+      <>
         <Header>
           <Title inverse={highlighted}>{title}</Title>
           {isNumber(change) && (
-            <Change style={styles.change}>
+            <Change style={{ color: changeTextColor }}>
               {`${change < 0 ? '-' : '+'}${toLocaleString(Math.abs(change))}`}
             </Change>
           )}
         </Header>
         <Description>{description}</Description>
-      </React.Fragment>
+      </>
     )
   }
 
   return (
-    <Container ref={cardElement} style={styles.container}>
-      <IconContent style={styles.iconContent}>
-        <IconBackground style={styles.iconBackground} />
+    <Container ref={cardElement} verticalOrientation={vertical}>
+      <IconContent>
+        <IconBackground style={{ backgroundColor: iconColor }} />
         <Icon size={26} color={iconColor} />
       </IconContent>
       <CardContent>{renderCardContent()}</CardContent>
@@ -121,48 +105,53 @@ export const CounterCard = ({
   )
 }
 
-const Container = styled.div`
-  display: flex;
-  flex-wrap: wrap;
+const Container = styled.div<{ verticalOrientation: boolean }>`
   align-items: center;
-  flex-direction: row;
+  display: flex;
+  flex-direction: ${props => (props.verticalOrientation ? 'column' : 'row')};
+  flex-wrap: wrap;
+  text-align: ${props => (props.verticalOrientation ? 'center' : 'left')};
+
+  & > div {
+    margin-right: ${props => (props.verticalOrientation ? '0px' : '22px')};
+  }
 `
 
 const IconContent = styled.div`
-  width: 60px;
-  height: 60px;
-  position: relative;
-  display: flex;
   align-items: center;
+  display: flex;
+  height: 60px;
   justify-content: center;
+  position: relative;
+  width: 60px;
 `
 
 const IconBackground = styled.div`
-  opacity: 0.2;
-  width: 100%;
-  height: 100%;
   border-radius: 30px;
+  height: 100%;
+  left: 0px;
+  opacity: 0.2;
   position: absolute;
   top: 0px;
-  left: 0px;
+  width: 100%;
 `
 
 const Header = styled.div`
-  display: inline-flex;
   align-items: flex-end;
+  display: inline-flex;
 `
 
 const Title = styled(Text)<{ inverse?: boolean }>`
   color: ${props => (props.inverse ? '#FFFFFF' : props.theme.colors.title)};
-  font-weight: bold;
   font-size: 22px;
+  font-weight: bold;
 `
 
 const Change = styled(Text)`
-  font-weight: bold;
   font-size: 12px;
-  margin-left: 10px;
+  font-weight: bold;
   margin-bottom: 4px;
+  margin-left: 10px;
 `
 
 const Description = styled(Text)`

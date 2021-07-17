@@ -25,20 +25,20 @@ const Content = styled.div<{
 }>`
   background-color: ${props =>
     props.highlighted ? props.highlighted : props.theme.colors.sidebar};
-  transition: 0.2s ease-in-out backgroundColor;
   border-radius: 10px;
   box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.1);
+  transition: 0.2s ease-in-out backgroundColor;
 `
 
 const Title = styled(Text)`
-  color: ${props => props.theme.colors.title};
   border-bottom: 2px solid ${props => props.theme.colors.content};
+  color: ${props => props.theme.colors.title};
   font-size: 16px;
   font-weight: bold;
   padding: 22px 30px;
 `
 
 const Body = styled.div`
-  padding: 30px;
   height: calc(100% - 70px);
+  padding: 30px;
 `

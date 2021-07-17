@@ -11,7 +11,7 @@ type Props = {
 
 export const WithTemplate = ({ children }: Props) => {
   return (
-    <React.Fragment>
+    <>
       <Navbar />
       <Menu />
       <Page>
@@ -20,7 +20,7 @@ export const WithTemplate = ({ children }: Props) => {
           <Grid>{children}</Grid>
         </Content>
       </Page>
-    </React.Fragment>
+    </>
   )
 }
 

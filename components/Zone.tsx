@@ -49,7 +49,9 @@ export const Zone = ({ regionSlug, ...otherProps }: Props) => {
       )
     }
 
-    if (error) {
+    // TODO: non esiste più la mappa sul sito del ministero che fornisce
+    // i colori delle regioni, rimuovere il box.
+    if (error || !regionZone) {
       return <Text>Errore durante il caricamento dei dati</Text>
     }
 
@@ -70,7 +72,7 @@ export const Zone = ({ regionSlug, ...otherProps }: Props) => {
       highlighted={zoneToColors[regionZone?.zone]}
       title={() => (
         <CardHeader>
-          <Title>{zoneToTitle[regionZone?.zone]}</Title>
+          <Title>{zoneToTitle[regionZone?.zone] || 'Zona Regione'}</Title>
           <a
             target='_blank'
             rel='noreferrer'

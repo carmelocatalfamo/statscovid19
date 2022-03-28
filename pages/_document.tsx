@@ -54,10 +54,6 @@ export default class MyDocument extends Document {
             rel='stylesheet'
             href='https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap'
           />
-        </Head>
-        <body>
-          <Main />
-          <NextScript />
           {NODE_ENV === 'production' && (
             <>
               <script
@@ -76,6 +72,10 @@ export default class MyDocument extends Document {
               />
             </>
           )}
+        </Head>
+        <body>
+          <Main />
+          <NextScript />
         </body>
       </Html>
     )

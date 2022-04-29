@@ -1,8 +1,10 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { AppProps } from 'next/app'
 import { ThemeProvider } from 'styled-components'
 import Head from 'next/head'
 import nookies from 'nookies'
+import { hotjar } from 'react-hotjar'
+import { useRouter } from 'next/router'
 
 import { changeTheme } from '@/store/slices/ui'
 import { CookieBanner } from '@/components/CookieBanner'
@@ -12,11 +14,46 @@ import { useAppSelector } from '@/hooks/useAppSelector'
 import { wrapper } from '@/store'
 import themes from '@/styles/themes'
 
+const {
+  NODE_ENV,
+  NEXT_PUBLIC_GOOGLE_ANALYTICS_ID,
+  NEXT_PUBLIC_HOTJAR_ID,
+  NEXT_PUBLIC_HOTJAR_SNIPPET_VERSION
+} = process.env
+
 const MyApp = ({ Component, pageProps }: AppProps) => {
+  const router = useRouter()
   const theme = useAppSelector(state => state.ui.theme)
   const title = 'Statistiche COVID-19 Italia'
   const description =
     'Numeri, grafici e statistiche dei dati ufficiali forniti dalla Protezione Civile sul COVID-19 in Italia prima e dopo la fase 2.'
+
+  // GA page events
+  useEffect(() => {
+    if (NODE_ENV === 'production') {
+      const handleRouteChange = (url: string) => {
+        window.gtag('config', NEXT_PUBLIC_GOOGLE_ANALYTICS_ID, {
+          page_path: url
+        })
+      }
+
+      router.events.on('routeChangeComplete', handleRouteChange)
+
+      return () => {
+        router.events.off('routeChangeComplete', handleRouteChange)
+      }
+    }
+  }, [router.events])
+
+  // Hotjar
+  useEffect(() => {
+    if (NODE_ENV === 'production') {
+      hotjar.initialize(
+        Number(NEXT_PUBLIC_HOTJAR_ID),
+        Number(NEXT_PUBLIC_HOTJAR_SNIPPET_VERSION)
+      )
+    }
+  }, [])
 
   return (
     <ThemeProvider theme={themes[theme]}>

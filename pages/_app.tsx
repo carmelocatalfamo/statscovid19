@@ -14,13 +14,6 @@ import { useAppSelector } from '@/hooks/useAppSelector'
 import { wrapper } from '@/store'
 import themes from '@/styles/themes'
 
-const {
-  NODE_ENV,
-  NEXT_PUBLIC_GOOGLE_ANALYTICS_ID,
-  NEXT_PUBLIC_HOTJAR_ID,
-  NEXT_PUBLIC_HOTJAR_SNIPPET_VERSION
-} = process.env
-
 const MyApp = ({ Component, pageProps }: AppProps) => {
   const router = useRouter()
   const theme = useAppSelector(state => state.ui.theme)
@@ -30,9 +23,9 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
 
   // GA page events
   useEffect(() => {
-    if (NODE_ENV === 'production') {
+    if (process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS_ID) {
       const handleRouteChange = (url: string) => {
-        window.gtag('config', NEXT_PUBLIC_GOOGLE_ANALYTICS_ID, {
+        window.gtag('config', process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS_ID, {
           page_path: url
         })
       }
@@ -47,10 +40,13 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
 
   // Hotjar
   useEffect(() => {
-    if (NODE_ENV === 'production') {
+    if (
+      process.env.NEXT_PUBLIC_HOTJAR_ID &&
+      process.env.NEXT_PUBLIC_HOTJAR_SNIPPET_VERSION
+    ) {
       hotjar.initialize(
-        Number(NEXT_PUBLIC_HOTJAR_ID),
-        Number(NEXT_PUBLIC_HOTJAR_SNIPPET_VERSION)
+        Number(process.env.NEXT_PUBLIC_HOTJAR_ID),
+        Number(process.env.NEXT_PUBLIC_HOTJAR_SNIPPET_VERSION)
       )
     }
   }, [])
